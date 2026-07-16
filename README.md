@@ -10,7 +10,7 @@ This repository is structured as a monorepo using pnpm workspaces. It contains b
 
 ## Repository Structure
 
-- `apps/api` - Node.js & Express REST API with PostgreSQL integration.
+- `apps/api` - Node.js & Express REST API with PostgreSQL & Drizzle ORM.
 - `apps/web` - React & Next.js frontend web application styled with Tailwind CSS v4.
 
 ---
@@ -18,7 +18,7 @@ This repository is structured as a monorepo using pnpm workspaces. It contains b
 ## Tech Stack Overview
 
 - **Monorepo Manager**: [pnpm](https://pnpm.io) Workspaces
-- **Backend API**: [Express.js](https://expressjs.com), [TypeScript](https://www.typescriptlang.org), [PostgreSQL](https://www.postgresql.org)
+- **Backend API**: [Express.js](https://expressjs.com), [TypeScript](https://www.typescriptlang.org), [PostgreSQL](https://www.postgresql.org), [Drizzle ORM](https://orm.drizzle.team)
 - **Frontend Client**: [Next.js](https://nextjs.org) (App Router), [React](https://react.dev), [Tailwind CSS v4](https://tailwindcss.com), [TypeScript](https://www.typescriptlang.org)
 
 ---
@@ -30,6 +30,7 @@ This repository is structured as a monorepo using pnpm workspaces. It contains b
 Make sure you have the following installed on your machine:
 - **Node.js** (version >= 24.18.0)
 - **PNPM** (version >= 8.15.9)
+- **Docker & Docker Compose** (for running the PostgreSQL database and Adminer locally)
 
 ### Installation
 
@@ -41,7 +42,13 @@ pnpm install
 
 ### Running the Application
 
-You can run the frontend and backend concurrently from the root directory:
+1. Spin up the PostgreSQL database and Adminer using Docker Compose:
+
+```bash
+docker compose -f apps/api/docker-compose.yml up -d
+```
+
+2. Run the frontend and backend concurrently from the root directory:
 
 ```bash
 # Start both Web and API in development mode

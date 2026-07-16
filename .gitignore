@@ -10,4 +10,8 @@ lerna-debug.log*
 node_modules
 apps/api/dist
 apps/web/.next
+apps/api/pgdata
 
+# Environment
+.env*
+!.env.example

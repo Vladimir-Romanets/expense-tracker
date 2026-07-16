@@ -1,0 +1,68 @@
+services:
+  pgdb:
+    image: postgres:16
+    restart: always
+    ports:
+      - '${DB_PORT}:${DB_PORT}'
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      PGDATA: /var/lib/postgresql/pgdata
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USERNAME} -d ${DB_NAME}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./pgdata:/var/lib/postgresql/pgdata # Persist data between container restarts
+      # - ./src/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - my-network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - '${API_HOST}:8080:8080'
+    depends_on:
+      - pgdb
+    environment:
+      - ADMINER_DEFAULT_SERVER=pgdb
+    networks:
+      - my-network
+    links:
+      - pgdb
+
+  api:
+    build: .
+    ports:
+      - '${API_PORT}:${API_PORT}'
+    depends_on:
+      pgdb:
+        condition: service_healthy
+    command: sh -c "pnpm run dev"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    networks:
+      - my-network
+    links:
+      - pgdb
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  data:
+    driver: local
+  pgdb:
+  adminer:
+  api:
