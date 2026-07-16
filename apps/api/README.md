@@ -3,6 +3,7 @@
 [![Express][express-badge]][express-url]
 [![TypeScript][typescript-badge]][typescript-url]
 [![PostgreSQL][postgres-badge]][postgres-url]
+[![Drizzle ORM][drizzle-badge]][drizzle-url]
 
 This is the backend REST API for the Expense Tracker application. It handles user authentication, purchase records, price history/dynamics, and budget definitions.
 
@@ -11,6 +12,7 @@ This is the backend REST API for the Expense Tracker application. It handles use
 - **Framework**: Express.js (v5.2.1)
 - **Language**: TypeScript (v5.5.2)
 - **Database**: PostgreSQL (using `pg` driver)
+- **ORM**: Drizzle ORM (v1.0.0-rc.4) with Drizzle Kit
 - **Security & Utilities**:
   - `helmet` - HTTP headers security
   - `cors` - Cross-Origin Resource Sharing
@@ -24,9 +26,12 @@ This is the backend REST API for the Expense Tracker application. It handles use
 
 ```
 apps/api/
-├── dist/             # Compiled production JavaScript files
+├── dist/               # Compiled production JavaScript files
 ├── src/
-│   └── index.ts      # Server entrypoint and express initialization
+│   └── index.ts        # Server entrypoint, express init & DATABASE_URL config
+├── .env.example        # Example environment variables template
+├── docker-compose.yml  # Docker Compose config for PG Database & Adminer
+├── Dockerfile          # Dockerfile for the API service
 ├── package.json
 └── tsconfig.json
 ```
@@ -35,17 +40,38 @@ apps/api/
 
 ## Environment Variables
 
-Create a `.env` file in the root of `apps/api/` directory (or define them in your environment):
+Copy [.env.example](file:///Users/vladimirromanets/Projects/expense-tracker/apps/api/.env.example) to `.env` in the root of the `apps/api/` directory:
 
-```env
-PORT=3001
-# PostgreSQL Connection details (standard env variables read by pg client)
-PGUSER=postgres
-PGPASSWORD=your_secure_password
-PGHOST=localhost
-PGPORT=5432
-PGDATABASE=expense_tracker
+```bash
+cp .env.example .env
 ```
+
+The file contains the following configuration variables:
+
+- `API_HOST`: Host address for the API server (e.g. `127.0.0.1` or `0.0.0.0`).
+- `API_PORT`: Port number for the API server (e.g. `3001`).
+- `DB_USERNAME`: Username for PostgreSQL connection.
+- `DB_PASSWORD`: Password for PostgreSQL connection.
+- `DB_HOST`: Hostname of the DB server (`pgdb` for Docker Compose, `localhost` for local run).
+- `DB_PORT`: Database port (default `5432`).
+- `DB_NAME`: Database name.
+- `DB_DIALECT`: Database dialect (`postgres`).
+- `DATABASE_URL` (optional override): Full connection string (e.g. `postgresql://user:pass@host:port/dbname`).
+
+---
+
+## Docker Support
+
+Spin up the PostgreSQL database and Adminer (database management web interface) using Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+This starts:
+- **PostgreSQL** container (`pgdb`) on port `5432`
+- **Adminer** container on port `8080` (accessible at `http://127.0.0.1:8080`)
+- **API** container on port `3001` (accessible at `http://127.0.0.1:3001`)
 
 ---
 
@@ -75,9 +101,10 @@ The API will be expanded with the following endpoints:
 
 ## Getting Started
 
-### Development Mode
+### Development Mode (Local)
 
-Runs the server with live reloading when source files change:
+1. Make sure you have a running Postgres database instance (e.g., using `docker compose up -d pgdb adminer`).
+2. Run the server with live reloading when source files change:
 
 ```bash
 pnpm dev
@@ -109,3 +136,5 @@ pnpm start
 [typescript-url]: https://www.typescriptlang.org
 [postgres-badge]: https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white
 [postgres-url]: https://www.postgresql.org
+[drizzle-badge]: https://img.shields.io/badge/drizzle--orm-%23C5F82A.svg?style=for-the-badge&logo=drizzle&logoColor=black
+[drizzle-url]: https://orm.drizzle.team
