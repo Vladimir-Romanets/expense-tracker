@@ -27,11 +27,18 @@ This is the backend REST API for the Expense Tracker application. It handles use
 ```
 apps/api/
 ├── dist/               # Compiled production JavaScript files
+├── drizzle/            # Auto-generated SQL migration files
 ├── src/
+│   ├── db/
+│   │   ├── schema.ts   # Drizzle ORM table definitions
+│   │   ├── relations.ts
+│   │   ├── index.ts
+│   │   └── getDatabaseUrl.ts
 │   └── index.ts        # Server entrypoint, express init & DATABASE_URL config
 ├── .env.example        # Example environment variables template
 ├── docker-compose.yml  # Docker Compose config for PG Database & Adminer
 ├── Dockerfile          # Dockerfile for the API service
+├── drizzle.config.ts   # Drizzle Kit configuration
 ├── package.json
 └── tsconfig.json
 ```
@@ -52,7 +59,7 @@ The file contains the following configuration variables:
 - `API_PORT`: Port number for the API server (e.g. `3001`).
 - `DB_USERNAME`: Username for PostgreSQL connection.
 - `DB_PASSWORD`: Password for PostgreSQL connection.
-- `DB_HOST`: Hostname of the DB server (`pgdb` for Docker Compose, `localhost` for local run).
+- `DB_HOST`: Hostname of the database for **local dev scripts only** (always `localhost`). Docker hardcodes `pgdb` internally.
 - `DB_PORT`: Database port (default `5432`).
 - `DB_NAME`: Database name.
 - `DB_DIALECT`: Database dialect (`postgres`).
@@ -96,6 +103,49 @@ The API will be expanded with the following endpoints:
 - **Purchases** (`/api/purchases`): Create, read, update, and delete purchase records, detailing items, stores, dates, and prices.
 - **Price Dynamics** (`/api/prices/dynamics`): Analyze price fluctuations of specific items over time.
 - **Budgets** (`/api/budgets`): Set, view, and adjust budgets and tracks category limits.
+
+---
+
+## Database Migrations
+
+Migrations are managed via [Drizzle Kit](https://orm.drizzle.team/docs/kit-overview). All SQL files are generated from the schema defined in [`src/db/schema.ts`](./src/db/schema.ts) and stored in the `drizzle/` directory.
+
+### Scripts
+
+| Script | Command | Description |
+|---|---|---|
+| `db:generate` | `drizzle-kit generate` | Generates SQL migration files based on schema changes |
+| `db:migrate:docker` | `docker compose exec api pnpm drizzle-kit migrate` | Applies migrations inside the running `api` container |
+| `db:check` | `drizzle-kit check` | Validates migration consistency (no conflicts, correct order) |
+| `db:studio` | `drizzle-kit studio` | Opens a browser-based GUI for viewing and editing database data |
+
+### Typical Workflow
+
+1. Modify the schema in `src/db/schema.ts`
+2. Generate a migration:
+   ```bash
+   pnpm db:generate
+   ```
+3. Verify migration consistency:
+   ```bash
+   pnpm db:check
+   ```
+4. Apply migrations inside Docker (requires `docker compose up`):
+   ```bash
+   pnpm db:migrate:docker
+   ```
+
+> **Important:** Before running `db:migrate:docker`, make sure the stack is running (`docker compose up`).
+
+### Drizzle Studio
+
+To visually browse and edit database data:
+
+```bash
+pnpm db:studio
+```
+
+Opens the interface at `https://local.drizzle.studio`.
 
 ---
 
