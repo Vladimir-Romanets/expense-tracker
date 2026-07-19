@@ -13,30 +13,30 @@ export const relations = defineRelations(schema, (relation) => ({
   },
   products: {
     categories: relation.one.categories({
-      from: relation.categories.id,
-      to: relation.products.categoryId,
+      from: relation.products.categoryId,
+      to: relation.categories.id,
     }),
     receiptItems: relation.many.receiptItems(),
   },
   receipts: {
     users: relation.one.users({
-      from: relation.users.id,
-      to: relation.receipts.userId,
+      from: relation.receipts.userId,
+      to: relation.users.id,
     }),
     stores: relation.one.stores({
-      from: relation.stores.id,
-      to: relation.receipts.storeId,
+      from: relation.receipts.storeId,
+      to: relation.stores.id,
     }),
     items: relation.many.receiptItems(),
   },
   receiptItems: {
     receipts: relation.one.receipts({
-      from: relation.receipts.id,
-      to: relation.receiptItems.receiptId,
+      from: relation.receiptItems.receiptId,
+      to: relation.receipts.id,
     }),
     products: relation.one.products({
-      from: relation.products.id,
-      to: relation.receiptItems.productId,
+      from: relation.receiptItems.receiptId,
+      to: relation.products.id,
     }),
   },
 }));
