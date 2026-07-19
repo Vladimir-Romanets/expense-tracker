@@ -15,7 +15,9 @@
       "@routes":["./src/routes/index"],
       "@models":["./src/models/index"],
       "@services":["./src/services/index"],
-      "@controllers":["./src/controllers/index"]
+      "@controllers":["./src/controllers/index"],
+      "@middleware/*":["./src/middleware/*"],
+      "@validators/*":["./src/validators/*"],
     }
   },
   "include": ["src/**/*"]
