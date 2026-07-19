@@ -29,12 +29,14 @@ apps/api/
 ├── dist/               # Compiled production JavaScript files
 ├── drizzle/            # Auto-generated SQL migration files
 ├── src/
-│   ├── db/
-│   │   ├── schema.ts   # Drizzle ORM table definitions
-│   │   ├── relations.ts
-│   │   ├── index.ts
-│   │   └── getDatabaseUrl.ts
-│   └── index.ts        # Server entrypoint, express init & DATABASE_URL config
+│   ├── controllers/    # HTTP layer: parse req, call service, send res
+│   ├── db/             # Drizzle instance, schema & table relations
+│   ├── middleware/     # Cross-cutting Express middlewares (e.g. validation)
+│   ├── models/         # Data-access layer: raw Drizzle ORM queries
+│   ├── routes/         # Express Router definitions
+│   ├── services/       # Business logic layer
+│   ├── validators/     # Joi schemas for request body validation
+│   └── index.ts        # Express entrypoint (app bootstrap)
 ├── .env.example        # Example environment variables template
 ├── docker-compose.yml  # Docker Compose config for PG Database & Adminer
 ├── Dockerfile          # Dockerfile for the API service
@@ -42,6 +44,49 @@ apps/api/
 ├── package.json
 └── tsconfig.json
 ```
+
+---
+
+## Architecture Overview
+
+The API follows a layered **MVC-style** architecture. Each incoming HTTP request passes through the following layers:
+
+```
+HTTP Request
+    │
+    ▼
+routes/          — Express Router: maps URL + method → controller + middleware
+    │
+    ▼
+middleware/      — Cross-cutting concerns (validation, auth, error handling)
+    │
+    ▼
+controllers/     — HTTP layer: extracts data from req, delegates to service, writes res
+    │
+    ▼
+services/        — Business logic: orchestrates model calls, applies rules
+    │
+    ▼
+models/          — Data-access layer: raw Drizzle ORM queries against the DB
+    │
+    ▼
+db/              — Drizzle instance, schema & relations
+```
+
+### Path Aliases (tsconfig.json)
+
+Absolute imports are used throughout to avoid deep relative paths:
+
+| Alias | Resolved path |
+|---|---|
+| `@db` | `src/db/index` |
+| `@db/*` | `src/db/*` |
+| `@routes` | `src/routes/index` |
+| `@controllers` | `src/controllers/index` |
+| `@services` | `src/services/index` |
+| `@models` | `src/models/index` |
+| `@middleware/*` | `src/middleware/*` |
+| `@validators/*` | `src/validators/*` |
 
 ---
 
@@ -96,13 +141,48 @@ This starts:
     }
     ```
 
+### Users
+
+- **POST `/api/users`**
+  - **Description**: Creates a new user record.
+  - **Body**:
+    ```json
+    {
+      "email": "user@example.com",      // required
+      "passwordHash": "hashed_string",  // required
+      "firstName": "John",              // optional, max 50 chars
+      "lastName": "Doe"                 // optional, max 50 chars
+    }
+    ```
+  - **Response** `201 Created`:
+    ```json
+    {
+      "id": 1,
+      "email": "user@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
+      "createdAt": "2026-07-19T13:51:53.000Z",
+      "updatedAt": "2026-07-19T13:51:53.000Z"
+    }
+    ```
+  - **Response** `400 Bad Request` (validation failure):
+    ```json
+    {
+      "status": "error",
+      "message": "Validation failed",
+      "details": [
+        "\"email\" is required"
+      ]
+    }
+    ```
+
 ### Planned Endpoints
 
 The API will be expanded with the following endpoints:
 
-- **Purchases** (`/api/purchases`): Create, read, update, and delete purchase records, detailing items, stores, dates, and prices.
-- **Price Dynamics** (`/api/prices/dynamics`): Analyze price fluctuations of specific items over time.
-- **Budgets** (`/api/budgets`): Set, view, and adjust budgets and tracks category limits.
+- **Purchases** (`/api/purchases`): CRUD for purchase records.
+- **Price Dynamics** (`/api/prices/dynamics`): Price fluctuation analysis over time.
+- **Budgets** (`/api/budgets`): Budget definitions and category limits.
 
 ---
 
