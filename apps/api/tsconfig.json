@@ -8,7 +8,15 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "paths": {
+      "@db/*": ["./src/db/*"],
+      "@db": ["./src/db/index"],
+      "@routes":["./src/routes/index"],
+      "@models":["./src/models/index"],
+      "@services":["./src/services/index"],
+      "@controllers":["./src/controllers/index"]
+    }
   },
   "include": ["src/**/*"]
 }
