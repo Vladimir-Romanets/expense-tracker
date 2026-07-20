@@ -90,6 +90,10 @@ The following scripts are available in the root `package.json`:
 | `build` | `pnpm -r build` | Build all applications for production |
 | `build:api` | `pnpm --filter api build` | Build the backend API |
 | `build:web` | `pnpm --filter web build` | Build the web client |
+| `lint` | `eslint .` | Run ESLint across all applications |
+| `lint:fix` | `eslint . --fix` | Run ESLint across all applications and auto-fix issues |
+| `format` | `prettier --write .` | Format all files in the repository using Prettier |
+| `format:check` | `prettier --check .` | Check formatting of all files in the repository |
 
 ---
 

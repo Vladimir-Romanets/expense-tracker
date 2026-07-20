@@ -12,13 +12,13 @@
     "paths": {
       "@db/*": ["./src/db/*"],
       "@db": ["./src/db/index"],
-      "@routes":["./src/routes/index"],
-      "@models":["./src/models/index"],
-      "@services":["./src/services/index"],
-      "@controllers":["./src/controllers/index"],
-      "@middleware/*":["./src/middleware/*"],
-      "@validators/*":["./src/validators/*"],
-      "@helpers/*":["./src/helpers/*"],
+      "@routes": ["./src/routes/index"],
+      "@models": ["./src/models/index"],
+      "@services": ["./src/services/index"],
+      "@controllers": ["./src/controllers/index"],
+      "@middleware/*": ["./src/middleware/*"],
+      "@validators/*": ["./src/validators/*"],
+      "@helpers/*": ["./src/helpers/*"]
     }
   },
   "include": ["src/**/*"]
