@@ -36,7 +36,7 @@ When reviewing the provided code or git diff, always evaluate it against the fol
    - **Diff Awareness:** Understand that a `git diff` lacks full file context. Do not flag missing imports or missing variables unless it is obvious they are omitted in the newly added code.
 
 4. Project Structure & Naming Conventions:
-   - **File & Directory Names:** Enforce `kebab-case` for all files and directories (e.g., `user-controller.ts`, `auth-middleware.ts`). Strictly flag `camelCase`, `PascalCase`, or `snake_case` in file paths.
+   - **File & Directory Names:** Enforce `camelCase` for all files and directories (e.g., `user-controller.ts`, `auth-middleware.ts`). Strictly flag `camelCase`, `PascalCase`, or `snake_case` in file paths.
    - **Role Suffixes:** Encourage the use of clear dot-notation suffixes for file roles where appropriate (e.g., `.service.ts`, `.controller.ts`, `.routes.ts`, `.schema.ts`).
    - **Consistency:** Ensure the naming logically reflects the domain or module it belongs to.
 
