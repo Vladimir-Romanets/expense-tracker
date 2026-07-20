@@ -18,6 +18,7 @@
       "@controllers":["./src/controllers/index"],
       "@middleware/*":["./src/middleware/*"],
       "@validators/*":["./src/validators/*"],
+      "@helpers/*":["./src/helpers/*"],
     }
   },
   "include": ["src/**/*"]
