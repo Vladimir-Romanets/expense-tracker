@@ -260,6 +260,32 @@ Start the compiled JavaScript application:
 pnpm start
 ```
 
+### Code Quality
+
+Run ESLint checking:
+
+```bash
+pnpm lint
+```
+
+Run ESLint and auto-fix issues:
+
+```bash
+pnpm lint:fix
+```
+
+Format code using Prettier:
+
+```bash
+pnpm format
+```
+
+Check code formatting:
+
+```bash
+pnpm format:check
+```
+
 [express-badge]: https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB
 [express-url]: https://expressjs.com
 [typescript-badge]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white

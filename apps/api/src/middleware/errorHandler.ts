@@ -1,6 +1,7 @@
-import { Request, Response, NextFunction } from "express";
-import { ValidationError } from "joi";
-import { AppError } from "@helpers/apiError";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Request, Response, NextFunction } from 'express';
+import { ValidationError } from 'joi';
+import { AppError } from '@helpers/apiError';
 
 interface CustomError extends Error {
   statusCode?: number;
@@ -13,24 +14,20 @@ interface CustomError extends Error {
 
 const handleJoiError = (err: ValidationError): AppError => {
   const errors = err.details.reduce((acc: Record<string, string>, current) => {
-    const field = current.path.join(".");
+    const field = current.path.join('.');
     acc[field] = current.message;
     return acc;
   }, {});
 
-  const appError = new AppError("Validation failed", 400);
+  const appError = new AppError('Validation failed', 400);
   appError.errors = errors;
   return appError;
 };
 
-const sendErrorDev = (
-  err: any,
-  validationErr: CustomError | null,
-  res: Response,
-): void => {
+const sendErrorDev = (err: any, validationErr: CustomError | null, res: Response): void => {
   const statusCode = validationErr?.statusCode || err.statusCode || 500;
 
-  console.error("[DEV] Original error:", err);
+  console.error('[DEV] Original error:', err);
 
   res.status(statusCode).json({
     status: validationErr?.status || err.status,
@@ -49,11 +46,11 @@ const sendErrorProd = (err: CustomError, res: Response): void | Response => {
     });
   }
 
-  console.error("CRITICAL UNKNOWN ERROR 💥:", err);
+  console.error('CRITICAL UNKNOWN ERROR 💥:', err);
 
   return res.status(500).json({
-    status: "error",
-    message: "Internal Server Error. Please try again later.",
+    status: 'error',
+    message: 'Internal Server Error. Please try again later.',
   });
 };
 
@@ -61,17 +58,15 @@ export const globalErrorHandler = (
   err: any,
   req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ): void => {
   err.statusCode = err.statusCode || 500;
-  err.status = err.status || "error";
+  err.status = err.status || 'error';
 
   const validationErr =
-    err.isJoi || err.name === "ValidationError"
-      ? handleJoiError(err as ValidationError)
-      : null;
+    err.isJoi || err.name === 'ValidationError' ? handleJoiError(err as ValidationError) : null;
 
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, validationErr, res);
   } else {
     const error: CustomError = validationErr || err;

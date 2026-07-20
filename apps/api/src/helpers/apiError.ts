@@ -1,6 +1,6 @@
 export class AppError extends Error {
   public readonly statusCode: number;
-  public readonly status: "fail" | "error";
+  public readonly status: 'fail' | 'error';
   public readonly isOperational: boolean;
   public errors?: Record<string, string>;
 
@@ -8,7 +8,7 @@ export class AppError extends Error {
     super(message);
 
     this.statusCode = statusCode;
-    this.status = `${statusCode}`.startsWith("4") ? "fail" : "error";
+    this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
     this.isOperational = true;
 
     Object.setPrototypeOf(this, new.target.prototype);

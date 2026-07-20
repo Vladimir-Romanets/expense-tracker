@@ -1,5 +1,5 @@
-import { usersModel } from "@models";
-import { users } from "@db/schema";
+import { usersModel } from '@models';
+import { users } from '@db/schema';
 
 type UserBasic = typeof users.$inferInsert;
 

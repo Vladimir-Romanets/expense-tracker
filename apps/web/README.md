@@ -63,12 +63,30 @@ Start the Next.js production server:
 pnpm start
 ```
 
-### Code Linting
+### Code Quality
 
 Run ESLint checking:
 
 ```bash
 pnpm lint
+```
+
+Run ESLint and auto-fix issues:
+
+```bash
+pnpm lint:fix
+```
+
+Format code using Prettier:
+
+```bash
+pnpm format
+```
+
+Check code formatting:
+
+```bash
+pnpm format:check
 ```
 
 [nextjs-badge]: https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white
