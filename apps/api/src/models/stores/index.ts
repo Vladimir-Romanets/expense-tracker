@@ -1,14 +1,14 @@
-import { db } from '@db';
-import { stores } from '@db/schema';
+import { db } from '@db'
+import { stores } from '@db/schema'
 
-type BasicStore = typeof stores.$inferInsert;
+type BasicStore = typeof stores.$inferInsert
 
 const create = async (payload: Pick<BasicStore, 'name'>) => {
-  const result = await db.insert(stores).values(payload).returning();
+  const result = await db.insert(stores).values(payload).returning()
 
-  return result;
-};
+  return result
+}
 
 export default {
   create,
-};
+}
