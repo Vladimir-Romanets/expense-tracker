@@ -1,5 +1,5 @@
-import { defineRelations } from 'drizzle-orm';
-import * as schema from './schema';
+import { defineRelations } from 'drizzle-orm'
+import * as schema from './schema'
 
 export const relations = defineRelations(schema, (relation) => ({
   users: {
@@ -39,4 +39,4 @@ export const relations = defineRelations(schema, (relation) => ({
       to: relation.products.id,
     }),
   },
-}));
+}))

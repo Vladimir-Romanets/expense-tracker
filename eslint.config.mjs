@@ -1,11 +1,11 @@
-import { defineConfig, globalIgnores } from 'eslint/config';
-import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import prettierPlugin from 'eslint-plugin-prettier';
-import prettierConfig from 'eslint-config-prettier';
-import globals from 'globals';
-import nextVitals from 'eslint-config-next/core-web-vitals';
-import nextTs from 'eslint-config-next/typescript';
+import { defineConfig, globalIgnores } from 'eslint/config'
+import js from '@eslint/js'
+import tseslint from 'typescript-eslint'
+import prettierPlugin from 'eslint-plugin-prettier'
+import prettierConfig from 'eslint-config-prettier'
+import globals from 'globals'
+import nextVitals from 'eslint-config-next/core-web-vitals'
+import nextTs from 'eslint-config-next/typescript'
 
 const sharedRules = {
   'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
@@ -14,7 +14,7 @@ const sharedRules = {
   '@typescript-eslint/no-explicit-any': 'warn',
   'import/no-anonymous-default-export': 'off',
   'prettier/prettier': 'error',
-};
+}
 
 export default defineConfig([
   globalIgnores([
@@ -83,4 +83,4 @@ export default defineConfig([
       ...prettierConfig.rules,
     },
   },
-]);
+])

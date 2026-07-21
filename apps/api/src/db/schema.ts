@@ -7,8 +7,8 @@ import {
   integer,
   date,
   numeric,
-} from 'drizzle-orm/pg-core';
-import { sql } from 'drizzle-orm';
+} from 'drizzle-orm/pg-core'
+import { sql } from 'drizzle-orm'
 
 export const users = pgTable('users', {
   id: serial().primaryKey(),
@@ -17,7 +17,7 @@ export const users = pgTable('users', {
   passwordHash: varchar('password_hash', { length: 255 }).notNull(),
   email: varchar({ length: 100 }).notNull().unique(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
-});
+})
 
 export const stores = pgTable(
   'stores',
@@ -27,7 +27,7 @@ export const stores = pgTable(
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
   },
   (table) => [uniqueIndex('stores_name_unique_idx').on(sql`lower(${table.name})`)],
-);
+)
 
 export const categories = pgTable(
   'categories',
@@ -36,7 +36,7 @@ export const categories = pgTable(
     name: varchar({ length: 100 }).notNull(),
   },
   (table) => [uniqueIndex('categories_name_unique_idx').on(sql`lower(${table.name})`)],
-);
+)
 
 export const products = pgTable(
   'products',
@@ -47,7 +47,7 @@ export const products = pgTable(
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
   },
   (table) => [uniqueIndex('products_name_unique_idx').on(sql`lower(${table.name})`)],
-);
+)
 
 export const receipts = pgTable('receipts', {
   id: serial().primaryKey(),
@@ -61,7 +61,7 @@ export const receipts = pgTable('receipts', {
   totalAmount: numeric('total_amount', { precision: 10, scale: 2 }).notNull(),
   photoUrl: varchar('photo_url', { length: 500 }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
-});
+})
 
 export const receiptItems = pgTable('receipt_items', {
   id: serial().primaryKey(),
@@ -74,4 +74,4 @@ export const receiptItems = pgTable('receipt_items', {
   quantity: numeric({ precision: 10, scale: 3 }),
   unitPrice: numeric('unit_price', { precision: 10, scale: 3 }),
   totalPrice: numeric('total_price', { precision: 10, scale: 3 }).notNull(),
-});
+})

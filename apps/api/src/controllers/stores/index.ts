@@ -1,13 +1,13 @@
-import { Request, Response } from 'express';
-import { storesService } from '@services';
-import { asyncHandler } from '@helpers/asyncHandler';
+import { Request, Response } from 'express'
+import { storesService } from '@services'
+import { asyncHandler } from '@helpers/asyncHandler'
 
 const create = asyncHandler(async (req: Request, res: Response) => {
-  const store = await storesService.create(req.body);
+  const store = await storesService.create(req.body)
 
-  res.status(201).json(store);
-});
+  res.status(201).json(store)
+})
 
 export default {
   create,
-};
+}
