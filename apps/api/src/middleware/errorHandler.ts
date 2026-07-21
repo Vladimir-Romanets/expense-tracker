@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response, NextFunction } from 'express';
-import { ValidationError } from 'joi';
+import { DrizzleError } from 'drizzle-orm';
 import { AppError } from '@helpers/apiError';
+import { handleDbConstraintError } from '@helpers/handleDbConstraintError';
+import { handleJoiError } from '@helpers/handleJoiError';
 
 interface CustomError extends Error {
   statusCode?: number;
@@ -12,22 +14,10 @@ interface CustomError extends Error {
   [key: string]: any;
 }
 
-const handleJoiError = (err: ValidationError): AppError => {
-  const errors = err.details.reduce((acc: Record<string, string>, current) => {
-    const field = current.path.join('.');
-    acc[field] = current.message;
-    return acc;
-  }, {});
-
-  const appError = new AppError('Validation failed', 400);
-  appError.errors = errors;
-  return appError;
-};
-
 const sendErrorDev = (err: any, validationErr: CustomError | null, res: Response): void => {
   const statusCode = validationErr?.statusCode || err.statusCode || 500;
 
-  console.error('[DEV] Original error:', err);
+  console.error('[DEV] Original error:', err, '\n', JSON.stringify(err));
 
   res.status(statusCode).json({
     status: validationErr?.status || err.status,
@@ -63,16 +53,18 @@ export const globalErrorHandler = (
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
-  const validationErr =
-    err.isJoi || err.name === 'ValidationError' ? handleJoiError(err as ValidationError) : null;
+  let validationErr: AppError | DrizzleError | null = null;
+
+  if (err.isJoi || err.name === 'ValidationError') {
+    validationErr = handleJoiError(err);
+  } else if (err.name === 'DrizzleQueryError') {
+    validationErr = handleDbConstraintError(err);
+  }
 
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, validationErr, res);
   } else {
     const error: CustomError = validationErr || err;
-
-    // TODO: add db error handler in the future
-    // if (error.name === 'CastError') error = handleDbCastError(error);
 
     sendErrorProd(error, res);
   }
