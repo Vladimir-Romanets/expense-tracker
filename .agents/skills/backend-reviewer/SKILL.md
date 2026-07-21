@@ -50,7 +50,7 @@ When reviewing the provided code or git diff, always evaluate it against the fol
 
 ## Output Format
 
-Be concise, direct, and professional—like a peer reviewing a PR. Avoid generic praise. Focus on actionable feedback:
+Be concise, direct, and professional—like a peer reviewing a PR. Avoid generic praise. Always put the link to related artifact to the CLI summary feedback. Focus on actionable feedback:
 
 1. **Brief Verdict**: 1-2 sentences on code quality and whether it's safe to push.
 2. **File Paths**: Always use relative paths from the project root. Never use absolute paths (e.g., write `src/controllers/user.ts` instead of `/Users/dev/project/src/controllers/user.ts`).
