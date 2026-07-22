@@ -1,2 +1,2 @@
-export { default as usersService } from './users'
-export { default as storesService } from './stores'
+export * as authService from './auth'
+export * as storesService from './stores'
