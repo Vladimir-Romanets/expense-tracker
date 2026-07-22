@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { storesService } from '@services'
 import { asyncHandler } from '@helpers/errors/asyncHandler'
+import { createPaginatedResponse, getPaginationParams } from '@helpers/utils/pagination'
 
 export const create = asyncHandler(async (req: Request, res: Response) => {
   const store = await storesService.create(req.body)
@@ -9,7 +10,9 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
 })
 
 export const getAllStores = asyncHandler(async (req: Request, res: Response) => {
-  const stores = await storesService.getAllStores()
+  const pagination = getPaginationParams(req.query)
 
-  res.status(200).json(stores)
+  const { list, total } = await storesService.getAllStores(pagination)
+
+  res.status(200).json(createPaginatedResponse(list, total, pagination))
 })
