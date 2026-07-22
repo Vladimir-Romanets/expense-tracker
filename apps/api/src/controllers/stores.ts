@@ -7,3 +7,9 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
 
   res.status(201).json(store)
 })
+
+export const getAllStores = asyncHandler(async (req: Request, res: Response) => {
+  const stores = await storesService.getAllStores()
+
+  res.status(200).json(stores)
+})
