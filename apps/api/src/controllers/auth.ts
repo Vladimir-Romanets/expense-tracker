@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { authService } from '@services'
-import { asyncHandler } from '@helpers/asyncHandler'
+import { asyncHandler } from '@helpers/errors/asyncHandler'
 
 export const register = asyncHandler(async (req: Request, res: Response) => {
   const response = await authService.registerUser(req.body)

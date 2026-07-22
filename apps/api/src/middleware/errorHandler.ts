@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response, NextFunction } from 'express'
 import { DrizzleError } from 'drizzle-orm'
-import { AppError } from '@helpers/apiError'
-import { handleDbConstraintError } from '@helpers/handleDbConstraintError'
-import { handleJoiError } from '@helpers/handleJoiError'
+import { AppError } from '@helpers/errors/apiError'
+import { handleDbConstraintError } from '@helpers/errors/handleDbConstraintError'
+import { handleJoiError } from '@helpers/errors/handleJoiError'
 
 interface CustomError extends Error {
   statusCode?: number

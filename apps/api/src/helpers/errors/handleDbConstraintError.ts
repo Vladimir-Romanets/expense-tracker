@@ -1,5 +1,5 @@
 import { DatabaseError } from 'pg'
-import { AppError } from '@helpers/apiError'
+import { AppError } from '@helpers/errors/apiError'
 
 interface DrizzleQueryError extends Error {
   cause?: DatabaseError
