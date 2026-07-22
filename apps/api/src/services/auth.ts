@@ -1,8 +1,8 @@
 import { usersModel } from '@models'
 import { users } from '@db/schema'
-import { AppError } from '@helpers/apiError'
-import { comparePassword, convertPasswordToHash } from '@helpers/password'
-import { signToken } from '@helpers/jwt'
+import { AppError } from '@helpers/errors/apiError'
+import { comparePassword, convertPasswordToHash } from '@helpers/utils/password'
+import { signToken } from '@helpers/utils/jwt'
 
 type UserInstance = typeof users.$inferInsert
 
