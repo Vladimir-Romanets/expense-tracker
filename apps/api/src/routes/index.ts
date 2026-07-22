@@ -1,10 +1,17 @@
 import express from 'express'
-import usersRouter from './users'
+
+import { validate } from '@middleware/validate'
+import { authenticate } from '@middleware/authenticate'
+import { registerUserSchema, loginUserSchema } from '@validators/auth'
+import { authController } from '@controllers'
 import storesRouter from './stores'
 
 const router = express.Router()
 
-router.use('/users', usersRouter)
+router.post('/register', validate(registerUserSchema), authController.register)
+router.post('/login', validate(loginUserSchema), authController.login)
+
+router.use(authenticate)
 router.use('/stores', storesRouter)
 
 export default router

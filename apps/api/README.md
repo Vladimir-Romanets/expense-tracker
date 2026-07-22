@@ -109,6 +109,8 @@ The file contains the following configuration variables:
 - `DB_NAME`: Database name.
 - `DB_DIALECT`: Database dialect (`postgres`).
 - `DATABASE_URL` (optional override): Full connection string (e.g. `postgresql://user:pass@host:port/dbname`).
+- `JWT_SECRET`: Secret key used for signing and verifying JWT tokens.
+- `JWT_EXPIRES_IN`: JWT token expiry duration (e.g. `1h`, `7d`, `30m`). Defaults to `1h` if not set.
 
 ---
 
@@ -129,62 +131,8 @@ This starts:
 
 ## API Endpoints
 
-### Health Check
+Full API documentation will be available via Swagger / OpenAPI. For now, refer to the route definitions in [`src/routes/`](./src/routes/) and the corresponding validators in [`src/validators/`](./src/validators/).
 
-- **GET `/api/health`**
-  - **Description**: Verifies that the API service is running and healthy.
-  - **Response**:
-    ```json
-    {
-      "status": "ok",
-      "message": "API is running"
-    }
-    ```
-
-### Users
-
-- **POST `/api/users`**
-  - **Description**: Creates a new user record.
-  - **Body**:
-    ```json
-    {
-      "email": "user@example.com",      // required
-      "passwordHash": "hashed_string",  // required
-      "firstName": "John",              // optional, max 50 chars
-      "lastName": "Doe"                 // optional, max 50 chars
-    }
-    ```
-  - **Response** `201 Created`:
-    ```json
-    {
-      "id": 1,
-      "email": "user@example.com",
-      "firstName": "John",
-      "lastName": "Doe",
-      "createdAt": "2026-07-19T13:51:53.000Z",
-      "updatedAt": "2026-07-19T13:51:53.000Z"
-    }
-    ```
-  - **Response** `400 Bad Request` (validation failure):
-    ```json
-    {
-      "status": "error",
-      "message": "Validation failed",
-      "details": [
-        "\"email\" is required"
-      ]
-    }
-    ```
-
-### Planned Endpoints
-
-The API will be expanded with the following endpoints:
-
-- **Purchases** (`/api/purchases`): CRUD for purchase records.
-- **Price Dynamics** (`/api/prices/dynamics`): Price fluctuation analysis over time.
-- **Budgets** (`/api/budgets`): Budget definitions and category limits.
-
----
 
 ## Database Migrations
 

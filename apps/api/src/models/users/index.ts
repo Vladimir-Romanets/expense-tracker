@@ -3,12 +3,6 @@ import { users } from '@db/schema'
 
 type UserBasic = typeof users.$inferInsert
 
-const create = async (user: UserBasic) => {
-  const result = await db.insert(users).values(user).returning()
+export const findUserByEmail = (email: string) => db.query.users.findFirst({ where: { email } })
 
-  return result
-}
-
-export default {
-  create,
-}
+export const create = (user: UserBasic) => db.insert(users).values(user).returning()
