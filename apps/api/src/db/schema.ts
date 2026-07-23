@@ -75,3 +75,8 @@ export const receiptItems = pgTable('receipt_items', {
   unitPrice: numeric('unit_price', { precision: 10, scale: 3 }),
   totalPrice: numeric('total_price', { precision: 10, scale: 3 }).notNull(),
 })
+
+export type StoreProps = typeof stores.$inferSelect
+export type NewStoreProps = typeof stores.$inferInsert
+export type CategoryProps = typeof categories.$inferSelect
+export type NewCategoryProps = typeof categories.$inferInsert

@@ -1,5 +1,5 @@
 import joi from 'joi'
 
-export const createStoreSchema = joi.object({
+export const createCategoriesSchema = joi.object({
   name: joi.string().max(100).required(),
 })

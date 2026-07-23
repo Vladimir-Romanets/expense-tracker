@@ -5,6 +5,7 @@ import { authenticate } from '@middleware/authenticate'
 import { registerUserSchema, loginUserSchema } from '@validators/auth'
 import { authController } from '@controllers'
 import storesRouter from './stores'
+import categoriesRouter from './categories'
 
 const router = express.Router()
 
@@ -13,5 +14,6 @@ router.post('/login', validate(loginUserSchema), authController.login)
 
 router.use(authenticate)
 router.use('/stores', storesRouter)
+router.use('/categories', categoriesRouter)
 
 export default router
