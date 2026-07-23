@@ -1,15 +1,15 @@
 import { Request, Response } from 'express'
-import { storesService } from '@services'
 import { asyncHandler } from '@helpers/errors/asyncHandler'
+import { categoriesService } from '@services'
 
 export const create = asyncHandler(async (req: Request, res: Response) => {
-  const store = await storesService.create(req.body)
+  const category = await categoriesService.create(req.body)
 
-  res.status(201).json(store)
+  res.status(201).json(category)
 })
 
 export const getAll = asyncHandler(async (req: Request, res: Response) => {
-  const response = await storesService.getAllStores(req.query)
+  const response = await categoriesService.getAll(req.query)
 
   res.status(200).json(response)
 })

@@ -51,8 +51,9 @@ When reviewing the provided code or git diff, always evaluate it against the fol
 
 ## Artifacts & References Constraint
 
-- **Artifacts Link:** If an artifact file (e.g., HTML report, log, or summary document) was generated during this execution, you MUST explicitly include its relative path in the final output.
-- **Path Resolution Root:** Always use relative paths from the project root directory. Never use absolute paths (e.g., write `src/controllers/user.controller.ts` instead of `/Users/dev/project/src/controllers/user.controller.ts`).
+- **Artifacts Generation & Storage:** If an artifact file (e.g., HTML report, log, or summary document) is generated, it MUST be saved to the global output directory on the user's system: `~/.gemini/antigravity-cli/brain/<execution-id>/<filename>`
+- **Project Code References:** Always reference files inside the repository using **relative paths** from the project root directory (e.g., write `src/controllers/user.controller.ts` instead of `/Users/.../src/controllers/user.controller.ts`).
+- **Artifact Links:** When referencing the generated artifact in the final response, provide both the **relative artifact path** (or friendly link) and the **full absolute system path** where it was saved, so the user knows exactly where to find it on disk.
 
 ## Output Format
 

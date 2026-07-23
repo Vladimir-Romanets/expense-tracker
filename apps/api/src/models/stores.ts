@@ -1,10 +1,8 @@
 import { db } from '@db'
-import { stores } from '@db/schema'
+import { stores, NewStoreProps } from '@db/schema'
 import { PaginationResult } from '@helpers/utils/pagination'
 
-type BasicStore = typeof stores.$inferInsert
-
-export const create = async (payload: Pick<BasicStore, 'name'>) => {
+export const create = async (payload: NewStoreProps) => {
   const result = await db.insert(stores).values(payload).returning()
 
   return result
@@ -20,6 +18,7 @@ export const getAllStores = async ({ limit, offset }: PaginationResult) => {
     columns: {
       id: true,
       name: true,
+      createdAt: true,
     },
   })
   const promiseCount = db.$count(stores)
