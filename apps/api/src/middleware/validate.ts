@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from 'express'
-import { Schema } from 'joi'
+import { ZodSchema } from 'zod'
 
-export const validate = (schema: Schema) => {
+export const validate = (schema: ZodSchema) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const { error, value } = schema.validate(req.body, { abortEarly: false })
+    const result = schema.safeParse(req.body)
 
-    if (error) {
-      return next(error)
+    if (!result.success) {
+      return next(result.error)
     }
-    req.body = value
+    req.body = result.data
     next()
   }
 }

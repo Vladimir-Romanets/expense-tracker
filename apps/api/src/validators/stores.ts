@@ -1,5 +1,7 @@
-import joi from 'joi'
+import { z } from 'zod'
 
-export const createStoreSchema = joi.object({
-  name: joi.string().max(100).required(),
+export const createStoreSchema = z.object({
+  name: z.string().min(1).max(100),
 })
+
+export type CreateStoreDto = z.infer<typeof createStoreSchema>

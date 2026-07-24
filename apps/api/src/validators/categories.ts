@@ -1,5 +1,7 @@
-import joi from 'joi'
+import { z } from 'zod'
 
-export const createCategoriesSchema = joi.object({
-  name: joi.string().max(100).required(),
+export const createCategoriesSchema = z.object({
+  name: z.string().min(1).max(100),
 })
+
+export type CreateCategoryDto = z.infer<typeof createCategoriesSchema>
