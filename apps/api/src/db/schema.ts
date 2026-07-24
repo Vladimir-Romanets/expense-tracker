@@ -38,16 +38,12 @@ export const categories = pgTable(
   (table) => [uniqueIndex('categories_name_unique_idx').on(sql`lower(${table.name})`)],
 )
 
-export const products = pgTable(
-  'products',
-  {
-    id: serial().primaryKey(),
-    name: varchar({ length: 100 }).notNull(),
-    categoryId: integer('category_id').references(() => categories.id),
-    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
-  },
-  (table) => [uniqueIndex('products_name_unique_idx').on(sql`lower(${table.name})`)],
-)
+export const products = pgTable('products', {
+  id: serial().primaryKey(),
+  name: varchar({ length: 100 }).notNull().unique(),
+  categoryId: integer('category_id').references(() => categories.id),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+})
 
 export const receipts = pgTable('receipts', {
   id: serial().primaryKey(),
@@ -80,3 +76,9 @@ export type StoreProps = typeof stores.$inferSelect
 export type NewStoreProps = typeof stores.$inferInsert
 export type CategoryProps = typeof categories.$inferSelect
 export type NewCategoryProps = typeof categories.$inferInsert
+export type ProductProps = typeof products.$inferSelect
+export type NewProductProps = typeof products.$inferInsert
+export type ReceiptProps = typeof receipts.$inferSelect
+export type NewReceiptProps = typeof receipts.$inferInsert
+export type ReceiptItemProps = typeof receiptItems.$inferSelect
+export type NewReceiptItemProps = typeof receiptItems.$inferInsert

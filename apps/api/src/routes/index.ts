@@ -6,6 +6,7 @@ import { registerUserSchema, loginUserSchema } from '@validators/auth'
 import { authController } from '@controllers'
 import storesRouter from './stores'
 import categoriesRouter from './categories'
+import receiptsRouter from './receipts'
 
 const router = express.Router()
 
@@ -15,5 +16,6 @@ router.post('/login', validate(loginUserSchema), authController.login)
 router.use(authenticate)
 router.use('/stores', storesRouter)
 router.use('/categories', categoriesRouter)
+router.use('/receipts', receiptsRouter)
 
 export default router

@@ -1,3 +1,6 @@
 export * as usersModel from './users'
 export * as storesModel from './stores'
 export * as categoriesModel from './categories'
+export * as productsModel from './products'
+export * as receiptsModel from './receipts'
+export * as receiptItemsModel from './receiptItems'
