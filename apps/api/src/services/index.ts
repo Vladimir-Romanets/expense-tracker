@@ -1,3 +1,6 @@
 export * as authService from './auth'
 export * as storesService from './stores'
 export * as categoriesService from './categories'
+export * as productsService from './products'
+export * as receiptsService from './receipts'
+export * as receiptItemsService from './receiptItems'

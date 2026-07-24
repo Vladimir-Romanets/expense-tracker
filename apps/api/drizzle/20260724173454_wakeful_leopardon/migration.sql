@@ -5,7 +5,7 @@ CREATE TABLE "categories" (
 --> statement-breakpoint
 CREATE TABLE "products" (
 	"id" serial PRIMARY KEY,
-	"name" varchar(100) NOT NULL,
+	"name" varchar(100) NOT NULL UNIQUE,
 	"category_id" integer,
 	"created_at" timestamp with time zone DEFAULT now()
 );
@@ -45,7 +45,6 @@ CREATE TABLE "users" (
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX "categories_name_unique_idx" ON "categories" (lower("name"));--> statement-breakpoint
-CREATE UNIQUE INDEX "products_name_unique_idx" ON "products" (lower("name"));--> statement-breakpoint
 CREATE UNIQUE INDEX "stores_name_unique_idx" ON "stores" (lower("name"));--> statement-breakpoint
 ALTER TABLE "products" ADD CONSTRAINT "products_category_id_categories_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id");--> statement-breakpoint
 ALTER TABLE "receipt_items" ADD CONSTRAINT "receipt_items_receipt_id_receipts_id_fkey" FOREIGN KEY ("receipt_id") REFERENCES "receipts"("id");--> statement-breakpoint

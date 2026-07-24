@@ -1,8 +1,10 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "9e82e5b4-18ef-4251-bd9c-2c56590aa9fa",
-  "prevIds": ["00000000-0000-0000-0000-000000000000"],
+  "id": "a4a9a912-13bd-4eef-b46b-dd336f52470d",
+  "prevIds": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
   "ddl": [
     {
       "isRlsEnabled": false,
@@ -441,27 +443,6 @@
       "with": "",
       "method": "btree",
       "concurrently": false,
-      "name": "products_name_unique_idx",
-      "entityType": "indexes",
-      "schema": "public",
-      "table": "products"
-    },
-    {
-      "nameExplicit": true,
-      "columns": [
-        {
-          "value": "lower(\"name\")",
-          "isExpression": true,
-          "asc": true,
-          "nullsFirst": false,
-          "opclass": null
-        }
-      ],
-      "isUnique": true,
-      "where": null,
-      "with": "",
-      "method": "btree",
-      "concurrently": false,
       "name": "stores_name_unique_idx",
       "entityType": "indexes",
       "schema": "public",
@@ -469,10 +450,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["category_id"],
+      "columns": [
+        "category_id"
+      ],
       "schemaTo": "public",
       "tableTo": "categories",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "products_category_id_categories_id_fkey",
@@ -482,10 +467,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["receipt_id"],
+      "columns": [
+        "receipt_id"
+      ],
       "schemaTo": "public",
       "tableTo": "receipts",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "receipt_items_receipt_id_receipts_id_fkey",
@@ -495,10 +484,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["product_id"],
+      "columns": [
+        "product_id"
+      ],
       "schemaTo": "public",
       "tableTo": "products",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "receipt_items_product_id_products_id_fkey",
@@ -508,10 +501,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["user_id"],
+      "columns": [
+        "user_id"
+      ],
       "schemaTo": "public",
       "tableTo": "users",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "receipts_user_id_users_id_fkey",
@@ -521,10 +518,14 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["store_id"],
+      "columns": [
+        "store_id"
+      ],
       "schemaTo": "public",
       "tableTo": "stores",
-      "columnsTo": ["id"],
+      "columnsTo": [
+        "id"
+      ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
       "name": "receipts_store_id_stores_id_fkey",
@@ -533,7 +534,9 @@
       "table": "receipts"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "categories_pkey",
       "schema": "public",
@@ -541,7 +544,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "products_pkey",
       "schema": "public",
@@ -549,7 +554,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "receipt_items_pkey",
       "schema": "public",
@@ -557,7 +564,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "receipts_pkey",
       "schema": "public",
@@ -565,7 +574,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "stores_pkey",
       "schema": "public",
@@ -573,7 +584,9 @@
       "entityType": "pks"
     },
     {
-      "columns": ["id"],
+      "columns": [
+        "id"
+      ],
       "nameExplicit": false,
       "name": "users_pkey",
       "schema": "public",
@@ -582,7 +595,20 @@
     },
     {
       "nameExplicit": false,
-      "columns": ["email"],
+      "columns": [
+        "name"
+      ],
+      "nullsNotDistinct": false,
+      "name": "products_name_key",
+      "schema": "public",
+      "table": "products",
+      "entityType": "uniques"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "email"
+      ],
       "nullsNotDistinct": false,
       "name": "users_email_key",
       "schema": "public",
