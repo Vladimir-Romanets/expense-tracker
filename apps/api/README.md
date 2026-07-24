@@ -4,6 +4,7 @@
 [![TypeScript][typescript-badge]][typescript-url]
 [![PostgreSQL][postgres-badge]][postgres-url]
 [![Drizzle ORM][drizzle-badge]][drizzle-url]
+[![Zod][zod-badge]][zod-url]
 
 This is the backend REST API for the Expense Tracker application. It handles user authentication, purchase records, price history/dynamics, and budget definitions.
 
@@ -17,7 +18,7 @@ This is the backend REST API for the Expense Tracker application. It handles use
   - `helmet` - HTTP headers security
   - `cors` - Cross-Origin Resource Sharing
   - `express-rate-limit` - Rate limiting requests
-  - `joi` - Request schema validation
+  - `zod` - TypeScript-first schema validation and type inference
 - **Dev Tools**: `ts-node-dev` for live reload, `typescript` for compiling
 
 ---
@@ -35,7 +36,7 @@ apps/api/
 │   ├── models/         # Data-access layer: raw Drizzle ORM queries
 │   ├── routes/         # Express Router definitions
 │   ├── services/       # Business logic layer
-│   ├── validators/     # Joi schemas for request body validation
+│   ├── validators/     # Zod schemas for request body validation and type inference
 │   └── index.ts        # Express entrypoint (app bootstrap)
 ├── .env.example        # Example environment variables template
 ├── docker-compose.yml  # Docker Compose config for PG Database & Adminer
@@ -242,3 +243,5 @@ pnpm format:check
 [postgres-url]: https://www.postgresql.org
 [drizzle-badge]: https://img.shields.io/badge/drizzle--orm-%23C5F82A.svg?style=for-the-badge&logo=drizzle&logoColor=black
 [drizzle-url]: https://orm.drizzle.team
+[zod-badge]: https://img.shields.io/badge/zod-%233068B7.svg?style=for-the-badge&logo=zod&logoColor=white
+[zod-url]: https://zod.dev

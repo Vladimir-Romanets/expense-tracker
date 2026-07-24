@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response, NextFunction } from 'express'
 import { DrizzleError } from 'drizzle-orm'
+import { ZodError } from 'zod'
 import { AppError } from '@helpers/errors/apiError'
 import { handleDbConstraintError } from '@helpers/errors/handleDbConstraintError'
-import { handleJoiError } from '@helpers/errors/handleJoiError'
+import { handleZodError } from '@helpers/errors/handleZodError'
 
 interface CustomError extends Error {
   statusCode?: number
   status?: string
   isOperational?: boolean
   errors?: Record<string, string>
-  isJoi?: boolean
   [key: string]: any
 }
 
@@ -55,8 +55,8 @@ export const globalErrorHandler = (
 
   let validationErr: AppError | DrizzleError | null = null
 
-  if (err.isJoi || err.name === 'ValidationError') {
-    validationErr = handleJoiError(err)
+  if (err instanceof ZodError) {
+    validationErr = handleZodError(err)
   } else if (err.name === 'DrizzleQueryError') {
     validationErr = handleDbConstraintError(err)
   }
