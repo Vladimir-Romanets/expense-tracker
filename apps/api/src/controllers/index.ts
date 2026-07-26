@@ -1,4 +1,5 @@
 export * as authController from './auth'
 export * as storesController from './stores'
 export * as categoriesController from './categories'
+export * as productsController from './products'
 export * as receiptsController from './receipts'

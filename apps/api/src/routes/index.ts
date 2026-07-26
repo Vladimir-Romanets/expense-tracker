@@ -7,6 +7,7 @@ import { authController } from '@controllers'
 import storesRouter from './stores'
 import categoriesRouter from './categories'
 import receiptsRouter from './receipts'
+import productsRouter from './products'
 
 const router = express.Router()
 
@@ -17,5 +18,6 @@ router.use(authenticate)
 router.use('/stores', storesRouter)
 router.use('/categories', categoriesRouter)
 router.use('/receipts', receiptsRouter)
+router.use('/products', productsRouter)
 
 export default router

@@ -1,5 +1,6 @@
 import { db, Executor } from '@db'
-import { products, NewProductProps } from '@db/schema'
+import { products, NewProductProps, ProductProps } from '@db/schema'
+import { eq } from 'drizzle-orm'
 
 export const createIfNotExists = async (payload: NewProductProps, tx: Executor = db) =>
   await tx
@@ -19,3 +20,14 @@ export const getByName = async (name: NewProductProps['name'], tx: Executor = db
       },
     },
   })
+
+export const getById = async (id: ProductProps['id'], tx: Executor = db) =>
+  await tx.query.products.findFirst({
+    where: { id },
+  })
+
+export const update = async (
+  id: ProductProps['id'],
+  payload: Partial<Pick<ProductProps, 'name' | 'categoryId'>>,
+  tx: Executor = db,
+) => await tx.update(products).set(payload).where(eq(products.id, id)).returning()
