@@ -20,4 +20,11 @@ router.use('/categories', categoriesRouter)
 router.use('/receipts', receiptsRouter)
 router.use('/products', productsRouter)
 
+router.use((req, res) => {
+  res.status(404).json({
+    error: 'Not Found',
+    path: req.originalUrl,
+  })
+})
+
 export default router
