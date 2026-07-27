@@ -1,14 +1,22 @@
 import { Request, Response, NextFunction } from 'express'
-import { ZodType } from 'zod'
+import { ZodObject, ZodRawShape } from 'zod'
 
-export const validate = (schema: ZodType) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    const result = schema.safeParse(req.body)
+export const validate = (schema: ZodObject<ZodRawShape>) => {
+  return async (req: Request, _res: Response, next: NextFunction) => {
+    try {
+      const parsed = await schema.parseAsync({
+        body: req.body,
+        query: req.query,
+        params: req.params,
+      })
 
-    if (!result.success) {
-      return next(result.error)
+      if ('body' in parsed) req.body = parsed.body
+      if ('query' in parsed) req.query = parsed.query as Request['query']
+      if ('params' in parsed) req.params = parsed.params as Request['params']
+
+      return next()
+    } catch (error) {
+      return next(error)
     }
-    req.body = result.data
-    next()
   }
 }

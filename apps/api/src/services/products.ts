@@ -25,10 +25,8 @@ export const checkAndInsert = async (name: NewProductProps['name'], tx?: Executo
   return product
 }
 
-const getById = async (id: ProductProps['id'], tx?: Executor) => await productsModel.getById(id, tx)
-
-export const update = async (id: ProductProps['id'], payload: UpdateProductDto) => {
-  const existing = await getById(id)
+export const update = async (id: ProductProps['id'], payload: UpdateProductDto['body']) => {
+  const existing = await productsModel.getById(id)
 
   if (!existing) {
     throw new AppError(`Product with id ${id} not found`, 404)

@@ -1,16 +1,19 @@
 import { z } from 'zod'
 
-export const registerUserSchema = z.object({
+const _registerUserBodySchema = z.object({
   firstName: z.string().max(50).optional(),
   lastName: z.string().max(50).optional(),
   email: z.email().max(100),
   password: z.string().min(8).max(255),
 })
 
-export const loginUserSchema = z.object({
+const _loginUserBodySchema = z.object({
   email: z.email().max(100),
   password: z.string().min(8).max(255),
 })
 
-export type RegisterUserDto = z.infer<typeof registerUserSchema>
-export type LoginUserDto = z.infer<typeof loginUserSchema>
+export const registerUserSchema = z.object({ body: _registerUserBodySchema })
+export const loginUserSchema = z.object({ body: _loginUserBodySchema })
+
+export type RegisterUserDto = z.infer<typeof _registerUserBodySchema>
+export type LoginUserDto = z.infer<typeof _loginUserBodySchema>

@@ -1,7 +1,9 @@
 import { z } from 'zod'
 
-export const createStoreSchema = z.object({
+const _createStoreBodySchema = z.object({
   name: z.string().min(1).max(100),
 })
 
-export type CreateStoreDto = z.infer<typeof createStoreSchema>
+export const createStoreSchema = z.object({ body: _createStoreBodySchema })
+
+export type CreateStoreDto = z.infer<typeof _createStoreBodySchema>
