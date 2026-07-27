@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const date = z.coerce.date().transform((d) => d.toISOString())
 
-export const createReceiptSchema = z.object({
+const _createReceiptBodySchema = z.object({
   storeId: z.number().int().positive(),
   totalAmount: z.number().gte(0),
   purchaseDate: date,
@@ -18,5 +18,7 @@ export const createReceiptSchema = z.object({
     .min(1, 'Receipt should contain at least one item!'),
 })
 
-export type CreateReceiptDto = z.infer<typeof createReceiptSchema>
+export const createReceiptSchema = z.object({ body: _createReceiptBodySchema })
+
+export type CreateReceiptDto = z.infer<typeof _createReceiptBodySchema>
 export type CreateReceiptItemsDto = CreateReceiptDto['items']

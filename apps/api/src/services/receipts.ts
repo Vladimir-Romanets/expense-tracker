@@ -2,8 +2,7 @@ import { db } from '@db'
 import { NewReceiptItemProps } from '@db/schema'
 import { CreateReceiptDto } from '@validators/receipts'
 import { receiptsModel } from '@models'
-import { productsService } from '@services'
-import * as receiptItemsService from './receiptItems'
+import { productsService, receiptItemsService } from '@services'
 
 export const addFullReceiptData = async (
   { storeId, totalAmount, purchaseDate, items }: CreateReceiptDto,

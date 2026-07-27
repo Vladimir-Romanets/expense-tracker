@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm'
 export const createIfNotExists = async (payload: NewProductProps, tx: Executor = db) =>
   await tx
     .insert(products)
-    .values(payload)
+    .values({ ...payload, name: payload.name.toLowerCase() })
     .onConflictDoUpdate({
       target: products.name,
       set: { name: payload.name.toLowerCase() },
@@ -28,6 +28,11 @@ export const getById = async (id: ProductProps['id'], tx: Executor = db) =>
 
 export const update = async (
   id: ProductProps['id'],
-  payload: Partial<Pick<ProductProps, 'name' | 'categoryId'>>,
+  payload: Pick<NewProductProps, 'name' | 'categoryId'>,
   tx: Executor = db,
-) => await tx.update(products).set(payload).where(eq(products.id, id)).returning()
+) =>
+  await tx
+    .update(products)
+    .set({ ...payload, name: payload.name.toLowerCase() })
+    .where(eq(products.id, id))
+    .returning()
