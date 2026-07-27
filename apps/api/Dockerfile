@@ -10,4 +10,6 @@ RUN pnpm install
 
 COPY . .
 
-CMD ["pnpm", "run", "dev"]
+RUN pnpm run build
+
+CMD ["pnpm", "run", "start"]
