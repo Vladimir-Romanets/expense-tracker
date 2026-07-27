@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3001
 app.use(cors({ origin: process.env.CORS_ORIGIN ?? '*' }))
 app.use(express.json())
 
-app.get('/api/health', (_, res: Response) => {
+app.get('/health', (_, res: Response) => {
   res.json({ status: 'ok', message: 'API is running' })
 })
 app.use('/api', routes)
