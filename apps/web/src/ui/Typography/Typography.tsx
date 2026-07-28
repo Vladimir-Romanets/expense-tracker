@@ -1,5 +1,5 @@
 import React from 'react'
-import { cn } from '@/app/utils/cn'
+import { cn } from '@/utils/cn'
 import { typographyVariants, type TypographyProps } from './typography.variants'
 
 const elementMap: Record<
@@ -29,7 +29,7 @@ export interface TextProps
   style?: React.CSSProperties
 }
 
-export const Typography: React.FC<TextProps> = ({
+const Typography: React.FC<TextProps> = ({
   className,
   variant = 'p',
   weight,
@@ -59,4 +59,4 @@ export const Typography: React.FC<TextProps> = ({
   )
 }
 
-Typography.displayName = 'Typography'
+export default Typography
