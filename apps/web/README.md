@@ -13,6 +13,8 @@ This is the frontend client for the Expense Tracker application. Built on Next.j
 - **Library**: React 19 (v19.2.4)
 - **Styling**: Tailwind CSS (v4)
 - **Language**: TypeScript
+- **Linter**: ESLint 9 (Flat Config) + `eslint-plugin-tailwindcss`
+- **Formatter**: Prettier
 
 ---
 
@@ -88,6 +90,33 @@ Check code formatting:
 ```bash
 pnpm format:check
 ```
+
+Sort Tailwind CSS class names in the recommended order:
+
+```bash
+pnpm lint:sort
+```
+
+> Automatically reorders Tailwind classes across all files following the official recommended order:
+> `positioning → layout → spacing → visual → typography`.
+> Runs automatically on save if you use the VS Code Prettier + ESLint extensions.
+
+---
+
+## Code Conventions
+
+These rules are enforced automatically on file save (VS Code) or via the scripts above.
+
+| Rule | Value | Description |
+|------|-------|-------------|
+| Semicolons | **off** | No `;` at the end of lines |
+| Quotes | **single** | Use `'` instead of `"` in JS/TS |
+| Print width | **80** | Soft line length limit |
+| Trailing commas | **es5** | Trailing commas where valid in ES5 |
+| JSX props | **one per line** | Each prop on its own line when there are multiple |
+| Tailwind class order | **recommended** | `position → layout → spacing → visual → typography` |
+
+VS Code auto-format on save is pre-configured in `.vscode/settings.json`.
 
 [nextjs-badge]: https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white
 [nextjs-url]: https://nextjs.org

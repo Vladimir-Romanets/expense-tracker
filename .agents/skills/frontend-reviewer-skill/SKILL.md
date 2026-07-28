@@ -21,7 +21,7 @@ When analyzing, designing, and reviewing code, you must strictly enforce these c
 
 - React (v18+)
 - Next.js (App Router preferred, Server/Client components)
-- Tailwind CSS
+- Tailwind CSS (v4)
 - TypeScript
 
 ## Review Criteria
