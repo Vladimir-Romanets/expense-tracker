@@ -3,7 +3,7 @@ import Link from 'next/link'
 import LinkAsButton from '@/ui/Link/LinkAsButton'
 import Hero from '@/ui/Hero/Hero'
 
-export default function Home() {
+const HomePage = () => {
   return (
     <>
       <header className="sticky top-0 z-20 border-b border-surface-border bg-surface-card py-2 shadow-md">
@@ -77,3 +77,5 @@ export default function Home() {
     </>
   )
 }
+
+export default HomePage

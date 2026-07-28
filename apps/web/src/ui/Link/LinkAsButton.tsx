@@ -2,12 +2,12 @@ import Link from 'next/link'
 
 import { buttonVariants, ButtonProps } from '../Button/Button'
 import { PropsWithChildren } from 'react'
-import { cn } from '@/app/utils/cn'
+import { cn } from '@/utils/cn'
 
 type Props = {
   href: string
   className?: string
-} & Pick<ButtonProps, 'variant' | 'shape' | 'size'> &
+} & Pick<ButtonProps, 'variant' | 'shape' | 'size' | 'fullWidth'> &
   PropsWithChildren
 
 const LinkAsButton = ({
@@ -17,11 +17,15 @@ const LinkAsButton = ({
   className,
   shape,
   size,
+  fullWidth,
 }: Props) => {
   return (
     <Link
       href={href}
-      className={cn(buttonVariants({ variant, shape, size }), className)}
+      className={cn(
+        buttonVariants({ variant, shape, size, fullWidth }),
+        className
+      )}
     >
       {children}
     </Link>
