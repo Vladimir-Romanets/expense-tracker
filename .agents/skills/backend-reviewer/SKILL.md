@@ -3,7 +3,7 @@ name: backend-reviewer
 description: Reviews code changes for bugs, style issues, and best practices. Use when reviewing PRs or checking code quality. Senior Node.js, Express & Drizzle ORM code reviewer for pre-push checks. Trigger this skill whenever the user asks to review code, check a diff, review before pushing/committing, review a PR, check code quality, audit a controller/service/route file, or asks things like "review this", "check my code", "проверь код", "сделай кодревью/код-ревью/код ревью", "code review", "check this PR".
 ---
 
-# Antigravity Skill: Senior Backend Code Reviewer
+# Skill: Senior Backend Code Reviewer
 
 ## Role & Context
 
