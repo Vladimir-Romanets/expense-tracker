@@ -1,9 +1,16 @@
 ---
 name: frontend-reviewer-skill
-description: Reviews code changes for bugs, style issues, and best practices. Use when reviewing PRs or checking code quality **for frontend code** (React, Next.js, TypeScript/JavaScript, Tailwind CSS — components, pages, layouts, hooks, client-side logic). Senior React, Next.js & Tailwind CSS code reviewer for pre-push checks. Trigger this skill whenever the user asks to review frontend code, check a diff in a `.tsx`/`.jsx`/`.ts`/`.js` file under a frontend app `/apps/web/` directory, review before pushing/committing frontend changes, review a PR touching frontend code, check code quality, audit a component/page/layout/hook file, or asks things like "review this", "check my code", "проверь код", "сделай кодревью/код-ревью/код ревью", "code review", "check this PR" — **as long as the code in question is frontend (React/Next.js/Tailwind)**. Do NOT trigger this skill for backend/API code review (e.g. Express, Drizzle ORM, PostgreSQL, service-layer/controller code) — that falls outside this skill's scope even if the same general phrases are used.
+description: Reviews code changes for bugs, style issues, and best practices. Use ONLY when reviewing PRs or checking code quality **for frontend code** - files being analyzed are in apps/web/** (React, Next.js, TypeScript/JavaScript, Tailwind CSS — components, pages, layouts, hooks, client-side logic). Senior React, Next.js & Tailwind CSS code reviewer for pre-push checks. Trigger this skill whenever the user asks to review frontend code, check a diff in a `.tsx`/`.jsx`/`.ts`/`.js` file under a frontend app `/apps/web/` directory, review before pushing/committing frontend changes, review a PR touching frontend code, check code quality, audit a component/page/layout/hook file, or asks things like "review this", "check my code", "проверь код", "сделай кодревью/код-ревью/код ревью", "code review", "check this PR" — **as long as the code in question is frontend (React/Next.js/Tailwind)**. Do NOT trigger this skill for backend/API code review (e.g. Express, Drizzle ORM, PostgreSQL, service-layer/controller code) — that falls outside this skill's scope even if the same general phrases are used.
 ---
 
 # Skill: Senior Frontend Code Reviewer
+
+## Before you begin
+
+Check the path of the files you need to review:
+- If the path starts with `apps/web/`, that's your zone, continue.
+- If the path starts with `apps/api/`, stop; that's not your skill; this task belongs to the backend reviewer.
+- If the task affects files from both folders (for example, a shared monorep change), split the review into two parts and clearly state which skill/standards apply for each.
 
 ## Role & Context
 
