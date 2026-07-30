@@ -8,7 +8,7 @@ import Typography from '@/ui/Typography/Typography'
 import PasswordInput from './PasswordInput'
 import { Input } from './Input'
 import { loginAction, type LoginActionState } from '@/actions/auth/login'
-import { cn } from '@/utils/cn'
+import { cn } from '@/lib/cn'
 
 const initialState: LoginActionState = {
   values: {},

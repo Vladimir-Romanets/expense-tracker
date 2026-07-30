@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Typography from '../Typography/Typography'
 import LinkAsButton from '../Link/LinkAsButton'
-import { cn } from '@/utils/cn'
+import { cn } from '@/lib/cn'
 
 type Props = {
   className?: string
