@@ -10,7 +10,14 @@ import nextTs from 'eslint-config-next/typescript'
 const sharedRules = {
   'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
   'no-unused-vars': 'off',
-  '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+  '@typescript-eslint/no-unused-vars': [
+    'error',
+    {
+      argsIgnorePattern: '^_',
+      varsIgnorePattern: '^_',
+      caughtErrorsIgnorePattern: '^_',
+    },
+  ],
   '@typescript-eslint/no-explicit-any': 'warn',
   'import/no-anonymous-default-export': 'off',
   'prettier/prettier': 'error',

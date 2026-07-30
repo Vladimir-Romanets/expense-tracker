@@ -23,7 +23,7 @@ const sendErrorDev = (err: any, validationErr: CustomError | null, res: Response
     status: validationErr?.status || err.status,
     message: validationErr?.message || err.message,
     stack: err.stack,
-    errors: validationErr?.errors,
+    errors: validationErr?.errors || err.errors,
   })
 }
 

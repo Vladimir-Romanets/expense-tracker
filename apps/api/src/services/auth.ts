@@ -19,14 +19,15 @@ export const registerUser = async ({ password, ...payload }: UserPayload) => {
   const existedUser = await usersModel.findUserByEmail(payload.email)
 
   if (existedUser) {
-    throw new AppError('User with this email already exists', 409)
+    const error = new AppError('Email already in use', 409, { email: 'Email already in use' })
+    throw error
   }
 
   const passwordHash = await convertPasswordToHash(password)
   const [userRecord] = await usersModel.create({ ...payload, passwordHash })
 
   const token = signToken({ userId: userRecord.id })
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const { passwordHash: _, ...user } = userRecord
 
   return { user, token }
@@ -46,7 +47,7 @@ export const loginUser = async ({ email, password }: UserLoginPayload) => {
   }
 
   const token = signToken({ userId: userRecord.id })
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const { passwordHash: _, ...user } = userRecord
 
   return { user, token }
