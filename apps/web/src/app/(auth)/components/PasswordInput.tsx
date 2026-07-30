@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { cn } from '@/utils/cn'
+import { cn } from '@/lib/cn'
 import { Input, type InputProps } from './Input'
 
 export default function PasswordInput({ className, ...props }: InputProps) {
