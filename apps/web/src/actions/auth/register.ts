@@ -1,8 +1,14 @@
 'use server'
 
 import { redirect } from 'next/navigation'
+import { cookies } from 'next/headers'
 import { type RegistrationSchemaProps } from '@/lib/validators/auth'
 import { apiClient, prettierError } from '@/lib/apiClient'
+
+type RegisterSucceedProps = {
+  user: unknown
+  token: string
+}
 
 export type RegisterActionState = {
   success?: boolean
@@ -12,16 +18,23 @@ export type RegisterActionState = {
 
 export const registrationAction = async (
   data: RegistrationSchemaProps
-): Promise<RegisterActionState | undefined> => {
-  let registerError: RegisterActionState | null = null
+): Promise<RegisterActionState> => {
   try {
-    await apiClient('/register', {
+    const { token } = await apiClient<RegisterSucceedProps>('/register', {
       method: 'POST',
       body: JSON.stringify(data),
     })
+
+    const cookieStore = await cookies()
+    cookieStore.set('session', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      path: '/',
+    })
   } catch (error) {
-    registerError = prettierError(error)
-    return registerError
+    return prettierError(error)
   }
-  if (!registerError) redirect('/dashboard')
+
+  redirect('/dashboard')
 }

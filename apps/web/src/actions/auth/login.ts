@@ -2,13 +2,9 @@
 
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import {
-  loginSchema,
-  type RegistrationSchemaProps,
-  type LoginSchemaProps,
-} from '@/lib/validators/auth'
+import { loginSchema, type LoginSchemaProps } from '@/lib/validators/auth'
 import { flattenFieldErrors } from '@/lib/validators/format-error'
-import { apiClient, prettierError } from '@/lib/apiClient'
+import { apiClient } from '@/lib/apiClient'
 
 type LoginSucceedProps = {
   user: unknown
@@ -41,6 +37,7 @@ export const loginAction = async (
       values: formValues,
     }
   }
+
   try {
     const { token } = await apiClient<LoginSucceedProps>('/login', {
       method: 'POST',
@@ -54,8 +51,6 @@ export const loginAction = async (
       sameSite: 'lax',
       path: '/',
     })
-
-    redirect('/dashboard')
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : 'Unknown error'
@@ -65,4 +60,6 @@ export const loginAction = async (
       values: formValues,
     }
   }
+
+  redirect('/dashboard')
 }
