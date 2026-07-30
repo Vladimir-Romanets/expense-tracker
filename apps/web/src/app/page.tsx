@@ -47,7 +47,7 @@ const HomePage = () => {
               Login
             </LinkAsButton>
             <LinkAsButton
-              href="/auth?tab=register"
+              href="/register"
               variant="primary"
             >
               Register

@@ -2,18 +2,28 @@ import { cn } from '@/lib/cn'
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string
+  label?: string
 }
 
-export function Input({
+export const Input = ({
   className,
   error,
   type = 'text',
+  label,
   ...props
-}: InputProps) {
+}: InputProps) => {
   const errorId = props.id ? `${props.id}-error` : undefined
 
   return (
     <div className={cn('relative pb-4', className)}>
+      {label ? (
+        <label
+          htmlFor={props.id}
+          className="absolute -top-2 left-4 inline-block px-1 bg-white text-xs"
+        >
+          {label}
+        </label>
+      ) : null}
       <input
         type={type}
         aria-invalid={!!error}
@@ -21,7 +31,7 @@ export function Input({
         className={cn(
           'w-full rounded-[50px] border-2 bg-white px-4 py-3.5 text-[0.95rem] text-gray-700 transition-all duration-200 outline-none placeholder:text-gray-400',
           error
-            ? 'border-red-500 text-red-900 placeholder:text-red-300 focus:border-red-600 focus:ring-[3px] focus:ring-red-500/20'
+            ? 'border-red-500 text-red-900 focus:border-red-600 focus:ring-[3px] focus:ring-red-500/20'
             : 'focus:border-brand-600 border-brand-500 focus:ring-[3px] focus:ring-brand-500/15'
         )}
         {...props}
@@ -29,7 +39,7 @@ export function Input({
       {error && (
         <p
           id={errorId}
-          className="animate-in fade-in-50 slide-in-from-top-1 absolute inset-s-4 bottom-0 text-xs font-medium text-red-500"
+          className="animate-in fade-in-50 slide-in-from-top-1 absolute inset-e-4 -bottom-0.5 text-xs font-medium text-red-500"
         >
           {error}
         </p>
