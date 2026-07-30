@@ -41,7 +41,7 @@ const HomePage = () => {
           </nav>
           <div className="flex gap-2">
             <LinkAsButton
-              href="/auth?tab=login"
+              href="/login"
               variant="outline"
             >
               Login
