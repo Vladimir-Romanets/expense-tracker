@@ -8,7 +8,7 @@ export const handleZodError = (err: ZodError): AppError => {
     return acc
   }, {})
 
-  const appError = new AppError('Validation failed', 400)
-  appError.errors = errors
+  const appError = new AppError('Validation failed', 400, errors)
+
   return appError
 }
