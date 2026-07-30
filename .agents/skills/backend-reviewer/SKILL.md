@@ -1,9 +1,16 @@
 ---
 name: backend-reviewer
-description: Reviews code changes for bugs, style issues, and best practices. Use when reviewing PRs or checking code quality. Senior Node.js, Express & Drizzle ORM code reviewer for pre-push checks. Trigger this skill whenever the user asks to review code, check a diff, review before pushing/committing, review a PR, check code quality, audit a controller/service/route file, or asks things like "review this", "check my code", "проверь код", "сделай кодревью/код-ревью/код ревью", "code review", "check this PR".
+description: Reviews code changes for bugs, style issues, and best practices. Use ONLY when reviewing PRs or checking code quality and files to be analyzed are in apps/api/**. Senior Node.js, Express & Drizzle ORM code reviewer for pre-push checks. Trigger this skill whenever the user asks to review code, check a diff, review before pushing/committing, review a PR, check code quality, audit a controller/service/route file, or asks things like "review this", "check my code", "проверь код", "сделай кодревью/код-ревью/код ревью", "code review", "check this PR".
 ---
 
 # Skill: Senior Backend Code Reviewer
+
+## Before you begin
+
+Check the path of the files you need to review:
+- If the path starts with `apps/api/`, that's your zone, continue.
+- If the path starts with `apps/web/`, stop; that's not your skill; this task belongs to the frontend reviewer.
+- If the task affects files from both folders (for example, a shared monorep change), split the review into two parts and clearly state which skill/standards apply for each.
 
 ## Role & Context
 
