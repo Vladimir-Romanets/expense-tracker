@@ -30,7 +30,6 @@ export const typographyVariants = cva('', {
   },
   defaultVariants: {
     variant: 'p',
-    style: 'normal',
   },
 })
 

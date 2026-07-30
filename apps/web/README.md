@@ -29,10 +29,16 @@ This is the frontend client for the Expense Tracker application. Built on Next.j
 
 ## Environment Variables
 
-Create a `.env.local` file in the root of the `apps/web/` directory to configure the frontend application:
+Create a `.env` file in the root of the `apps/web/` directory (you can copy `.env.example`) to configure the frontend application:
+
+```bash
+cp .env.example .env
+```
+
+The `.env` file should contain:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
+API_URL="http://localhost:3001"
 ```
 
 ---
