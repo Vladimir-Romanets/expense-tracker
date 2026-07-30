@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import Button from '@/ui/Button/Button'
 import Typography from '@/ui/Typography/Typography'
-import PasswordInput from './PasswordInput'
+import { PasswordInput } from './PasswordInput'
 import { Input } from './Input'
 import { loginAction, type LoginActionState } from '@/actions/auth/login'
 import { cn } from '@/lib/cn'
@@ -34,7 +34,8 @@ const LoginForm = () => {
         id="email"
         name="email"
         required
-        placeholder="Email Address"
+        placeholder="example@email.com"
+        label="Email *"
         autoComplete="email"
         defaultValue={state.values.email}
         error={state.errors?.email}
@@ -42,8 +43,9 @@ const LoginForm = () => {
       <PasswordInput
         id="password"
         name="password"
-        placeholder="Password"
-        autoComplete="current-password"
+        placeholder="********"
+        label="Password *"
+        autoComplete="new-password"
         required
         defaultValue={state.values.password}
         error={state.errors?.password}

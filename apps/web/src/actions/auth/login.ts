@@ -2,8 +2,18 @@
 
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { loginSchema, type LoginSchemaProps } from '@/lib/validators/auth'
-import { flattenFieldErrors } from '../../lib/validators/format-error'
+import {
+  loginSchema,
+  type RegistrationSchemaProps,
+  type LoginSchemaProps,
+} from '@/lib/validators/auth'
+import { flattenFieldErrors } from '@/lib/validators/format-error'
+import { apiClient, prettierError } from '@/lib/apiClient'
+
+type LoginSucceedProps = {
+  user: unknown
+  token: string
+}
 
 export type LoginActionState = {
   errors?: {
@@ -31,28 +41,28 @@ export const loginAction = async (
       values: formValues,
     }
   }
+  try {
+    const { token } = await apiClient<LoginSucceedProps>('/login', {
+      method: 'POST',
+      body: JSON.stringify(validated.data),
+    })
 
-  const res = await fetch(`${process.env.API_URL}/api/login`, {
-    method: 'POST',
-    body: JSON.stringify(validated.data),
-    headers: { 'Content-Type': 'application/json' },
-  })
+    const cookieStore = await cookies()
+    cookieStore.set('session', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      path: '/',
+    })
 
-  if (!res.ok) {
+    redirect('/dashboard')
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error'
+
     return {
-      errors: { formError: 'Login or password incorrect' },
+      errors: { formError: errorMessage },
       values: formValues,
     }
   }
-
-  const { token } = await res.json()
-  const cookieStore = await cookies()
-  cookieStore.set('session', token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-    path: '/',
-  })
-
-  redirect('/dashboard')
 }

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { cn } from '@/lib/cn'
 import { Input, type InputProps } from './Input'
 
-export default function PasswordInput({ className, ...props }: InputProps) {
+export const PasswordInput = ({ className, ...props }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
