@@ -11,6 +11,7 @@ node_modules
 apps/api/dist
 apps/web/.next
 apps/api/pgdata
+.turbo
 
 # Environment
 .env*
