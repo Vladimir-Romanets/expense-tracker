@@ -1,10 +1,10 @@
 'use server'
 
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { loginSchema, type LoginSchemaProps } from '../schemas/auth'
 import { flattenFieldErrors } from '@/utils/format-error'
 import { apiClient } from '@/lib/apiClient'
+import { login } from '@/utils/login'
 
 type LoginSucceedProps = {
   user: unknown
@@ -44,13 +44,7 @@ export const loginAction = async (
       body: JSON.stringify(validated.data),
     })
 
-    const cookieStore = await cookies()
-    cookieStore.set('session', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
-      path: '/',
-    })
+    await login(token)
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : 'Unknown error'
@@ -61,5 +55,5 @@ export const loginAction = async (
     }
   }
 
-  redirect('/dashboard')
+  redirect('/overview')
 }

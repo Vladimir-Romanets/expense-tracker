@@ -12,6 +12,9 @@
   --surface-bg: #f8fafc;
   --surface-card: #ffffff;
   --surface-border: #e2e8f0;
+
+  --sidebar-bg: #131b2e;
+  --main-bg: #f6f8fb;
 }
 
 @theme {
@@ -27,6 +30,9 @@
   --color-surface-bg: var(--surface-bg);
   --color-surface-card: var(--surface-card);
   --color-surface-border: var(--surface-border);
+
+  --color-sidebar-bg: var(--sidebar-bg);
+  --color-main-bg: var(--main-bg);
 
   --font-sans: var(--font-inter);
 
