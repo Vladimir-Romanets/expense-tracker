@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
-// import SidebarNav from '@/features/navigation/components/SidebarNav'
+import SidebarNav from '@/features/navigation/components/SidebarNav'
 import Typography from '@/ui/Typography/Typography'
+import Image from 'next/image'
+import Link from 'next/link'
 
 const ProtectedLayout = ({
   children,
@@ -12,14 +14,21 @@ const ProtectedLayout = ({
   return (
     <div className="flex h-screen overflow-hidden bg-main-bg">
       <aside className="flex h-full w-64 shrink-0 flex-col bg-sidebar-bg p-6 text-white shadow-xl">
-        <div className="flex h-12 items-center justify-start pb-4">
-          Expense tracker
-        </div>
+        <Link
+          href="/"
+          className="flex h-12 w-max items-center justify-start gap-2 pb-4"
+          aria-label="Expense Tracker — Home"
+        >
+          <Image
+            src="/logo.webp"
+            width={32}
+            height={32}
+            alt="Expense Tracker"
+          />
+          <b className="text-sm leading-4 max-md:hidden">Expense Tracker</b>
+        </Link>
 
-        {/* Menu Navigation Area Slot */}
-        <div className="flex flex-1 flex-col justify-start py-6">
-          {/* <SidebarNav /> */}
-        </div>
+        <SidebarNav className="flex flex-1 flex-col justify-start py-6" />
 
         <Typography
           as="p"

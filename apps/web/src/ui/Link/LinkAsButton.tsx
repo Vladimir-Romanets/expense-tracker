@@ -1,14 +1,11 @@
 import Link from 'next/link'
+import type { ComponentPropsWithoutRef } from 'react'
 
 import { buttonVariants, ButtonProps } from '../Button/Button'
-import { PropsWithChildren } from 'react'
 import { cn } from '@/utils/cn'
 
-type Props = {
-  href: string
-  className?: string
-} & Pick<ButtonProps, 'variant' | 'shape' | 'size' | 'fullWidth'> &
-  PropsWithChildren
+export type LinkAsButtonProps = ComponentPropsWithoutRef<typeof Link> &
+  Pick<ButtonProps, 'variant' | 'shape' | 'size' | 'fullWidth'>
 
 const LinkAsButton = ({
   href,
@@ -18,7 +15,8 @@ const LinkAsButton = ({
   shape,
   size,
   fullWidth,
-}: Props) => {
+  ...props
+}: LinkAsButtonProps) => {
   return (
     <Link
       href={href}
@@ -26,6 +24,7 @@ const LinkAsButton = ({
         buttonVariants({ variant, shape, size, fullWidth }),
         className
       )}
+      {...props}
     >
       {children}
     </Link>
