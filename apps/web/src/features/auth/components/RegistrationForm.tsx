@@ -10,8 +10,8 @@ import { RHFPasswordInput } from './RHFPasswordInput'
 import {
   registrationSchema,
   type RegistrationSchemaProps,
-} from '@/lib/validators/auth'
-import { registrationAction } from '@/actions/auth/register'
+} from '../schemas/auth'
+import { registrationAction } from '../actions/register'
 
 const defaultValues = {
   firstName: '',

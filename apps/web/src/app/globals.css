@@ -33,9 +33,18 @@
   --animate-shake: shake 0.4s ease-in-out;
 
   @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-6px); }
-    40%, 80% { transform: translateX(6px); }
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20%,
+    60% {
+      transform: translateX(-6px);
+    }
+    40%,
+    80% {
+      transform: translateX(6px);
+    }
   }
 }
 
@@ -54,7 +63,6 @@
       disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] cursor-pointer;
   }
 }
-
 
 body {
   background: var(--surface-bg);

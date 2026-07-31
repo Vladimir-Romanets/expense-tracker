@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import { buttonVariants, ButtonProps } from '../Button/Button'
 import { PropsWithChildren } from 'react'
-import { cn } from '@/lib/cn'
+import { cn } from '@/utils/cn'
 
 type Props = {
   href: string

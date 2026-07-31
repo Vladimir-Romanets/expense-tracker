@@ -2,8 +2,8 @@
 
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { loginSchema, type LoginSchemaProps } from '@/lib/validators/auth'
-import { flattenFieldErrors } from '@/lib/validators/format-error'
+import { loginSchema, type LoginSchemaProps } from '../schemas/auth'
+import { flattenFieldErrors } from '@/utils/format-error'
 import { apiClient } from '@/lib/apiClient'
 
 type LoginSucceedProps = {

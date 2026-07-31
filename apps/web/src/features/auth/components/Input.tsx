@@ -1,4 +1,4 @@
-import { cn } from '@/lib/cn'
+import { cn } from '@/utils/cn'
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string
@@ -19,7 +19,7 @@ export const Input = ({
       {label ? (
         <label
           htmlFor={props.id}
-          className="absolute -top-2 left-4 inline-block px-1 bg-white text-xs"
+          className="absolute -top-1.5 left-4 inline-block bg-white px-1 text-xs leading-3"
         >
           {label}
         </label>

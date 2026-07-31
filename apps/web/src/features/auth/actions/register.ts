@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
-import { type RegistrationSchemaProps } from '@/lib/validators/auth'
+import { type RegistrationSchemaProps } from '../schemas/auth'
 import { apiClient, prettierError } from '@/lib/apiClient'
 
 type RegisterSucceedProps = {
