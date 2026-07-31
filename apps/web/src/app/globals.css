@@ -54,7 +54,7 @@
   }
 }
 
-@layer utilities {
+@layer components {
   .container {
     width: 100%;
     max-width: 80rem;
