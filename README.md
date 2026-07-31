@@ -29,7 +29,7 @@ This repository is structured as a monorepo using pnpm workspaces. It contains b
 ### Prerequisites
 
 Make sure you have the following installed on your machine:
-- **Node.js** (version >= 24.18.0)
+- **Node.js** (version 24.x)
 - **PNPM** (version >= 8.15.9)
 - **Docker & Docker Compose** (for running the PostgreSQL database and Adminer locally)
 
