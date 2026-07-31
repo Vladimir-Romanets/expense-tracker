@@ -1,9 +1,9 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
 import { type RegistrationSchemaProps } from '../schemas/auth'
 import { apiClient, prettierError } from '@/lib/apiClient'
+import { login } from '@/utils/login'
 
 type RegisterSucceedProps = {
   user: unknown
@@ -25,16 +25,10 @@ export const registrationAction = async (
       body: JSON.stringify(data),
     })
 
-    const cookieStore = await cookies()
-    cookieStore.set('session', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
-      path: '/',
-    })
+    await login(token)
   } catch (error) {
     return prettierError(error)
   }
 
-  redirect('/dashboard')
+  redirect('/overview')
 }
