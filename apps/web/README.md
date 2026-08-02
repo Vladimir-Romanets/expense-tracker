@@ -76,6 +76,9 @@ The `.env` file should contain:
 
 ```env
 API_URL="http://localhost:3001"
+
+# JWT Authentication
+JWT_SECRET="your_jwt_secret_key_here"  # Must match the JWT_SECRET value used on the API server
 ```
 
 ---
