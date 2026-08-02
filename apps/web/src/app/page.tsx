@@ -16,7 +16,7 @@ const HomePage = () => {
             <Image
               src="/logo.webp"
               width={32}
-              height={32}
+              height={24}
               alt="Expense Tracker"
             />
             <b className="text-sm leading-4 max-md:hidden">

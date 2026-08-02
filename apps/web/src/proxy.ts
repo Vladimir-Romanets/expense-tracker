@@ -1,43 +1,73 @@
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify } from 'jose'
 import { SESSION_COOKIE_NAME } from '@/constants/sessionCookie'
-import { logout } from '@/utils/logout'
+
+interface JwtPayload {
+  userId: number
+}
 
 if (!process.env.JWT_SECRET) {
   throw new Error('[proxy] JWT_SECRET environment variable is not set')
 }
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET)
+const AUTH_PATHS = ['/login', '/register', '/forgot-password']
+const DEFAULT_REDIRECT_AFTER_LOGIN = '/overview'
 
-interface JwtPayload {
-  userId: number
-}
+const checkIsAuthPath = (pathname: string): boolean =>
+  AUTH_PATHS.some(
+    (path) => pathname === path || pathname.startsWith(`${path}/`)
+  )
 
 const redirectToLogin = async (request: NextRequest) => {
   const loginUrl = new URL('/login', request.url)
   loginUrl.searchParams.set('from', request.nextUrl.pathname)
   const response = NextResponse.redirect(loginUrl)
 
-  await logout()
+  response.cookies.delete(SESSION_COOKIE_NAME)
 
   return response
 }
 
+const redirectAuthenticatedUser = (request: NextRequest) => {
+  const url = new URL(DEFAULT_REDIRECT_AFTER_LOGIN, request.url)
+  return NextResponse.redirect(url)
+}
+
+const validateToken = async (token: string) => {
+  try {
+    await jwtVerify<JwtPayload>(token, secret, {
+      algorithms: ['HS256'],
+    })
+    return true
+  } catch (_) {
+    return false
+  }
+}
+
 export default async function proxy(request: NextRequest) {
   const token = request.cookies.get(SESSION_COOKIE_NAME)?.value
+  const isTokenValid = token ? await validateToken(token) : false
+  const isAuthPath = checkIsAuthPath(request.nextUrl.pathname)
 
-  if (token) {
-    try {
-      await jwtVerify<JwtPayload>(token, secret, {
-        algorithms: ['HS256'],
-      })
-      return NextResponse.next()
-    } catch (_) {
-      // TODO: Token revalidation will be added in the future
-      return await redirectToLogin(request)
+  if (isTokenValid) {
+    if (isAuthPath) {
+      return redirectAuthenticatedUser(request)
     }
+
+    return NextResponse.next()
   }
 
+  if (isAuthPath) {
+    if (token) {
+      const response = NextResponse.next()
+      response.cookies.delete(SESSION_COOKIE_NAME)
+      return response
+    }
+
+    return NextResponse.next()
+  }
+  // TODO: Token revalidation will be added in the future
   return await redirectToLogin(request)
 }
 
@@ -47,5 +77,7 @@ export const config = {
     '/receipts/:path*',
     '/categories/:path*',
     '/profile',
+    '/login',
+    '/register',
   ],
 }
