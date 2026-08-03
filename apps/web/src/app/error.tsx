@@ -1,10 +1,8 @@
 'use client'
 
 import { useEffect } from 'react'
-import Typography from '@/ui/Typography/Typography'
-import Button from '@/ui/Button/Button'
 import Image from 'next/image'
-import LinkAsButton from '@/ui/Link/LinkAsButton'
+import { Typography, Button, LinkAsButton } from '@/ui'
 
 interface ErrorProps {
   error: Error & { digest?: string }

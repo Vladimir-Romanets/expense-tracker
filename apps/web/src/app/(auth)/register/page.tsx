@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import Typography from '@/ui/Typography/Typography'
 import { RegistrationForm } from '@/features/auth'
+import { Typography } from '@/ui'
 
 const RegistrationPage = () => (
   <>

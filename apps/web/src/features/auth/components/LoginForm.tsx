@@ -4,13 +4,12 @@ import { useActionState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import Button from '@/ui/Button/Button'
-import Typography from '@/ui/Typography/Typography'
 import { PasswordInput } from './PasswordInput'
 import { Input } from './Input'
 import { loginAction, type LoginActionState } from '../actions/login'
 import { cn } from '@/utils/cn'
 import { useUserStore } from '@/stores/user'
+import { Button, Typography } from '@/ui'
 
 const initialState: LoginActionState = {
   values: {},

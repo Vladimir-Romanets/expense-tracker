@@ -1,10 +1,9 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import Button from '@/ui/Button/Button'
-import { Icon } from '@/ui/Icon/Icon'
 import { useUserStore } from '@/stores/user'
 import { logoutAction } from '@/features/auth/actions/logout'
+import { Button, Icon } from '@/ui'
 
 export const HeaderLogoutButton = () => {
   const clearUser = useUserStore((state) => state.clearUser)

@@ -4,8 +4,6 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 
-import Button from '@/ui/Button/Button'
-import Typography from '@/ui/Typography/Typography'
 import { RHFInput } from './RHFInput'
 import { RHFPasswordInput } from './RHFPasswordInput'
 import {
@@ -14,6 +12,7 @@ import {
 } from '../schemas/auth'
 import { registrationAction } from '../actions/register'
 import { useUserStore } from '@/stores/user'
+import { Button, Typography } from '@/ui'
 
 const defaultValues = {
   firstName: '',

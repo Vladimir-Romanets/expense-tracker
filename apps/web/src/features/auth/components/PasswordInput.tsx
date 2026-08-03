@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { cn } from '@/utils/cn'
 import { Input, type InputProps } from './Input'
-import { Icon } from '@/ui/Icon/Icon'
+import { Icon } from '@/ui'
 
 export const PasswordInput = ({ className, ...props }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false)
