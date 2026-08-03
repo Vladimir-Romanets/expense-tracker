@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import LinkAsButton from '@/ui/Link/LinkAsButton'
-import Hero from '@/ui/Hero/Hero'
+import { LinkAsButton, Hero } from '@/ui'
 
 const HomePage = () => {
   return (

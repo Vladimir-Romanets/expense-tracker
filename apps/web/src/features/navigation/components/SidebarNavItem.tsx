@@ -1,8 +1,6 @@
-import LinkAsButton from '@/ui/Link/LinkAsButton'
-import Typography from '@/ui/Typography/Typography'
 import { cn } from '@/utils/cn'
 import type { NavigationItem } from '../types'
-import { Icon } from '@/ui/Icon/Icon'
+import { LinkAsButton, Typography, Icon } from '@/ui'
 
 interface SidebarNavItemProps {
   item: NavigationItem

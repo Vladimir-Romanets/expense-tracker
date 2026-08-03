@@ -1,4 +1,4 @@
-import Typography from '@/ui/Typography/Typography'
+import { Typography } from '@/ui'
 
 export default function ProtectedDashboardPage() {
   return (

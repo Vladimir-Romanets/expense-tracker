@@ -1,0 +1,6 @@
+export { default as Button } from './Button/Button'
+export { default as Hero } from './Hero/Hero'
+export { Icon } from './Icon/Icon'
+export { Input, RHFInput } from './Input'
+export { default as LinkAsButton } from './Link/LinkAsButton'
+export { default as Typography } from './Typography/Typography'

@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
 import SidebarNav from '@/features/navigation/components/SidebarNav'
 import { HeaderLogoutButton } from '@/features/navigation/components/HeaderLogoutButton'
-import Typography from '@/ui/Typography/Typography'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Typography } from '@/ui'
 
 const ProtectedLayout = ({
   children,

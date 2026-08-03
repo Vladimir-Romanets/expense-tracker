@@ -1,5 +1,5 @@
-import Typography from '@/ui/Typography/Typography'
 import { getCategories } from '@/features/categories/actions/getCategories'
+import { Typography } from '@/ui'
 
 export default async function CategoriesPage() {
   const { data: categories } = await getCategories()
