@@ -4,6 +4,7 @@
 [![React][react-badge]][react-url]
 [![Tailwind CSS][tailwind-badge]][tailwind-url]
 [![TypeScript][typescript-badge]][typescript-url]
+[![Zustand][zustand-badge]][zustand-url]
 
 This is the frontend client for the Expense Tracker application. Built on Next.js, it provides a dashboard for detailed purchase entry, price dynamics visualization, and budget limit monitoring.
 
@@ -13,6 +14,7 @@ This is the frontend client for the Expense Tracker application. Built on Next.j
 - **Library**: React 19 (v19.2.4)
 - **Styling**: Tailwind CSS (v4)
 - **Language**: TypeScript
+- **State Management**: Zustand
 - **Linter**: ESLint 9 (Flat Config) + `eslint-plugin-tailwindcss`
 - **Formatter**: Prettier
 
@@ -172,3 +174,5 @@ VS Code auto-format on save is pre-configured in `.vscode/settings.json`.
 [tailwind-url]: https://tailwindcss.com
 [typescript-badge]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white
 [typescript-url]: https://www.typescriptlang.org
+[zustand-badge]: https://img.shields.io/badge/zustand-%2320232a.svg?style=for-the-badge&logoColor=white
+[zustand-url]: https://zustand-demo.pmnd.rs
