@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { UserStoreProvider } from '@/stores/user'
 import './globals.css'
 
 const inter = Inter({
@@ -24,7 +25,9 @@ export default function RootLayout({
       className={`${inter.variable} h-full scroll-smooth text-base leading-normal antialiased`}
       data-scroll-behavior="smooth"
     >
-      <body className="min-h-screen font-normal">{children}</body>
+      <body className="min-h-screen font-normal">
+        <UserStoreProvider>{children}</UserStoreProvider>
+      </body>
     </html>
   )
 }

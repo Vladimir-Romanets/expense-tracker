@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { jwtVerify } from 'jose'
+import { jwtVerify, errors as joseErrors } from 'jose'
 import { SESSION_COOKIE_NAME } from '@/constants/sessionCookie'
 
 interface JwtPayload {
@@ -19,7 +19,7 @@ const checkIsAuthPath = (pathname: string): boolean =>
     (path) => pathname === path || pathname.startsWith(`${path}/`)
   )
 
-const redirectToLogin = async (request: NextRequest) => {
+const redirectToLogin = (request: NextRequest) => {
   const loginUrl = new URL('/login', request.url)
   loginUrl.searchParams.set('from', request.nextUrl.pathname)
   const response = NextResponse.redirect(loginUrl)
@@ -40,8 +40,15 @@ const validateToken = async (token: string) => {
       algorithms: ['HS256'],
     })
     return true
-  } catch (_) {
-    return false
+  } catch (err) {
+    if (
+      err instanceof joseErrors.JWTExpired ||
+      err instanceof joseErrors.JWTInvalid ||
+      err instanceof joseErrors.JWSSignatureVerificationFailed
+    ) {
+      return false
+    }
+    throw err
   }
 }
 
@@ -68,7 +75,7 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.next()
   }
   // TODO: Token revalidation will be added in the future
-  return await redirectToLogin(request)
+  return redirectToLogin(request)
 }
 
 export const config = {
@@ -79,5 +86,6 @@ export const config = {
     '/profile',
     '/login',
     '/register',
+    '/forgot-password',
   ],
 }

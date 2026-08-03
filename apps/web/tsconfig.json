@@ -20,10 +20,6 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@/ui/*": ["./src/ui/*"],
-      "@/actions/*": ["./src/actions/*"],
-      "@/utils/*": ["./src/utils/*"],
-      "@/lib/*": ["./src/lib/*"]
     }
   },
   "include": [

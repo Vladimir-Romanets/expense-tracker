@@ -2,6 +2,7 @@
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 
 import Button from '@/ui/Button/Button'
 import Typography from '@/ui/Typography/Typography'
@@ -12,6 +13,7 @@ import {
   type RegistrationSchemaProps,
 } from '../schemas/auth'
 import { registrationAction } from '../actions/register'
+import { useUserStore } from '@/stores/user'
 
 const defaultValues = {
   firstName: '',
@@ -22,6 +24,8 @@ const defaultValues = {
 }
 
 const RegistrationForm = () => {
+  const router = useRouter()
+  const setUser = useUserStore((s) => s.setUser)
   const {
     control,
     handleSubmit,
@@ -34,6 +38,12 @@ const RegistrationForm = () => {
 
   const onSubmit = handleSubmit(async (data: RegistrationSchemaProps) => {
     const result = await registrationAction(data)
+
+    if (result?.success && result?.user) {
+      setUser(result.user)
+      router.push('/overview')
+      return
+    }
 
     if (!result?.success) {
       const fieldErrors = Object.entries(result?.errors || {})
