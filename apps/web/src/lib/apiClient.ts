@@ -1,7 +1,8 @@
 const API_BASE_URL = process.env.API_URL!
 
-type FetchOptions = RequestInit & {
+export type FetchOptions = RequestInit & {
   params?: Record<string, string | number>
+  token?: string
 }
 
 export class ApiError extends Error {
@@ -40,7 +41,7 @@ export async function apiClient<T>(
   endpoint: string,
   options: FetchOptions = {}
 ): Promise<T> {
-  const { params, headers, ...customConfig } = options
+  const { params, token, headers, method = 'GET', ...customConfig } = options
 
   let url = `${API_BASE_URL}/api${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
 
@@ -52,11 +53,15 @@ export async function apiClient<T>(
     url += `?${searchParams.toString()}`
   }
 
+  const finalHeaders = new Headers(headers)
+  if (customConfig.body) {
+    finalHeaders.set('Content-Type', 'application/json')
+  }
+  if (token) finalHeaders.set('Authorization', `Bearer ${token}`)
+
   const response = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...headers,
-    },
+    headers: finalHeaders,
+    method,
     ...customConfig,
   })
 

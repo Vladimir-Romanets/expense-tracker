@@ -27,7 +27,7 @@ export const registrationAction = async (
     })
 
     await login(token)
-    
+
     return { success: true, user }
   } catch (error) {
     return prettierError(error)
