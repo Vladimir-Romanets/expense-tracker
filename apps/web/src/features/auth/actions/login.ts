@@ -47,11 +47,11 @@ export const loginAction = async (
     })
 
     await login(token)
-    
+
     return {
       success: true,
       user,
-      values: formValues
+      values: formValues,
     }
   } catch (error) {
     const errorMessage =
