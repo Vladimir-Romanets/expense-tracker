@@ -70,7 +70,7 @@ const HomePage = () => {
           id="how-it-works"
           className="h-75"
         >
-          {/* TODO: replace with real Features content */}
+          {/* TODO: replace with real "How it works" section */}
           Lorem ipsum
         </section>
       </main>

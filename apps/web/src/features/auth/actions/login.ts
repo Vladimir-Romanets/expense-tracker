@@ -1,17 +1,19 @@
 'use server'
 
-import { redirect } from 'next/navigation'
 import { loginSchema, type LoginSchemaProps } from '../schemas/auth'
 import { flattenFieldErrors } from '@/utils/format-error'
 import { apiClient } from '@/lib/apiClient'
 import { login } from '@/utils/login'
+import type { User } from '@/stores/user'
 
 type LoginSucceedProps = {
-  user: unknown
+  user: User
   token: string
 }
 
 export type LoginActionState = {
+  success?: boolean
+  user?: User
   errors?: {
     email?: string
     password?: string
@@ -39,12 +41,18 @@ export const loginAction = async (
   }
 
   try {
-    const { token } = await apiClient<LoginSucceedProps>('/login', {
+    const { token, user } = await apiClient<LoginSucceedProps>('/login', {
       method: 'POST',
       body: JSON.stringify(validated.data),
     })
 
     await login(token)
+    
+    return {
+      success: true,
+      user,
+      values: formValues
+    }
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : 'Unknown error'
@@ -54,6 +62,4 @@ export const loginAction = async (
       values: formValues,
     }
   }
-
-  redirect('/overview')
 }

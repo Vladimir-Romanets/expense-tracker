@@ -5,4 +5,5 @@ export const SIDEBAR_MENU_ITEMS: NavigationItem[] = [
   { id: 'receipt', label: 'Receipts', href: '/receipts' },
   { id: 'cart', label: 'Products & Prices', href: '/products' },
   { id: 'categoriesGrid', label: 'Categories', href: '/categories' },
+  { id: 'profile', label: 'Profile', href: '/profile' },
 ]
