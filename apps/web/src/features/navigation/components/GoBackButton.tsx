@@ -1,4 +1,5 @@
 'use client'
+
 import { useRouter } from 'next/navigation'
 import { Button } from '@/ui'
 
@@ -15,7 +16,7 @@ const GoBackButton = ({ referer, currentHost }: Props) => {
         const refererUrl = new URL(referer)
 
         if (refererUrl.host === currentHost) {
-          router.push(refererUrl.pathname + refererUrl.search)
+          return router.push(refererUrl.pathname + refererUrl.search)
         }
       } catch (error) {
         console.error('Failed to parse referer URL:', error)

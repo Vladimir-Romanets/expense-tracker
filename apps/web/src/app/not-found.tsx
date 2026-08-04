@@ -1,9 +1,8 @@
 import { Metadata } from 'next'
 import { headers } from 'next/headers'
-import Image from 'next/image'
 
-import GoBackButton from '@/features/goBack/GoBackButton'
-import { Typography, LinkAsButton } from '@/ui'
+import { Typography, LinkAsButton, Icon } from '@/ui'
+import GoBackButton from '@/features/navigation/components/GoBackButton'
 
 export const metadata: Metadata = {
   title: 'Page Not Found — Expense Tracker',
@@ -19,12 +18,11 @@ const NotFoundPage = async () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-surface-bg p-4 text-center">
       <div className="w-full max-w-md space-y-6 rounded-3xl border border-surface-border bg-surface-card p-8 shadow-sm">
-        <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-brand-50">
-          <Image
-            src="/icons/alert.svg"
-            alt="Page not found icon"
-            width={32}
-            height={32}
+        <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-brand-50 text-emerald-600">
+          <Icon
+            name="alert"
+            title="Page not found icon"
+            size={32}
           />
         </div>
 

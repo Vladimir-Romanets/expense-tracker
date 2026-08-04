@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import Image from 'next/image'
-import { Typography, Button, LinkAsButton } from '@/ui'
+import { Typography, Button, LinkAsButton, Icon } from '@/ui'
 
 interface ErrorProps {
   error: Error & { digest?: string }
@@ -18,12 +18,11 @@ const ErrorPage = ({ error, reset }: ErrorProps) => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-surface-bg p-4 text-center">
       <div className="w-full max-w-md space-y-6 rounded-3xl border border-surface-border bg-surface-card p-8 shadow-sm">
-        <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-rose-50">
-          <Image
-            src="/icons/error.svg"
-            alt="Error icon"
-            width={32}
-            height={32}
+        <div className="mx-auto flex size-16 items-center justify-center rounded-2xl bg-rose-50 text-rose-600">
+          <Icon
+            name="bug"
+            title="Error icon"
+            size={32}
           />
         </div>
 
