@@ -46,7 +46,7 @@ export const AddCategoryForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mb-8 flex flex-col gap-2"
+      className="mb-8 flex flex-col gap-2 lg:ms-auto lg:w-96"
       noValidate
     >
       <div className="flex items-start gap-4">

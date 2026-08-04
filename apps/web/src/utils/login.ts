@@ -11,6 +11,6 @@ export const login = async (token: string) => {
     secure: true,
     sameSite: 'lax',
     path: '/',
-    maxAge: 3600 * 2,
+    maxAge: 3600 * 24,
   })
 }
