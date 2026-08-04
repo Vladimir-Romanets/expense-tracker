@@ -1,8 +1,9 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { SIDEBAR_MENU_ITEMS } from '../constants/menu-items'
 import { SidebarNavItem } from './SidebarNavItem'
+import { SIDEBAR_MENU_ITEMS } from '@/constants/menuItems'
+import { isNavItemActive } from '@/utils/getActiveNavItem'
 
 type Props = {
   className?: string
@@ -21,8 +22,7 @@ export const SidebarNav = ({ className }: Props) => {
         role="list"
       >
         {SIDEBAR_MENU_ITEMS.map((item) => {
-          const isActive =
-            pathname === item.href || pathname.startsWith(`${item.href}/`)
+          const isActive = isNavItemActive(pathname, item.href)
 
           return (
             <li key={item.id}>
