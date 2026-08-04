@@ -4,6 +4,7 @@ import { HeaderLogoutButton } from '@/features/navigation/components/HeaderLogou
 import Image from 'next/image'
 import Link from 'next/link'
 import { Typography } from '@/ui'
+import { PageTitle } from '@/features/pageTitle'
 
 const ProtectedLayout = ({
   children,
@@ -53,6 +54,7 @@ const ProtectedLayout = ({
         </header>
 
         <main className="flex-1 overflow-y-auto bg-main-bg p-6 lg:p-8">
+          <PageTitle />
           {children}
         </main>
       </div>

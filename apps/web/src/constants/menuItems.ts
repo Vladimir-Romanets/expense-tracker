@@ -1,4 +1,4 @@
-import type { NavigationItem } from '../types'
+import type { NavigationItem } from '@/features/navigation/types'
 
 export const SIDEBAR_MENU_ITEMS: NavigationItem[] = [
   { id: 'overview', label: 'Overview', href: '/overview' },
