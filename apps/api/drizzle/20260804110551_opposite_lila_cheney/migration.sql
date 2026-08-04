@@ -46,7 +46,7 @@ CREATE TABLE "users" (
 --> statement-breakpoint
 CREATE UNIQUE INDEX "categories_name_unique_idx" ON "categories" (lower("name"));--> statement-breakpoint
 CREATE UNIQUE INDEX "stores_name_unique_idx" ON "stores" (lower("name"));--> statement-breakpoint
-ALTER TABLE "products" ADD CONSTRAINT "products_category_id_categories_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id");--> statement-breakpoint
+ALTER TABLE "products" ADD CONSTRAINT "products_category_id_categories_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE SET NULL;--> statement-breakpoint
 ALTER TABLE "receipt_items" ADD CONSTRAINT "receipt_items_receipt_id_receipts_id_fkey" FOREIGN KEY ("receipt_id") REFERENCES "receipts"("id");--> statement-breakpoint
 ALTER TABLE "receipt_items" ADD CONSTRAINT "receipt_items_product_id_products_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id");--> statement-breakpoint
 ALTER TABLE "receipts" ADD CONSTRAINT "receipts_user_id_users_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id");--> statement-breakpoint

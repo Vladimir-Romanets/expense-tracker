@@ -5,6 +5,7 @@ import {
   getPaginationParams,
   PaginationInput,
 } from '@helpers/utils/pagination'
+import { AppError } from '@helpers/errors/apiError'
 
 export const create = async (payload: NewCategoryProps) => {
   const [category] = await categoriesModel.create(payload)
@@ -18,4 +19,10 @@ export const getAll = async (payload: PaginationInput) => {
   const { list, total } = await categoriesModel.getAllCategories(pagination)
 
   return createPaginatedResponse<CategoryProps>(list, total, pagination)
+}
+
+export const remove = async (id: number) => {
+  const [deleted] = await categoriesModel.remove(id)
+
+  if (!deleted) throw new AppError('Category not found', 404)
 }
