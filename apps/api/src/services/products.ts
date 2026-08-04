@@ -14,13 +14,14 @@ export const getByName = async (name: NewProductProps['name'], tx?: Executor) =>
   await productsModel.getByName(name, tx)
 
 export const checkAndInsert = async (name: NewProductProps['name'], tx?: Executor) => {
-  const existedProduct = await getByName(name, tx)
+  const formattedName = name.trim().toLowerCase()
+  const existedProduct = await getByName(formattedName, tx)
 
   if (existedProduct) {
     return existedProduct
   }
 
-  const product = await createIfNotExists({ name }, tx)
+  const product = await createIfNotExists({ name: formattedName }, tx)
 
   return product
 }

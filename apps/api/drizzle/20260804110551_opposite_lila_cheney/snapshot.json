@@ -1,7 +1,7 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "a4a9a912-13bd-4eef-b46b-dd336f52470d",
+  "id": "72ffcdf9-b0a1-4325-8b24-8dffae11804d",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -459,7 +459,7 @@
         "id"
       ],
       "onUpdate": "NO ACTION",
-      "onDelete": "NO ACTION",
+      "onDelete": "SET NULL",
       "name": "products_category_id_categories_id_fkey",
       "entityType": "fks",
       "schema": "public",

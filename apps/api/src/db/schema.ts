@@ -38,16 +38,12 @@ export const categories = pgTable(
   (table) => [uniqueIndex('categories_name_unique_idx').on(sql`lower(${table.name})`)],
 )
 
-export const products = pgTable(
-  'products',
-  {
-    id: serial().primaryKey(),
-    name: varchar({ length: 100 }).notNull().unique(),
-    categoryId: integer('category_id').references(() => categories.id),
-    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
-  },
-  (table) => [uniqueIndex('products_name_unique_idx').on(sql`lower(${table.name})`)],
-)
+export const products = pgTable('products', {
+  id: serial().primaryKey(),
+  name: varchar({ length: 100 }).notNull().unique(),
+  categoryId: integer('category_id').references(() => categories.id, { onDelete: 'set null' }),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+})
 
 export const receipts = pgTable('receipts', {
   id: serial().primaryKey(),
