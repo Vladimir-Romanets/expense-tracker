@@ -1,13 +1,12 @@
 'use server'
 
 import { type RegistrationSchemaProps } from '../schemas/auth'
-import { apiClient, prettierError } from '@/lib/apiClient'
+import { apiClientWithHeaders, prettierError } from '@/lib/apiClient'
 import { login } from '@/utils/login'
 import type { User } from '@/stores/user'
 
 type RegisterSucceedProps = {
   user: User
-  token: string
 }
 
 export type RegisterActionState = {
@@ -21,12 +20,16 @@ export const registrationAction = async (
   data: RegistrationSchemaProps
 ): Promise<RegisterActionState> => {
   try {
-    const { token, user } = await apiClient<RegisterSucceedProps>('/register', {
+    const response = await apiClientWithHeaders('/register', {
       method: 'POST',
       body: JSON.stringify(data),
     })
 
-    await login(token)
+    const { user } = (await response.json()) as RegisterSucceedProps
+
+    const setCookieHeaders = response.headers.getSetCookie()
+
+    await login(setCookieHeaders)
 
     return { success: true, user }
   } catch (error) {

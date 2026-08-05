@@ -31,7 +31,7 @@ const LoginForm = () => {
     }
   }, [state, router, setUser])
 
-  const isFormInvalid = Boolean(state.errors?.formError)
+  const isFormInvalid = Boolean(state.formError)
 
   return (
     <form
@@ -67,7 +67,7 @@ const LoginForm = () => {
           weight="medium"
           className="animate-in fade-in-50 text-center text-red-500"
         >
-          {state.errors?.formError}
+          {state.formError}
         </Typography>
       )}
       <div className="mx-1 mt-3 mb-0 flex justify-end">

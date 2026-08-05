@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify, errors as joseErrors } from 'jose'
-import { SESSION_COOKIE_NAME } from '@/constants/sessionCookie'
+import { AUTH_COOKIE_NAME } from './constants/cookie'
 
 interface JwtPayload {
   userId: number
@@ -24,7 +24,7 @@ const redirectToLogin = (request: NextRequest) => {
   loginUrl.searchParams.set('from', request.nextUrl.pathname)
   const response = NextResponse.redirect(loginUrl)
 
-  response.cookies.delete(SESSION_COOKIE_NAME)
+  response.cookies.delete(AUTH_COOKIE_NAME)
 
   return response
 }
@@ -53,7 +53,7 @@ const validateToken = async (token: string) => {
 }
 
 export default async function proxy(request: NextRequest) {
-  const token = request.cookies.get(SESSION_COOKIE_NAME)?.value
+  const token = request.cookies.get(AUTH_COOKIE_NAME)?.value
   const isTokenValid = token ? await validateToken(token) : false
   const isAuthPath = checkIsAuthPath(request.nextUrl.pathname)
 
@@ -68,7 +68,7 @@ export default async function proxy(request: NextRequest) {
   if (isAuthPath) {
     if (token) {
       const response = NextResponse.next()
-      response.cookies.delete(SESSION_COOKIE_NAME)
+      response.cookies.delete(AUTH_COOKIE_NAME)
       return response
     }
 
