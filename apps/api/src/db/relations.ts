@@ -23,7 +23,7 @@ export const relations = defineRelations(schema, (relation) => ({
       from: relation.receipts.userId,
       to: relation.users.id,
     }),
-    stores: relation.one.stores({
+    store: relation.one.stores({
       from: relation.receipts.storeId,
       to: relation.stores.id,
     }),

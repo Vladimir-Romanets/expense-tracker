@@ -1,8 +1,17 @@
 import { db } from '@db'
-import { NewReceiptItemProps } from '@db/schema'
+import { NewReceiptItemProps, ReceiptProps, StoreProps } from '@db/schema'
 import { CreateReceiptDto } from '@validators/receipts'
 import { receiptsModel } from '@models'
 import { productsService, receiptItemsService } from '@services'
+import {
+  createPaginatedResponse,
+  getPaginationParams,
+  PaginationInput,
+} from '@helpers/utils/pagination'
+
+type ReceiptsList = {
+  store: Pick<StoreProps, 'id' | 'name'> | null
+} & Omit<ReceiptProps, 'createdAt' | 'userId' | 'storeId'>
 
 export const addFullReceiptData = async (
   { storeId, totalAmount, purchaseDate, items }: CreateReceiptDto,
@@ -36,4 +45,12 @@ export const addFullReceiptData = async (
       items: receiptItems,
     }
   })
+}
+
+export const getAll = async (payload: PaginationInput, userId: number) => {
+  const pagination = getPaginationParams(payload)
+
+  const { list, total } = await receiptsModel.getAll(pagination, userId)
+
+  return createPaginatedResponse<ReceiptsList>(list, total, pagination)
 }
