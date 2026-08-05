@@ -2,7 +2,7 @@
 
 import { CategoryEntity } from '../types'
 import { CategoryCard } from './CategoryCard'
-import { deleteCategory } from '../actions'
+import { deleteCategory } from '../actions/deleteCategory'
 
 type Props = {
   categories: CategoryEntity[]
