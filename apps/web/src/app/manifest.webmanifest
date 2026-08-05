@@ -1,7 +1,8 @@
 {
   "name": "Expense Tracker",
   "short_name": "ET",
-  "description": "This is the frontend client for the Expense Tracker application. It provides a dashboard for detailed purchase entry, price dynamics visualization, and budget limit monitoring.",
+  "start_url": "/",
+  "description": "Expense Tracker application. It provides a dashboard for detailed purchase entry, price dynamics visualization, and budget limit monitoring.",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -16,5 +17,5 @@
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "minimal-ui"
 }
