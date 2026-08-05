@@ -1,8 +1,11 @@
-const API_BASE_URL = process.env.API_URL!
+const API_BASE_URL = process.env.API_URL
+
+if (!API_BASE_URL) {
+  throw new Error('API_URL environment variable is not set')
+}
 
 export type FetchOptions = RequestInit & {
   params?: Record<string, string | number>
-  token?: string
 }
 
 export class ApiError extends Error {
@@ -37,11 +40,11 @@ export const prettierError = (error: unknown) => {
   }
 }
 
-export async function apiClient<T>(
+export async function apiClientWithHeaders(
   endpoint: string,
   options: FetchOptions = {}
-): Promise<T> {
-  const { params, token, headers, method = 'GET', ...customConfig } = options
+): Promise<Response> {
+  const { params, headers, method = 'GET', ...customConfig } = options
 
   let url = `${API_BASE_URL}/api${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
 
@@ -57,7 +60,6 @@ export async function apiClient<T>(
   if (customConfig.body) {
     finalHeaders.set('Content-Type', 'application/json')
   }
-  if (token) finalHeaders.set('Authorization', `Bearer ${token}`)
 
   const response = await fetch(url, {
     headers: finalHeaders,
@@ -85,6 +87,15 @@ export async function apiClient<T>(
       error.errors
     )
   }
+
+  return response
+}
+
+export async function apiClient<T>(
+  endpoint: string,
+  options: FetchOptions = {}
+): Promise<T> {
+  const response = await apiClientWithHeaders(endpoint, options)
 
   if (response.status === 204) {
     return {} as T

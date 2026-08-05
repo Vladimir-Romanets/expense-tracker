@@ -2,13 +2,12 @@
 
 import { loginSchema, type LoginSchemaProps } from '../schemas/auth'
 import { flattenFieldErrors } from '@/utils/format-error'
-import { apiClient } from '@/lib/apiClient'
+import { apiClientWithHeaders, prettierError } from '@/lib/apiClient'
 import { login } from '@/utils/login'
 import type { User } from '@/stores/user'
 
 type LoginSucceedProps = {
   user: User
-  token: string
 }
 
 export type LoginActionState = {
@@ -17,8 +16,8 @@ export type LoginActionState = {
   errors?: {
     email?: string
     password?: string
-    formError?: string
   }
+  formError?: string
   values: Partial<LoginSchemaProps>
 }
 
@@ -41,12 +40,16 @@ export const loginAction = async (
   }
 
   try {
-    const { token, user } = await apiClient<LoginSucceedProps>('/login', {
+    const response = await apiClientWithHeaders('/login', {
       method: 'POST',
       body: JSON.stringify(validated.data),
     })
 
-    await login(token)
+    const { user } = (await response.json()) as LoginSucceedProps
+
+    const setCookieHeaders = response.headers.getSetCookie()
+
+    await login(setCookieHeaders)
 
     return {
       success: true,
@@ -54,11 +57,8 @@ export const loginAction = async (
       values: formValues,
     }
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : 'Unknown error'
-
     return {
-      errors: { formError: errorMessage },
+      ...prettierError(error),
       values: formValues,
     }
   }
