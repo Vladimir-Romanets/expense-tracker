@@ -1,11 +1,14 @@
 import { Button, Icon, Table } from '@/ui'
 import type { ReceiptEntity } from '../types'
+import { receiptsFormatter } from '../utils/receiptListFormatter'
 
 interface ReceiptsListProps {
   receipts: ReceiptEntity[]
 }
 
 export const ReceiptsList = ({ receipts }: ReceiptsListProps) => {
+  const list = receiptsFormatter(receipts)
+
   return (
     <Table>
       <Table.Header>
@@ -15,6 +18,7 @@ export const ReceiptsList = ({ receipts }: ReceiptsListProps) => {
               Date
               <Icon
                 name="arrowDown"
+                aria-hidden="true"
                 size={16}
               />
             </div>
@@ -26,7 +30,7 @@ export const ReceiptsList = ({ receipts }: ReceiptsListProps) => {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {receipts.map((receipt) => (
+        {list.map((receipt) => (
           <Table.Row key={receipt.id}>
             <Table.Cell>{receipt.purchaseDate}</Table.Cell>
             <Table.Cell>
@@ -51,7 +55,7 @@ export const ReceiptsList = ({ receipts }: ReceiptsListProps) => {
                 <Button
                   variant="social"
                   size="icon"
-                  title="View"
+                  aria-label="View receipt"
                 >
                   <Icon
                     name="eye"
@@ -61,7 +65,7 @@ export const ReceiptsList = ({ receipts }: ReceiptsListProps) => {
                 <Button
                   variant="social"
                   size="icon"
-                  title="Edit"
+                  aria-label="Edit receipt"
                 >
                   <Icon
                     name="edit"

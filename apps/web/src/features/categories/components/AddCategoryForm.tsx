@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { RHFInput, Button } from '@/ui'
-import { addCategory } from '../actions'
+import { addCategory } from '../actions/addCategory'
 
 const schema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters'),

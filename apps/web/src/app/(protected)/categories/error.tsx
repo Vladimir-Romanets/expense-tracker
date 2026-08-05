@@ -1,7 +1,7 @@
 'use client'
 
-const CategoriesError = ({ error }: { error: Error }) => {
-  return <p>Failed to load categories: {error.message}</p>
+const CategoriesError = () => {
+  return <p>Failed to load categories</p>
 }
 
 export default CategoriesError

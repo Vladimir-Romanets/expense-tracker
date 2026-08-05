@@ -10,12 +10,7 @@ export default async function ReceiptsPage() {
       {receipts?.length ? (
         <ReceiptsList receipts={receipts} />
       ) : (
-        <Typography
-          variant="p"
-          className="text-slate-500"
-        >
-          No receipts found.
-        </Typography>
+        <Typography variant="p">No receipts found.</Typography>
       )}
     </div>
   )
