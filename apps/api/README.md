@@ -103,6 +103,8 @@ The file contains the following configuration variables:
 
 - `API_HOST`: Host address for the API server (e.g. `127.0.0.1` or `0.0.0.0`).
 - `API_PORT`: Port number for the API server (e.g. `3001`).
+- `NODE_ENV`: Application environment (`development` or `production`). Affects cookie security: in `production`, cookies are set with `secure: true` and `sameSite: 'none'`; in `development`, `secure: false` and `sameSite: 'lax'`.
+- `CORS_ORIGIN`: Allowed origin for CORS requests (e.g. `http://localhost:3000`).
 - `DB_USERNAME`: Username for PostgreSQL connection.
 - `DB_PASSWORD`: Password for PostgreSQL connection.
 - `DB_HOST`: Hostname of the database for **local dev scripts only** (always `localhost`). Docker hardcodes `pgdb` internally.
@@ -112,6 +114,7 @@ The file contains the following configuration variables:
 - `DATABASE_URL` (optional override): Full connection string (e.g. `postgresql://user:pass@host:port/dbname`).
 - `JWT_SECRET`: Secret key used for signing and verifying JWT tokens.
 - `JWT_EXPIRES_IN`: JWT token expiry duration (e.g. `1h`, `7d`, `30m`). Defaults to `1h` if not set.
+- `COOKIE_MAX_AGE`: Cookie expiration time in milliseconds (e.g. `3600000` for 1 hour). Defaults to `3600000`.
 
 ---
 

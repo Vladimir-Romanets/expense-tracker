@@ -11,9 +11,12 @@ import productsRouter from './products'
 
 const router = express.Router()
 
+// Public routes (no auth required)
 router.post('/register', validate(registerUserSchema), authController.register)
 router.post('/login', validate(loginUserSchema), authController.login)
+router.post('/logout', authController.logout) // Intentionally public — clears cookie even for invalid/expired sessions
 
+// Protected routes
 router.use(authenticate)
 router.use('/stores', storesRouter)
 router.use('/categories', categoriesRouter)
