@@ -5,6 +5,7 @@ import { receiptsController } from '@controllers'
 
 const router = Router()
 
+router.get('/', receiptsController.getAll)
 router.post('/', validate(createReceiptSchema), receiptsController.create)
 
 export default router
