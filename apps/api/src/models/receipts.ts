@@ -1,10 +1,10 @@
+import { eq } from 'drizzle-orm'
 import { NewReceiptProps, receipts } from '@db/schema'
 import { db, Executor } from '@db'
 import { PaginationResult } from '@helpers/utils/pagination'
-import { eq } from 'drizzle-orm'
 
 export const getAll = async ({ limit, offset }: PaginationResult, userId: number) => {
-  const reqCategories = db.query.receipts.findMany({
+  const reqReceipts = db.query.receipts.findMany({
     where: {
       userId,
     },
@@ -30,7 +30,7 @@ export const getAll = async ({ limit, offset }: PaginationResult, userId: number
 
   const reqTotal = db.$count(receipts, eq(receipts.userId, userId))
 
-  const [list, total] = await Promise.all([reqCategories, reqTotal])
+  const [list, total] = await Promise.all([reqReceipts, reqTotal])
 
   return { list, total }
 }

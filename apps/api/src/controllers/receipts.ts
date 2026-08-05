@@ -4,9 +4,9 @@ import { receiptsService } from '@services'
 import { AuthRequest } from '@middleware/authenticate'
 
 export const getAll = asyncHandler(async (req: AuthRequest, res: Response) => {
-  const response = await receiptsService.getAll(req.body, req.userId as number)
+  const response = await receiptsService.getAll(req.query, req.userId as number)
 
-  res.status(201).json(response)
+  res.status(200).json(response)
 })
 
 export const create = asyncHandler(async (req: AuthRequest, res: Response) => {

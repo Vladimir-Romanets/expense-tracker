@@ -10,7 +10,7 @@ import {
 } from '@helpers/utils/pagination'
 
 type ReceiptsList = {
-  store: Omit<StoreProps, 'createdAt'> | null
+  store: Pick<StoreProps, 'id' | 'name'> | null
 } & Omit<ReceiptProps, 'createdAt' | 'userId' | 'storeId'>
 
 export const addFullReceiptData = async (
