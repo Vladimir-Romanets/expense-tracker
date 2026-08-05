@@ -11,7 +11,7 @@ export const validate = (schema: ZodObject<ZodRawShape>) => {
       })
 
       if ('body' in parsed) req.body = parsed.body
-      if ('query' in parsed) req.query = parsed.query as Request['query']
+      if ('query' in parsed) Object.assign(req.query, parsed.query)
       if ('params' in parsed) req.params = parsed.params as Request['params']
 
       return next()
