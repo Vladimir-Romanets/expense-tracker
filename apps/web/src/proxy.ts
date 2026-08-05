@@ -87,5 +87,6 @@ export const config = {
     '/login',
     '/register',
     '/forgot-password',
+    '/((?!api|_next/static|_next/image|favicon\\.ico|manifest\\.webmanifest|manifest\\.json|robots\\.txt|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|woff|woff2)$).*)',
   ],
 }

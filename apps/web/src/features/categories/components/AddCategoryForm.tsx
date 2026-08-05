@@ -54,6 +54,7 @@ export const AddCategoryForm = () => {
           <RHFInput
             control={control}
             name="name"
+            autoComplete="off"
             placeholder="New category name"
             disabled={isSubmitting}
           />
