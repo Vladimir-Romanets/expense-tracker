@@ -1,6 +1,12 @@
+import type { Metadata } from 'next'
 import { Typography } from '@/ui'
 import { getReceipts } from '@/features/receipts/actions/getReceipts'
 import { ReceiptsList } from '@/features/receipts/components'
+
+export const metadata: Metadata = {
+  title: 'Receipts',
+  description: 'Read, create, update or remove receipts',
+}
 
 export default async function ReceiptsPage() {
   const { data: receipts } = await getReceipts()

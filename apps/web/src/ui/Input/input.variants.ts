@@ -7,11 +7,16 @@ export const inputVariants = cva(
       isError: {
         true: 'border-red-500 text-red-900 focus:border-red-600 focus:ring-3 focus:ring-red-500/20',
         false:
-          'border-border focus:border-green-600 focus:ring-3 focus:ring-green-600/20',
+          'border-gray-300 focus:border-green-600 focus:ring-3 focus:ring-green-600/20',
+      },
+      hideNativeControl: {
+        true: 'hide-input-native-control',
+        false: '',
       },
     },
     defaultVariants: {
       isError: false,
+      hideNativeControl: false,
     },
   }
 )

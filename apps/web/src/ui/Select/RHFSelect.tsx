@@ -6,27 +6,27 @@ import {
   type FieldValues,
   type Path,
 } from 'react-hook-form'
-import { Input, type InputProps } from './Input'
+import { Select, type SelectProps } from './Select'
 
-export interface RHFInputProps<T extends FieldValues> extends Omit<
-  InputProps,
+export interface RHFSelectProps<T extends FieldValues> extends Omit<
+  SelectProps,
   'name'
 > {
   name: Path<T>
   control: Control<T>
 }
 
-export const RHFInput = <T extends FieldValues>({
+export const RHFSelect = <T extends FieldValues>({
   name,
   control,
   ...rest
-}: RHFInputProps<T>) => {
+}: RHFSelectProps<T>) => {
   return (
     <Controller
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <Input
+        <Select
           {...rest}
           {...field}
           error={fieldState.error?.message}
@@ -36,4 +36,4 @@ export const RHFInput = <T extends FieldValues>({
   )
 }
 
-RHFInput.displayName = 'RHFInput'
+RHFSelect.displayName = 'RHFSelect'

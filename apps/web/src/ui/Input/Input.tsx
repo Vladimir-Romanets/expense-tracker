@@ -8,6 +8,7 @@ export interface InputProps extends Omit<
 > {
   label?: string
   error?: string
+  hideNativeControl?: boolean
   wrapperClassName?: string
   ref?: React.Ref<HTMLInputElement>
 }
@@ -17,6 +18,7 @@ export const Input = ({
   wrapperClassName,
   label,
   error,
+  hideNativeControl,
   id,
   ref,
   ...props
@@ -40,7 +42,10 @@ export const Input = ({
           ref={ref}
           aria-invalid={!!error}
           aria-describedby={error ? errorId : undefined}
-          className={cn(inputVariants({ isError: !!error }), className)}
+          className={cn(
+            inputVariants({ isError: !!error, hideNativeControl }),
+            className
+          )}
           {...props}
         />
       </div>
