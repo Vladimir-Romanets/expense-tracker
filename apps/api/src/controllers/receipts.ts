@@ -18,7 +18,7 @@ export const create = asyncHandler(async (req: AuthRequest, res: Response) => {
 })
 
 export const remove = asyncHandler(
-  async (req: ValidatedRequest<DeleteReceiptDto, AuthRequest>, res: Response) => {
+  async (req: ValidatedRequest<DeleteReceiptDto> & AuthRequest, res: Response) => {
     await receiptsService.remove(req.params.id, req.userId as number)
 
     res.status(204).send()
