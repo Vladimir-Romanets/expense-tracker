@@ -115,6 +115,10 @@ The file contains the following configuration variables:
 - `JWT_SECRET`: Secret key used for signing and verifying JWT tokens.
 - `JWT_EXPIRES_IN`: JWT token expiry duration (e.g. `1h`, `7d`, `30m`). Defaults to `1h` if not set.
 - `COOKIE_MAX_AGE`: Cookie expiration time in milliseconds (e.g. `3600000` for 1 hour). Defaults to `3600000`.
+- `R2_ACCOUNT_ID`: Cloudflare account ID (found in the Cloudflare dashboard).
+- `R2_ACCESS_KEY_ID`: Cloudflare R2 API token Access Key ID.
+- `R2_SECRET_ACCESS_KEY`: Cloudflare R2 API token Secret Access Key.
+- `R2_BUCKET_NAME`: Name of the Cloudflare R2 bucket for storing uploaded receipt images.
 
 ---
 

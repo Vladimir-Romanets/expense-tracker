@@ -59,5 +59,6 @@ export const getAll = async (payload: PaginationInput, userId: number) => {
 export const remove = async (id: number, userId: number) => {
   const [deleted] = await receiptsModel.remove(id, userId)
 
+  // Returns 404 for both non-existent and unauthorized receipts (intentional — avoids leaking ownership info)
   if (!deleted) throw new AppError('Receipt not found', 404)
 }
