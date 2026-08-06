@@ -8,6 +8,7 @@ import storesRouter from './stores'
 import categoriesRouter from './categories'
 import receiptsRouter from './receipts'
 import productsRouter from './products'
+import uploadFileRoute from './uploads'
 
 const router = express.Router()
 
@@ -22,6 +23,7 @@ router.use('/stores', storesRouter)
 router.use('/categories', categoriesRouter)
 router.use('/receipts', receiptsRouter)
 router.use('/products', productsRouter)
+router.use('/uploads', uploadFileRoute)
 
 router.use((req, res) => {
   res.status(404).json({
