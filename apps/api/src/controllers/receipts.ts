@@ -2,6 +2,8 @@ import { Response } from 'express'
 import { asyncHandler } from '@helpers/errors/asyncHandler'
 import { receiptsService } from '@services'
 import { AuthRequest } from '@middleware/authenticate'
+import { ValidatedRequest } from '../types/validator'
+import { DeleteReceiptDto } from '@validators/receipts'
 
 export const getAll = asyncHandler(async (req: AuthRequest, res: Response) => {
   const response = await receiptsService.getAll(req.query, req.userId as number)
@@ -14,3 +16,11 @@ export const create = asyncHandler(async (req: AuthRequest, res: Response) => {
 
   res.status(201).json(response)
 })
+
+export const remove = asyncHandler(
+  async (req: ValidatedRequest<DeleteReceiptDto, AuthRequest>, res: Response) => {
+    await receiptsService.remove(req.params.id, req.userId as number)
+
+    res.status(204).send()
+  },
+)
