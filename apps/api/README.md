@@ -147,7 +147,8 @@ Migrations are managed via [Drizzle Kit](https://orm.drizzle.team/docs/kit-overv
 | Script | Command | Description |
 |---|---|---|
 | `db:generate` | `drizzle-kit generate` | Generates SQL migration files based on schema changes |
-| `db:migrate:docker` | `docker compose exec api pnpm drizzle-kit migrate` | Applies migrations inside the running `api` container |
+| `db:migrate` | `drizzle-kit migrate` | Applies migrations directly to the database (used in production) |
+| `db:migrate:docker` | `docker compose exec api pnpm drizzle-kit migrate` | Applies migrations inside the running `api` container (used for local dev) |
 | `db:check` | `drizzle-kit check` | Validates migration consistency (no conflicts, correct order) |
 | `db:studio` | `drizzle-kit studio` | Opens a browser-based GUI for viewing and editing database data |
 
@@ -162,12 +163,17 @@ Migrations are managed via [Drizzle Kit](https://orm.drizzle.team/docs/kit-overv
    ```bash
    pnpm db:check
    ```
-4. Apply migrations inside Docker (requires `docker compose up`):
-   ```bash
-   pnpm db:migrate:docker
-   ```
+4. Apply migrations:
+   - **Local Development**: Apply inside Docker (requires `docker compose up`):
+     ```bash
+     pnpm db:migrate:docker
+     ```
+   - **Production**: Apply directly to the database:
+     ```bash
+     pnpm db:migrate
+     ```
 
-> **Important:** Before running `db:migrate:docker`, make sure the stack is running (`docker compose up`).
+> **Important:** To run migrations in production using `pnpm db:migrate`, the `DATABASE_URL` environment variable must be populated in `.env` with a connection string pointing to the real database.
 
 ### Drizzle Studio
 

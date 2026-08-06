@@ -5,7 +5,7 @@ export const updateProductSchema = z.object({
     id: z.coerce.number().positive(),
   }),
   body: z.object({
-    name: z.string().min(1).max(100),
+    name: z.string().trim().min(1).max(100),
     categoryId: z.number().int().positive().nullable().optional(),
   }),
 })

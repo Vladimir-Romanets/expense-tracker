@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 import { NewReceiptProps, receipts } from '@db/schema'
 import { db, Executor } from '@db'
 import { PaginationResult } from '@helpers/utils/pagination'
@@ -37,3 +37,9 @@ export const getAll = async ({ limit, offset }: PaginationResult, userId: number
 
 export const create = async (payload: NewReceiptProps, tx: Executor = db) =>
   await tx.insert(receipts).values(payload).returning()
+
+export const remove = async (id: number, userId: number) =>
+  await db
+    .delete(receipts)
+    .where(and(eq(receipts.id, id), eq(receipts.userId, userId)))
+    .returning({ id: receipts.id })

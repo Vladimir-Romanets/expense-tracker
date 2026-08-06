@@ -1,0 +1,1 @@
+ALTER TABLE "receipt_items" DROP CONSTRAINT "receipt_items_receipt_id_receipts_id_fkey", ADD CONSTRAINT "receipt_items_receipt_id_receipts_id_fkey" FOREIGN KEY ("receipt_id") REFERENCES "receipts"("id") ON DELETE CASCADE;

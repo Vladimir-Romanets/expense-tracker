@@ -8,6 +8,7 @@ import {
   getPaginationParams,
   PaginationInput,
 } from '@helpers/utils/pagination'
+import { AppError } from '@helpers/errors/apiError'
 
 type ReceiptsList = {
   store: Pick<StoreProps, 'id' | 'name'> | null
@@ -53,4 +54,10 @@ export const getAll = async (payload: PaginationInput, userId: number) => {
   const { list, total } = await receiptsModel.getAll(pagination, userId)
 
   return createPaginatedResponse<ReceiptsList>(list, total, pagination)
+}
+
+export const remove = async (id: number, userId: number) => {
+  const [deleted] = await receiptsModel.remove(id, userId)
+
+  if (!deleted) throw new AppError('Receipt not found', 404)
 }
