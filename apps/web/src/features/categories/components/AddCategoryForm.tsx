@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 import { RHFInput, Button } from '@/ui'
 import { addCategory } from '../actions/addCategory'
+import { setFormErrors } from '@/utils/setFormErrors'
 
 const schema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters'),
@@ -28,16 +29,8 @@ export const AddCategoryForm = () => {
   const onSubmit = async (values: FormValues) => {
     const result = await addCategory(values)
 
-    if (!result.success) {
-      if ('errors' in result && result.errors?.name) {
-        setError('name', { message: result.errors.name })
-      } else if ('formError' in result) {
-        setError('root', {
-          message: result.formError || 'Failed to add category',
-        })
-      } else {
-        setError('root', { message: 'Failed to add category' })
-      }
+    if (!result.success && 'errors' in result) {
+      setFormErrors(setError, { ...result })
     } else {
       reset()
     }

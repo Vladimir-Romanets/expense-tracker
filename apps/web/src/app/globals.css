@@ -70,6 +70,15 @@
       focus-visible:ring-2 focus-visible:ring-emerald-500/50 focus-visible:ring-offset-2 focus-visible:outline-none
       disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] cursor-pointer;
   }
+
+  .hide-input-native-control::-webkit-outer-spin-button,
+  .hide-input-native-control::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .hide-input-native-control {
+    -moz-appearance: textfield;
+  }
 }
 
 body {

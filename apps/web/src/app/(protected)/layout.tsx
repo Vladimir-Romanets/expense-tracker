@@ -8,8 +8,10 @@ import { PageTitle } from '@/features/pageTitle'
 
 const ProtectedLayout = ({
   children,
+  headNavigation,
 }: Readonly<{
   children: ReactNode
+  headNavigation: ReactNode
 }>) => {
   const year = new Date().getFullYear()
 
@@ -44,9 +46,7 @@ const ProtectedLayout = ({
         {/* Header Area */}
         <header className="flex h-16 shrink-0 items-center justify-between border-b border-slate-200/80 bg-white px-8 shadow-xs">
           {/* Left Action Area Slot */}
-          <div className="flex items-center gap-4">
-            {/* Header left slot */}
-          </div>
+          <div className="flex items-center gap-4">{headNavigation}</div>
 
           <div className="flex items-center gap-4">
             <HeaderLogoutButton />
