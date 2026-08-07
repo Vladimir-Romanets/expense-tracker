@@ -5,6 +5,6 @@ import { presignedUploadSchema } from '@validators/uploads'
 
 const router = Router()
 
-router.post('/presign-upload', validate(presignedUploadSchema), uploadController.uploadFile)
+router.post('/presigned-url', validate(presignedUploadSchema), uploadController.uploadFile)
 
 export default router
