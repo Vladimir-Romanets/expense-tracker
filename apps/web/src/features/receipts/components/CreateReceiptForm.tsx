@@ -2,13 +2,9 @@
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Icon, RHFInput, RHFSelect, Button } from '@/ui'
+import { RHFInput, RHFSelect, Button, RHFFileUpload } from '@/ui'
 import { ReceiptItemsGrid } from './ReceiptItemsGrid'
-import {
-  createReceiptSchema,
-  type CreateReceiptFormValues,
-  type CreateReceiptDto,
-} from '../schemas'
+import { createReceiptSchema, type CreateReceiptFormValues } from '../schemas'
 import { createReceiptAction } from '../actions/createReceipt'
 import { setFormErrors } from '@/utils/setFormErrors'
 
@@ -34,7 +30,6 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
   const {
     control,
     reset,
-    register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting, isDirty },
@@ -44,15 +39,9 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
   })
 
   const onSubmit = async (data: CreateReceiptFormValues) => {
-    const { receiptFile, ...dto } = data
-
-    const payload: CreateReceiptDto = {
-      ...dto,
-      purchaseDate: new Date(dto.purchaseDate).toISOString(),
-    }
-
-    if (receiptFile && receiptFile.length > 0) {
-      //  TODO: File will be uploaded separately in the future
+    const payload = {
+      ...data,
+      purchaseDate: new Date(data.purchaseDate).toISOString(),
     }
 
     const result = await createReceiptAction(payload)
@@ -70,36 +59,16 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
       className="w-full"
     >
       <div className="grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr]">
-        {/* Left column: File Upload Stub */}
         <div className="flex flex-col">
-          <label
-            htmlFor="receiptFile"
-            className="flex h-96 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-6 text-center hover:bg-gray-100"
-          >
-            <Icon
-              name="upload"
-              className="mb-4 text-gray-400"
-              size={40}
-            />
-            <span className="text-sm text-gray-500">
-              Upload or drag and-drop scan/photo of receipt or QR code for OCR
-              recognition.
-            </span>
-            <input
-              id="receiptFile"
-              type="file"
-              className="hidden"
-              {...register('receiptFile')}
-            />
-          </label>
-          {errors.receiptFile && (
-            <span className="mt-2 text-sm text-red-500">
-              {errors.receiptFile.message as string}
-            </span>
-          )}
+          <RHFFileUpload<CreateReceiptFormValues>
+            control={control}
+            name="receiptFile"
+            label="Upload or drag and-drop scan/photo of receipt."
+            className="h-96"
+            accept="image/*"
+          />
         </div>
 
-        {/* Right column: Form Fields */}
         <div className="flex flex-col gap-6 rounded-xl border border-surface-border bg-white p-6 shadow-sm">
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
             <RHFSelect<CreateReceiptFormValues>
