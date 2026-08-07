@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react'
+import React, { useCallback, useState, useMemo, useEffect } from 'react'
 import { useController, UseControllerProps, FieldValues } from 'react-hook-form'
 import { Icon, Button } from '@/ui'
 import { cn } from '@/utils/cn'
@@ -34,7 +34,6 @@ export function RHFFileUpload<T extends FieldValues>({
     control,
     ...props,
   })
-  const prev = useRef(null)
   const [isDragActive, setIsDragActive] = useState(false)
 
   const previewUrl = useMemo(() => {
