@@ -2,7 +2,7 @@ import { db } from '@db'
 import { NewReceiptItemProps, ReceiptProps, StoreProps } from '@db/schema'
 import { CreateReceiptDto } from '@validators/receipts'
 import { receiptsModel } from '@models'
-import { productsService, receiptItemsService } from '@services'
+import { productsService, receiptItemsService, uploadsService } from '@services'
 import {
   createPaginatedResponse,
   getPaginationParams,
@@ -62,4 +62,6 @@ export const remove = async (id: number, userId: number) => {
 
   // Returns 404 for both non-existent and unauthorized receipts (intentional — avoids leaking ownership info)
   if (!deleted) throw new AppError('Receipt not found', 404)
+
+  if (deleted.imageKey) uploadsService.deleteReceiptFile(deleted.imageKey)
 }
