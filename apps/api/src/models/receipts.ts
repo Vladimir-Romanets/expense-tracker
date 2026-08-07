@@ -42,4 +42,4 @@ export const remove = async (id: number, userId: number) =>
   await db
     .delete(receipts)
     .where(and(eq(receipts.id, id), eq(receipts.userId, userId)))
-    .returning({ id: receipts.id })
+    .returning({ id: receipts.id, imageKey: receipts.imageKey })
