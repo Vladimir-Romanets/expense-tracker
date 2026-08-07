@@ -1,0 +1,1 @@
+ALTER TABLE "receipts" RENAME COLUMN "photo_url" TO "image_key";

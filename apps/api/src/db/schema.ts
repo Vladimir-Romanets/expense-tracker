@@ -55,7 +55,7 @@ export const receipts = pgTable('receipts', {
     .references(() => stores.id),
   purchaseDate: date('purchase_date').notNull(),
   totalAmount: numeric('total_amount', { precision: 10, scale: 2 }).notNull(),
-  photoUrl: varchar('photo_url', { length: 500 }),
+  imageKey: varchar('image_key', { length: 500 }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 })
 
