@@ -9,9 +9,8 @@ type SignedUploadResponse = {
 export const fileUploader = async (
   file: File
 ): Promise<{ imageKey: string }> => {
-  console.log(file)
   const { uploadUrl, imageKey } = await serverApiClient<SignedUploadResponse>(
-    '/uploads/presign-upload',
+    '/uploads/presigned-url',
     {
       method: 'POST',
       body: JSON.stringify({
@@ -20,7 +19,7 @@ export const fileUploader = async (
       }),
     }
   )
-  console.log('URL for upload:\n', uploadUrl, '\n', imageKey)
+
   if (!uploadUrl) {
     throw new Error('Failed to get upload URL')
   }
@@ -30,7 +29,7 @@ export const fileUploader = async (
     headers: { 'Content-Type': file.type },
     body: file,
   })
-  console.log('uploadRes', uploadRes)
+
   if (!uploadRes.ok) {
     throw new Error('Failed to upload to R2')
   }
