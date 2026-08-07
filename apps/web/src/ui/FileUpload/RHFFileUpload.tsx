@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useState, useMemo, useEffect } from 'react'
+import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react'
 import { useController, UseControllerProps, FieldValues } from 'react-hook-form'
 import { Icon, Button } from '@/ui'
 import { cn } from '@/utils/cn'
@@ -16,7 +16,6 @@ interface RHFFileUploadProps<
   label?: string
   accept?: string
   className?: string
-  alt?: string
 }
 
 export function RHFFileUpload<T extends FieldValues>({
@@ -25,7 +24,6 @@ export function RHFFileUpload<T extends FieldValues>({
   label = 'Upload or drag and-drop scan/photo',
   accept = '*',
   className,
-  alt = 'Preview',
   ...props
 }: RHFFileUploadProps<T>) {
   const {
@@ -36,7 +34,7 @@ export function RHFFileUpload<T extends FieldValues>({
     control,
     ...props,
   })
-
+  const prev = useRef(null)
   const [isDragActive, setIsDragActive] = useState(false)
 
   const previewUrl = useMemo(() => {
@@ -63,7 +61,7 @@ export function RHFFileUpload<T extends FieldValues>({
       setIsDragActive(false)
       const file = e.dataTransfer.files?.[0]
 
-      if (accept !== '*') {
+      if (accept !== '*' && file) {
         const accepted = accept.split(',').map((s) => s.trim())
         const isAllowed = accepted.some((a) =>
           a.endsWith('/*')
@@ -127,7 +125,7 @@ export function RHFFileUpload<T extends FieldValues>({
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={previewUrl}
-                alt={alt}
+                alt={label}
                 className="max-h-full max-w-full rounded-lg object-contain"
               />
             ) : (
@@ -182,7 +180,7 @@ export function RHFFileUpload<T extends FieldValues>({
           className="hidden"
           onChange={handleChange}
           accept={accept}
-          disabled={value}
+          disabled={!!value}
         />
       </label>
       {error && (

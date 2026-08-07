@@ -61,7 +61,6 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
             label="Upload or drag and-drop scan/photo of receipt."
             className="h-96"
             accept="image/*"
-            alt="Receipt preview"
           />
         </div>
 
