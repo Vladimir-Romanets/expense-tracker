@@ -15,7 +15,6 @@ interface CreateReceiptFormProps {
 const defaultValues = {
   storeId: undefined,
   totalAmount: '' as unknown as number,
-  purchaseDate: new Date().toISOString().slice(0, 16),
   items: [
     {
       name: '',
@@ -35,7 +34,10 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
     formState: { errors, isSubmitting, isDirty },
   } = useForm<CreateReceiptFormValues>({
     resolver: zodResolver(createReceiptSchema as any),
-    defaultValues,
+    defaultValues: {
+      ...defaultValues,
+      purchaseDate: new Date().toISOString().slice(0, 16),
+    },
   })
 
   const onSubmit = async (payload: CreateReceiptFormValues) => {
@@ -103,7 +105,12 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
             <Button
               type="button"
               variant="outline"
-              onClick={() => reset()}
+              onClick={() =>
+                reset({
+                  ...defaultValues,
+                  purchaseDate: new Date().toISOString().slice(0, 16),
+                })
+              }
             >
               Reset
             </Button>
