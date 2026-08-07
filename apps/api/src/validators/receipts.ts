@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
-const R2_KEY_REGEX = /^receipts\/\d+\/[\w-]+\.(jpeg|png|webp|heic)$/
+const R2_KEY_REGEX =
+  /^receipts\/\d+\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|jpeg|png|webp|heic|avif)$/
 
 const date = z.coerce.date().transform((d) => d.toISOString())
 
@@ -8,7 +9,7 @@ const _createReceiptBodySchema = z.object({
   storeId: z.number().int().positive(),
   totalAmount: z.number().gte(0),
   purchaseDate: date,
-  photoUrl: z.string().regex(R2_KEY_REGEX).optional(),
+  imageKey: z.string().regex(R2_KEY_REGEX).optional(),
   items: z
     .array(
       z.object({
