@@ -38,12 +38,7 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
     defaultValues,
   })
 
-  const onSubmit = async (data: CreateReceiptFormValues) => {
-    const payload = {
-      ...data,
-      purchaseDate: new Date(data.purchaseDate).toISOString(),
-    }
-
+  const onSubmit = async (payload: CreateReceiptFormValues) => {
     const result = await createReceiptAction(payload)
 
     if (result.success) reset()
@@ -66,6 +61,7 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
             label="Upload or drag and-drop scan/photo of receipt."
             className="h-96"
             accept="image/*"
+            alt="Receipt preview"
           />
         </div>
 
@@ -110,7 +106,7 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
               variant="outline"
               onClick={() => reset()}
             >
-              Cancel
+              Reset
             </Button>
             <Button
               type="submit"

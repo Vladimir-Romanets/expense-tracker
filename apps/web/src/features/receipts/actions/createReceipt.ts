@@ -15,12 +15,12 @@ export async function createReceiptAction({
 
     await serverApiClient('/receipts', {
       method: 'POST',
-      body: JSON.stringify({ ...data, photoUrl: imageKey || null }),
+      body: JSON.stringify({ ...data, photoUrl: imageKey ?? null }),
     })
     revalidatePath('/receipts')
+
     return { success: true }
   } catch (error) {
-    console.log(error)
     return prettierError(error)
   }
 }

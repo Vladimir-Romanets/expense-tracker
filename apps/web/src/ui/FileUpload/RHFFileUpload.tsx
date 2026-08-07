@@ -1,9 +1,14 @@
 'use client'
 
-import React, { useCallback, useState, useMemo } from 'react'
+import React, { useCallback, useState, useMemo, useEffect } from 'react'
 import { useController, UseControllerProps, FieldValues } from 'react-hook-form'
 import { Icon, Button } from '@/ui'
 import { cn } from '@/utils/cn'
+
+const stopEvent = (e: React.MouseEvent | React.DragEvent<HTMLLabelElement>) => {
+  e.preventDefault()
+  e.stopPropagation()
+}
 
 interface RHFFileUploadProps<
   T extends FieldValues,
@@ -11,6 +16,7 @@ interface RHFFileUploadProps<
   label?: string
   accept?: string
   className?: string
+  alt?: string
 }
 
 export function RHFFileUpload<T extends FieldValues>({
@@ -19,6 +25,7 @@ export function RHFFileUpload<T extends FieldValues>({
   label = 'Upload or drag and-drop scan/photo',
   accept = '*',
   className,
+  alt = 'Preview',
   ...props
 }: RHFFileUploadProps<T>) {
   const {
@@ -33,18 +40,15 @@ export function RHFFileUpload<T extends FieldValues>({
   const [isDragActive, setIsDragActive] = useState(false)
 
   const previewUrl = useMemo(() => {
-    if (
-      (value as any) instanceof File &&
-      (value as File).type.startsWith('image/')
-    ) {
-      return URL.createObjectURL(value as File)
-    }
-    return null
+    const file = value as unknown
+
+    return file instanceof File && file.type.startsWith('image/')
+      ? URL.createObjectURL(file)
+      : null
   }, [value])
 
   const handleDrag = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault()
-    e.stopPropagation()
+    stopEvent(e)
 
     if (e.type === 'dragenter' || e.type === 'dragover') {
       setIsDragActive(true)
@@ -55,19 +59,27 @@ export function RHFFileUpload<T extends FieldValues>({
 
   const handleDrop = useCallback(
     (e: React.DragEvent<HTMLLabelElement>) => {
-      e.preventDefault()
-      e.stopPropagation()
+      stopEvent(e)
       setIsDragActive(false)
       const file = e.dataTransfer.files?.[0]
 
+      if (accept !== '*') {
+        const accepted = accept.split(',').map((s) => s.trim())
+        const isAllowed = accepted.some((a) =>
+          a.endsWith('/*')
+            ? file.type.startsWith(a.slice(0, -1))
+            : file.type === a
+        )
+        if (!isAllowed) return
+      }
+
       if (file) onChange(file)
     },
-    [onChange]
+    [onChange, accept]
   )
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      e.preventDefault()
       const file = e.target.files?.[0]
 
       if (file) onChange(file)
@@ -77,12 +89,17 @@ export function RHFFileUpload<T extends FieldValues>({
 
   const handleRemove = useCallback(
     (e: React.MouseEvent) => {
-      e.preventDefault()
-      e.stopPropagation()
+      stopEvent(e)
       onChange(undefined)
     },
     [onChange]
   )
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl)
+    }
+  }, [previewUrl])
 
   return (
     <div className="flex flex-col">
@@ -106,10 +123,11 @@ export function RHFFileUpload<T extends FieldValues>({
         {value ? (
           <div className="relative flex size-full flex-col items-center justify-center">
             {previewUrl ? (
+              // next/image doesn't support blob: URLs — plain <img> is intentional here
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={previewUrl}
-                alt="Preview"
+                alt={alt}
                 className="max-h-full max-w-full rounded-lg object-contain"
               />
             ) : (
@@ -156,15 +174,16 @@ export function RHFFileUpload<T extends FieldValues>({
             >
               {label}
             </span>
-            <input
-              id={name}
-              type="file"
-              className="hidden"
-              onChange={handleChange}
-              accept={accept}
-            />
           </>
         )}
+        <input
+          id={name}
+          type="file"
+          className="hidden"
+          onChange={handleChange}
+          accept={accept}
+          disabled={value}
+        />
       </label>
       {error && (
         <span className="mt-2 text-sm text-red-500">{error.message}</span>
