@@ -3,7 +3,7 @@ import { z } from 'zod'
 const date = z.coerce.date().transform((d) => d.toISOString())
 
 export const createReceiptSchema = z.object({
-  receiptFile: z.any().optional(),
+  receiptFile: z.file().optional(),
   storeId: z.coerce.number().int().positive('Please select a store'),
   totalAmount: z.coerce.number().gte(0, 'Amount must be positive'),
   purchaseDate: date,
@@ -20,4 +20,3 @@ export const createReceiptSchema = z.object({
 })
 
 export type CreateReceiptFormValues = z.infer<typeof createReceiptSchema>
-export type CreateReceiptDto = Omit<CreateReceiptFormValues, 'receiptFile'>

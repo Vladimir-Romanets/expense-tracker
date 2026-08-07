@@ -1,0 +1,38 @@
+'use server'
+import { serverApiClient } from './apiClient.server'
+
+type SignedUploadResponse = {
+  uploadUrl: string
+  imageKey: string
+}
+
+export const fileUploader = async (
+  file: File
+): Promise<{ imageKey: string }> => {
+  const { uploadUrl, imageKey } = await serverApiClient<SignedUploadResponse>(
+    '/uploads/presigned-url',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        contentType: file.type,
+        fileSize: file.size,
+      }),
+    }
+  )
+
+  if (!uploadUrl) {
+    throw new Error('Failed to get upload URL')
+  }
+
+  const uploadRes = await fetch(uploadUrl, {
+    method: 'PUT',
+    headers: { 'Content-Type': file.type },
+    body: file,
+  })
+
+  if (!uploadRes.ok) {
+    throw new Error('Failed to upload to R2')
+  }
+
+  return { imageKey }
+}
