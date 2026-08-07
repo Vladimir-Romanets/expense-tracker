@@ -11,11 +11,13 @@ export async function createReceiptAction({
   ...data
 }: CreateReceiptFormValues) {
   try {
-    const { imageKey } = receiptFile ? await fileUploader(receiptFile) : {}
+    const { imageKey } = receiptFile
+      ? await fileUploader(receiptFile)
+      : { imageKey: null }
 
     await serverApiClient('/receipts', {
       method: 'POST',
-      body: JSON.stringify({ ...data, photoUrl: imageKey ?? null }),
+      body: JSON.stringify({ ...data, imageKey }),
     })
     revalidatePath('/receipts')
 

@@ -40,7 +40,7 @@ export const ReceiptsList = ({ receipts }: ReceiptsListProps) => {
               ${receipt.totalAmount}
             </Table.Cell>
             <Table.Cell>
-              {receipt.photoUrl && (
+              {receipt.imageKey && (
                 <span className="flex size-10 items-center justify-center rounded border border-slate-300 bg-slate-50">
                   <Icon
                     name="receipt"

@@ -9,6 +9,6 @@ export interface ReceiptEntity {
   store?: StoreEntity
   purchaseDate: string
   totalAmount: string
-  photoUrl?: string | null
+  imageKey?: string | null
   createdAt: string
 }
