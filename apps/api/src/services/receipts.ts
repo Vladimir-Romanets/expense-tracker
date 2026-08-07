@@ -15,7 +15,7 @@ type ReceiptsList = {
 } & Omit<ReceiptProps, 'createdAt' | 'userId' | 'storeId'>
 
 export const addFullReceiptData = async (
-  { storeId, totalAmount, purchaseDate, items }: CreateReceiptDto,
+  { storeId, totalAmount, photoUrl, purchaseDate, items }: CreateReceiptDto,
   userId: number,
 ) => {
   return db.transaction(async (tx) => {
@@ -25,6 +25,7 @@ export const addFullReceiptData = async (
         storeId,
         totalAmount: totalAmount.toFixed(2),
         purchaseDate,
+        photoUrl,
       },
       tx,
     )

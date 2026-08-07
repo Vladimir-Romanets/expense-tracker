@@ -6,6 +6,7 @@ const _createReceiptBodySchema = z.object({
   storeId: z.number().int().positive(),
   totalAmount: z.number().gte(0),
   purchaseDate: date,
+  photoUrl: z.string().optional(),
   items: z
     .array(
       z.object({

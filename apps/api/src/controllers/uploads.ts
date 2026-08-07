@@ -1,5 +1,5 @@
 import { Response } from 'express'
-import { PutObjectCommand } from '@aws-sdk/client-s3'
+import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { randomUUID } from 'crypto'
 import { r2Client, R2_BUCKET } from '@helpers/utils/r2'
@@ -23,3 +23,12 @@ export const uploadFile = asyncHandler(async (req: AuthRequest, res: Response) =
   const uploadUrl = await getSignedUrl(r2Client, command, { expiresIn: 300 })
   res.status(200).json({ uploadUrl, imageKey })
 })
+
+export const getImgLink = async (imageKey: string): Promise<string> => {
+  const command = new GetObjectCommand({
+    Bucket: R2_BUCKET,
+    Key: imageKey,
+  })
+
+  return await getSignedUrl(r2Client, command, { expiresIn: 900 })
+}
