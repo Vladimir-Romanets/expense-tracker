@@ -1,68 +1,13 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
-
-import { RHFInput } from './RHFInput'
-import { RHFPasswordInput } from './RHFPasswordInput'
-import {
-  registrationSchema,
-  type RegistrationSchemaProps,
-} from '../schemas/auth'
-import { registrationAction } from '../actions/register'
-import { useUserStore } from '@/stores/user'
+import { RHFInput } from '../ui/RHFInput'
+import { RHFPasswordInput } from '../ui/RHFPasswordInput'
+import { useRegistrationForm } from '../../hooks/useRegistrationForm'
 import { Button, Typography } from '@/ui'
 
-const defaultValues = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  repeatPassword: '',
-}
-
 const RegistrationForm = () => {
-  const router = useRouter()
-  const setUser = useUserStore((s) => s.setUser)
-  const {
-    control,
-    handleSubmit,
-    setError,
-    formState: { isSubmitting, errors },
-  } = useForm<RegistrationSchemaProps>({
-    resolver: zodResolver(registrationSchema),
-    defaultValues,
-  })
-
-  const onSubmit = handleSubmit(async (data: RegistrationSchemaProps) => {
-    const result = await registrationAction(data)
-
-    if (result?.success && result?.user) {
-      setUser(result.user)
-      router.push('/overview')
-      return
-    }
-
-    if (!result?.success) {
-      const fieldErrors = Object.entries(result?.errors || {})
-
-      fieldErrors.forEach(([field, message]) => {
-        setError(field as keyof RegistrationSchemaProps, {
-          type: 'server',
-          message: message,
-        })
-      })
-
-      if (!fieldErrors.length && result?.formError) {
-        setError('root', {
-          type: 'server',
-          message: result?.formError,
-        })
-      }
-      return
-    }
-  })
+  const { form, onSubmit } = useRegistrationForm()
+  const { control, formState: { isSubmitting, errors } } = form
 
   return (
     <form

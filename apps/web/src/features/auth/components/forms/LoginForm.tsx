@@ -1,37 +1,15 @@
 'use client'
 
-import { useActionState, useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
-import { PasswordInput } from './PasswordInput'
-import { Input } from './Input'
-import { loginAction, type LoginActionState } from '../actions/login'
+import { PasswordInput } from '../ui/PasswordInput'
+import { Input } from '../ui/Input'
+import { useLoginForm } from '../../hooks/useLoginForm'
 import { cn } from '@/utils/cn'
-import { useUserStore } from '@/stores/user'
 import { Button, Typography } from '@/ui'
 
-const initialState: LoginActionState = {
-  values: {},
-}
-
 const LoginForm = () => {
-  const [state, formAction, isPending] = useActionState(
-    loginAction,
-    initialState,
-    '/dashboard'
-  )
-  const router = useRouter()
-  const setUser = useUserStore((s) => s.setUser)
-
-  useEffect(() => {
-    if (state.success && state.user) {
-      setUser(state.user)
-      router.push('/overview')
-    }
-  }, [state, router, setUser])
-
-  const isFormInvalid = Boolean(state.formError)
+  const { state, formAction, isPending, isFormInvalid } = useLoginForm()
 
   return (
     <form

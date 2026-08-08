@@ -1,5 +1,5 @@
 import { getCategories } from '@/features/categories/actions/getCategories'
-import { CategoryGrid, AddCategoryForm } from '@/features/categories/components'
+import { CategoryGrid, AddCategoryForm } from '@/features/categories'
 import { Typography } from '@/ui'
 
 export default async function CategoriesPage() {

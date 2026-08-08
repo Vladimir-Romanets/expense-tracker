@@ -1,40 +1,15 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-
 import { RHFInput, Button } from '@/ui'
-import { addCategory } from '../actions/addCategory'
-import { setFormErrors } from '@/utils/setFormErrors'
-
-const schema = z.object({
-  name: z.string().min(3, 'Name must be at least 3 characters'),
-})
-
-type FormValues = z.infer<typeof schema>
+import { useAddCategoryForm } from '../../hooks/useAddCategoryForm'
 
 export const AddCategoryForm = () => {
+  const { form, onSubmit } = useAddCategoryForm()
   const {
     control,
     handleSubmit,
-    setError,
-    reset,
     formState: { isSubmitting, errors },
-  } = useForm<FormValues>({
-    resolver: zodResolver(schema),
-    defaultValues: { name: '' },
-  })
-
-  const onSubmit = async (values: FormValues) => {
-    const result = await addCategory(values)
-
-    if (!result.success && 'errors' in result) {
-      setFormErrors(setError, { ...result })
-    } else {
-      reset()
-    }
-  }
+  } = form
 
   return (
     <form
