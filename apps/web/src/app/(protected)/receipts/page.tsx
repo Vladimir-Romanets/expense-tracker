@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Typography } from '@/ui'
 import { getReceipts } from '@/features/receipts/actions/getReceipts'
-import { ReceiptsList } from '@/features/receipts/components'
+import { ReceiptsList } from '@/features/receipts'
 
 export const metadata: Metadata = {
   title: 'Receipts',

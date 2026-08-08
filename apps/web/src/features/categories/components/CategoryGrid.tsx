@@ -1,7 +1,7 @@
 'use client'
 
 import { CategoryEntity } from '../types'
-import { CategoryCard } from './CategoryCard'
+import { CategoryCard } from './ui/CategoryCard'
 import { deleteCategory } from '../actions/deleteCategory'
 
 type Props = {

@@ -1,53 +1,21 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { RHFInput, RHFSelect, Button, RHFFileUpload } from '@/ui'
 import { ReceiptItemsGrid } from './ReceiptItemsGrid'
-import { createReceiptSchema, type CreateReceiptFormValues } from '../schemas'
-import { createReceiptAction } from '../actions/createReceipt'
-import { setFormErrors } from '@/utils/setFormErrors'
+import type { CreateReceiptFormValues } from '../../schemas'
+import { useCreateReceiptForm } from '../../hooks/useCreateReceiptForm'
 
 interface CreateReceiptFormProps {
   stores: { value: number; label: string }[]
 }
 
-const defaultValues = {
-  storeId: undefined,
-  totalAmount: '' as unknown as number,
-  items: [
-    {
-      name: '',
-      totalPrice: '' as unknown as number,
-      quantity: '' as unknown as number,
-      unitPrice: '' as unknown as number,
-    },
-  ],
-}
-
 export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
+  const { form, onSubmit, handleReset } = useCreateReceiptForm()
   const {
     control,
-    reset,
     handleSubmit,
-    setError,
     formState: { errors, isSubmitting, isDirty },
-  } = useForm<CreateReceiptFormValues>({
-    resolver: zodResolver(createReceiptSchema as any),
-    defaultValues: {
-      ...defaultValues,
-      purchaseDate: new Date().toISOString().slice(0, 16),
-    },
-  })
-
-  const onSubmit = async (payload: CreateReceiptFormValues) => {
-    const result = await createReceiptAction(payload)
-
-    if (result.success) reset()
-    else if ('errors' in result) {
-      setFormErrors(setError, { ...result })
-    }
-  }
+  } = form
 
   return (
     <form
@@ -105,12 +73,7 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
             <Button
               type="button"
               variant="outline"
-              onClick={() =>
-                reset({
-                  ...defaultValues,
-                  purchaseDate: new Date().toISOString().slice(0, 16),
-                })
-              }
+              onClick={handleReset}
             >
               Reset
             </Button>

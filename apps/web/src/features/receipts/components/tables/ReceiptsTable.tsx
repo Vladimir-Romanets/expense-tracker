@@ -1,7 +1,7 @@
 import { Button, Icon, Table } from '@/ui'
-import type { ReceiptEntity } from '../types'
-import { receiptsFormatter } from '../utils/receiptListFormatter'
-import { ButtonReceiptDelete } from './ButtonReceiptDelete'
+import type { ReceiptEntity } from '../../types'
+import { receiptsFormatter } from '../../utils/receiptListFormatter'
+import { ButtonReceiptDelete } from '../ui/ButtonReceiptDelete'
 
 export interface Props {
   receipts: ReceiptEntity[]

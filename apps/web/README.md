@@ -41,15 +41,18 @@ src/
 │   ├── layout.tsx
 │   └── page.tsx          # Landing / Home page
 ├── features/             # Self-contained domain modules
-│   ├── auth/             # Auth domain
-│   │   ├── actions/      # Server Actions (login, register)
-│   │   ├── components/   # Auth forms and auth-specific inputs
-│   │   ├── schemas/      # Zod validation schemas
-│   │   └── index.ts      # Public feature exports
-│   ├── overview/         # Dashboard / Overview feature (planned)
-│   ├── receipt/          # Receipts CRUD feature (planned)
-│   ├── categories/       # Categories CRUD feature (planned)
-│   └── profile/          # User profile feature (planned)
+│   ├── [feature-name]/   # Example feature module (auth, receipts, categories)
+│   │   ├── actions/      # Server Actions (e.g., fetch, mutate)
+│   │   ├── components/   # UI layer
+│   │   │   ├── forms/    # Smart forms (e.g., LoginForm)
+│   │   │   ├── modals/   # Feature-specific modals
+│   │   │   ├── tables/   # Feature-specific tables
+│   │   │   └── ui/       # Dumb/presentational feature-specific components
+│   │   ├── context/      # React Context providers for the feature
+│   │   ├── hooks/        # Custom hooks containing business logic
+│   │   ├── schemas.ts    # Zod validation schemas
+│   │   ├── types.ts      # TypeScript interfaces and types
+│   │   └── index.ts      # Strict Public API (exports only what is needed outside)
 ├── ui/                   # Shared design system components (Button, Hero, Typography, Link)
 └── lib/                  # Shared infrastructure & utilities
     ├── utils/            # Shared error formatters and helpers
@@ -61,8 +64,11 @@ src/
 
 1. **App Router Boundary (`src/app/`)**: `src/app/` handles routing, layouts, and page entry points. Pages delegate UI rendering and business logic to `features/` or `ui/`.
 2. **Feature Co-location (`src/features/`)**: Everything specific to a business feature (components, server actions, Zod schemas, types) lives inside `features/<feature-name>/`.
-3. **Feature Isolation**: Feature-specific UI controls (e.g. Auth pill inputs) reside inside their respective feature folder rather than global `ui/`.
-4. **Global Design System (`src/ui/`)**: `src/ui/` contains reusable, domain-agnostic UI primitives used across multiple features.
+3. **Separation of Concerns (Inside Features)**: 
+   - **Business Logic**: Extracted into custom hooks (`hooks/`) to keep components clean.
+   - **Component Hierarchy**: `components/` is subdivided into logical groups (`forms/`, `ui/`, `modals/`, `tables/`).
+4. **Strict Public API**: Each feature exposes its public interface strictly through `index.ts`. Deep imports into a feature's internal structure from outside are forbidden.
+5. **Feature Isolation vs Global UI**: Feature-specific UI controls reside inside their respective feature's `components/ui/` folder, while domain-agnostic UI primitives live in the global `src/ui/`.
 
 ---
 

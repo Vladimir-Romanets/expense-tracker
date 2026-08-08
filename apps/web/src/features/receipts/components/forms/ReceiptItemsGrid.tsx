@@ -2,7 +2,7 @@
 
 import { useFieldArray, type Control, type FieldErrors } from 'react-hook-form'
 import { RHFInput, Button, Icon } from '@/ui/'
-import type { CreateReceiptFormValues } from '../schemas'
+import type { CreateReceiptFormValues } from '../../schemas'
 
 interface ReceiptItemsGridProps {
   control: Control<CreateReceiptFormValues>

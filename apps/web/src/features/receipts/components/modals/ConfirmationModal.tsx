@@ -1,9 +1,9 @@
 'use client'
 
 import { startTransition, useState } from 'react'
-import { useReceiptsContext } from './ReceiptsListProvider'
+import { useReceiptsContext } from '../../context/ReceiptsListProvider'
 import { Button, Icon, Modal, Typography } from '@/ui'
-import { deleteReceipt } from '../actions/deleteReceipt'
+import { deleteReceipt } from '../../actions/deleteReceipt'
 
 export const ConfirmationModal = () => {
   const [errMsg, setErrMsg] = useState('')
