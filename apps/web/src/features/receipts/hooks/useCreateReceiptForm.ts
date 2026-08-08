@@ -32,7 +32,7 @@ export const useCreateReceiptForm = () => {
     if (result.success) {
       form.reset()
     } else if ('errors' in result) {
-      setFormErrors(form.setError, { ...result })
+      setFormErrors(form.setError, result)
     }
   }
 

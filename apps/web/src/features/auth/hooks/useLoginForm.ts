@@ -11,7 +11,7 @@ export const useLoginForm = () => {
   const [state, formAction, isPending] = useActionState(
     loginAction,
     initialState,
-    '/dashboard'
+    '/overview'
   )
   const router = useRouter()
   const setUser = useUserStore((s) => s.setUser)

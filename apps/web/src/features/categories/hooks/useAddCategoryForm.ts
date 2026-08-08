@@ -14,7 +14,7 @@ export const useAddCategoryForm = () => {
     const result = await addCategory(values)
 
     if (!result.success && 'errors' in result) {
-      setFormErrors(form.setError, { ...result })
+      setFormErrors(form.setError, result)
     } else {
       form.reset()
     }

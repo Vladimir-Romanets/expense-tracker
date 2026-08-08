@@ -7,6 +7,7 @@ import {
 } from '../schemas/auth'
 import { registrationAction } from '../actions/register'
 import { useUserStore } from '@/stores/user'
+import { setFormErrors } from '@/utils/setFormErrors'
 
 const defaultValues = {
   firstName: '',
@@ -19,7 +20,7 @@ const defaultValues = {
 export const useRegistrationForm = () => {
   const router = useRouter()
   const setUser = useUserStore((s) => s.setUser)
-  
+
   const form = useForm<RegistrationSchemaProps>({
     resolver: zodResolver(registrationSchema),
     defaultValues,
@@ -35,22 +36,7 @@ export const useRegistrationForm = () => {
     }
 
     if (!result?.success) {
-      const fieldErrors = Object.entries(result?.errors || {})
-
-      fieldErrors.forEach(([field, message]) => {
-        form.setError(field as keyof RegistrationSchemaProps, {
-          type: 'server',
-          message: message as string,
-        })
-      })
-
-      if (!fieldErrors.length && result?.formError) {
-        form.setError('root', {
-          type: 'server',
-          message: result?.formError,
-        })
-      }
-      return
+      setFormErrors(form.setError, result)
     }
   })
 
