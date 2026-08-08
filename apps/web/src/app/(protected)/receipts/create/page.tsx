@@ -1,4 +1,4 @@
-import { CreateReceiptForm } from '@/features/receipts/components/CreateReceiptForm'
+import { CreateReceiptForm } from '@/features/receipts/components'
 import { getStores } from '@/features/markets/action/getStores'
 
 export default async function CreateReceiptPage() {

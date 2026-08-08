@@ -18,7 +18,7 @@ export const SidebarNav = ({ className }: Props) => {
       className={className}
     >
       <ul
-        className="flex flex-col gap-3"
+        className="flex flex-col gap-2"
         role="list"
       >
         {SIDEBAR_MENU_ITEMS.map((item) => {
