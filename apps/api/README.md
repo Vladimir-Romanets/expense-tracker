@@ -78,16 +78,16 @@ db/              — Drizzle instance, schema & relations
 
 Absolute imports are used throughout to avoid deep relative paths:
 
-| Alias | Resolved path |
-|---|---|
-| `@db` | `src/db/index` |
-| `@db/*` | `src/db/*` |
-| `@routes` | `src/routes/index` |
-| `@controllers` | `src/controllers/index` |
-| `@services` | `src/services/index` |
-| `@models` | `src/models/index` |
-| `@middleware/*` | `src/middleware/*` |
-| `@validators/*` | `src/validators/*` |
+| Alias           | Resolved path           |
+| --------------- | ----------------------- |
+| `@db`           | `src/db/index`          |
+| `@db/*`         | `src/db/*`              |
+| `@routes`       | `src/routes/index`      |
+| `@controllers`  | `src/controllers/index` |
+| `@services`     | `src/services/index`    |
+| `@models`       | `src/models/index`      |
+| `@middleware/*` | `src/middleware/*`      |
+| `@validators/*` | `src/validators/*`      |
 
 ---
 
@@ -115,6 +115,11 @@ The file contains the following configuration variables:
 - `JWT_SECRET`: Secret key used for signing and verifying JWT tokens.
 - `JWT_EXPIRES_IN`: JWT token expiry duration (e.g. `1h`, `7d`, `30m`). Defaults to `1h` if not set.
 - `COOKIE_MAX_AGE`: Cookie expiration time in milliseconds (e.g. `3600000` for 1 hour). Defaults to `3600000`.
+- `RATE_LIMIT_WINDOW_MS`: Time window for rate limiting in milliseconds (defaults to `900000` / 15 minutes).
+- `RATE_LIMIT_MAX_REQUESTS`: Maximum number of requests allowed per window for general API endpoints (defaults to `100`).
+- `LOGIN_RATE_LIMIT_MAX`: Maximum number of authentication attempts allowed per window for the `/login` route (defaults to `3`).
+- `REGISTER_RATE_LIMIT_MAX`: Maximum number of registration attempts allowed per window for the `/register` route (defaults to `5`).
+- `UPLOAD_RATE_LIMIT_MAX`: Maximum number of requests allowed per window for file upload routes (defaults to `10`).
 - `R2_ACCOUNT_ID`: Cloudflare account ID (found in the Cloudflare dashboard).
 - `R2_ACCESS_KEY_ID`: Cloudflare R2 API token Access Key ID.
 - `R2_SECRET_ACCESS_KEY`: Cloudflare R2 API token Secret Access Key.
@@ -131,6 +136,7 @@ docker compose up -d
 ```
 
 This starts:
+
 - **PostgreSQL** container (`pgdb`) on port `5432`
 - **Adminer** container on port `8080` (accessible at `http://127.0.0.1:8080`)
 - **API** container on port `3001` (accessible at `http://127.0.0.1:3001`)
@@ -141,20 +147,19 @@ This starts:
 
 Full API documentation will be available via Swagger / OpenAPI. For now, refer to the route definitions in [`src/routes/`](./src/routes/) and the corresponding validators in [`src/validators/`](./src/validators/).
 
-
 ## Database Migrations
 
 Migrations are managed via [Drizzle Kit](https://orm.drizzle.team/docs/kit-overview). All SQL files are generated from the schema defined in [`src/db/schema.ts`](./src/db/schema.ts) and stored in the `drizzle/` directory.
 
 ### Scripts
 
-| Script | Command | Description |
-|---|---|---|
-| `db:generate` | `drizzle-kit generate` | Generates SQL migration files based on schema changes |
-| `db:migrate` | `drizzle-kit migrate` | Applies migrations directly to the database (used in production) |
+| Script              | Command                                            | Description                                                                |
+| ------------------- | -------------------------------------------------- | -------------------------------------------------------------------------- |
+| `db:generate`       | `drizzle-kit generate`                             | Generates SQL migration files based on schema changes                      |
+| `db:migrate`        | `drizzle-kit migrate`                              | Applies migrations directly to the database (used in production)           |
 | `db:migrate:docker` | `docker compose exec api pnpm drizzle-kit migrate` | Applies migrations inside the running `api` container (used for local dev) |
-| `db:check` | `drizzle-kit check` | Validates migration consistency (no conflicts, correct order) |
-| `db:studio` | `drizzle-kit studio` | Opens a browser-based GUI for viewing and editing database data |
+| `db:check`          | `drizzle-kit check`                                | Validates migration consistency (no conflicts, correct order)              |
+| `db:studio`         | `drizzle-kit studio`                               | Opens a browser-based GUI for viewing and editing database data            |
 
 ### Typical Workflow
 
