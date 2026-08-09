@@ -2,6 +2,12 @@ import express from 'express'
 
 import { validate } from '@middleware/validate'
 import { authenticate } from '@middleware/authenticate'
+import {
+  globalLimiter,
+  loginLimiter,
+  registerLimiter,
+  uploadLimiter,
+} from '@middleware/rateLimiter'
 import { registerUserSchema, loginUserSchema } from '@validators/auth'
 import { authController } from '@controllers'
 import storesRouter from './stores'
@@ -12,9 +18,12 @@ import uploadFileRoute from './uploads'
 
 const router = express.Router()
 
+// Apply global rate limiter to all API routes
+router.use(globalLimiter)
+
 // Public routes (no auth required)
-router.post('/register', validate(registerUserSchema), authController.register)
-router.post('/login', validate(loginUserSchema), authController.login)
+router.post('/register', registerLimiter, validate(registerUserSchema), authController.register)
+router.post('/login', loginLimiter, validate(loginUserSchema), authController.login)
 router.post('/logout', authController.logout) // Intentionally public — clears cookie even for invalid/expired sessions
 
 // Protected routes
@@ -23,7 +32,7 @@ router.use('/stores', storesRouter)
 router.use('/categories', categoriesRouter)
 router.use('/receipts', receiptsRouter)
 router.use('/products', productsRouter)
-router.use('/uploads', uploadFileRoute)
+router.use('/uploads', uploadLimiter, uploadFileRoute)
 
 router.use((req, res) => {
   res.status(404).json({
