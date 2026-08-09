@@ -2,12 +2,7 @@ import express from 'express'
 
 import { validate } from '@middleware/validate'
 import { authenticate } from '@middleware/authenticate'
-import {
-  globalLimiter,
-  loginLimiter,
-  registerLimiter,
-  uploadLimiter,
-} from '@middleware/rateLimiter'
+import { loginLimiter, registerLimiter, uploadLimiter } from '@middleware/rateLimiter'
 import { registerUserSchema, loginUserSchema } from '@validators/auth'
 import { authController } from '@controllers'
 import storesRouter from './stores'
@@ -17,9 +12,6 @@ import productsRouter from './products'
 import uploadFileRoute from './uploads'
 
 const router = express.Router()
-
-// Apply global rate limiter to all API routes
-router.use(globalLimiter)
 
 // Public routes (no auth required)
 router.post('/register', registerLimiter, validate(registerUserSchema), authController.register)
