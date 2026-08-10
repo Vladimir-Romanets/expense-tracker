@@ -45,16 +45,16 @@
     "typescript": "^5",
     "storybook": "^10.5.7",
     "@storybook/nextjs-vite": "^10.5.7",
-    "@chromatic-com/storybook": "^3.x.x",
+    "@chromatic-com/storybook": "latest",
     "@storybook/addon-vitest": "^10.5.7",
     "@storybook/addon-a11y": "^10.5.7",
     "@storybook/addon-docs": "^10.5.7",
-    "@storybook/addon-mcp": "^10.5.7",
-    "vite": "^6.x.x",
+    "@storybook/addon-mcp": "latest",
+    "vite": "^8.x.x",
     "eslint-plugin-storybook": "^10.5.7",
-    "vitest": "^3.x.x",
+    "vitest": "^4.x.x",
     "playwright": "^1.x.x",
-    "@vitest/browser-playwright": "^3.x.x",
-    "@vitest/coverage-v8": "^3.x.x"
+    "@vitest/browser-playwright": "^4.x.x",
+    "@vitest/coverage-v8": "^4.x.x"
   }
 }
