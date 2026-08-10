@@ -7,7 +7,7 @@ import { setFormErrors } from '@/utils/setFormErrors'
 export const useAddCategoryForm = () => {
   const form = useForm<AddCategoryFormValues>({
     resolver: zodResolver(addCategorySchema),
-    defaultValues: { name: '' },
+    defaultValues: { name: '', description: '' },
   })
 
   const onSubmit = async (values: AddCategoryFormValues) => {
