@@ -5,6 +5,8 @@
 [![Tailwind CSS][tailwind-badge]][tailwind-url]
 [![TypeScript][typescript-badge]][typescript-url]
 [![Zustand][zustand-badge]][zustand-url]
+[![Storybook][storybook-badge]][storybook-url]
+
 
 This is the frontend client for the Expense Tracker application. Built on Next.js, it provides a dashboard for detailed purchase entry, price dynamics visualization, and budget limit monitoring.
 
@@ -17,6 +19,7 @@ This is the frontend client for the Expense Tracker application. Built on Next.j
 - **State Management**: Zustand
 - **Linter**: ESLint 9 (Flat Config) + `eslint-plugin-tailwindcss`
 - **Formatter**: Prettier
+- **UI Explorer**: Storybook
 
 ---
 
@@ -155,6 +158,18 @@ pnpm lint:sort
 > `positioning → layout → spacing → visual → typography`.
 > Runs automatically on save if you use the VS Code Prettier + ESLint extensions.
 
+### Storybook (UI Component Explorer)
+
+Storybook is set up to develop and test UI components in isolation. It includes global styles and automatically discovers stories matching `*.stories.tsx` across the application.
+
+Start the Storybook development server:
+
+```bash
+pnpm storybook
+```
+
+This will launch Storybook locally, accessible at [http://localhost:6006](http://localhost:6006).
+
 ---
 
 ## Code Conventions
@@ -182,3 +197,6 @@ VS Code auto-format on save is pre-configured in `.vscode/settings.json`.
 [typescript-url]: https://www.typescriptlang.org
 [zustand-badge]: https://img.shields.io/badge/zustand-%2320232a.svg?style=for-the-badge&logoColor=white
 [zustand-url]: https://zustand-demo.pmnd.rs
+[storybook-badge]: https://img.shields.io/badge/storybook-%23FF4785.svg?style=for-the-badge&logo=storybook&logoColor=white
+[storybook-url]: https://storybook.js.org
+
