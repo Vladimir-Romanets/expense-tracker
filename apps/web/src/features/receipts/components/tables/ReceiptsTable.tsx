@@ -18,7 +18,7 @@ export const ReceiptsTable = ({ receipts }: Props) => {
             <div className="flex items-center gap-1">
               Date
               <Icon
-                name="arrowDown"
+                name="arrow-down"
                 aria-hidden="true"
                 size={16}
               />
