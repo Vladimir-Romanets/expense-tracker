@@ -9,7 +9,7 @@ type Props = {
 }
 
 export const CategoryGrid = ({ categories }: Props) => (
-  <ul className="grid grid-cols-1 gap-2.5 md:grid-cols-2 lg:grid-cols-4">
+  <ul className="grid grid-cols-1 gap-2.5 md:grid-cols-2 xl:grid-cols-4">
     {categories.map((card) => (
       <CategoryCard
         key={card.id}

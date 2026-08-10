@@ -1,8 +1,9 @@
-import clsx from 'clsx'
-import { Icon, Button } from '@/ui'
+import { Icon, Button, Typography } from '@/ui'
+import { cn } from '@/utils/cn'
 
 export type CategoryCardProps = {
   name: string
+  description?: string
   id: number
   onEdit?: (id: number) => void
   onDelete?: (id: number) => void
@@ -14,16 +15,16 @@ export const CategoryCard = ({
   id,
   name,
   iconName,
+  description,
   onEdit,
   onDelete,
   className,
 }: CategoryCardProps) => {
   return (
     <li
-      className={clsx(
-        'group relative flex flex-col items-center justify-center rounded-xl border border-surface-border bg-white p-6 transition-all duration-200',
-        'focus-within:bg-surface-bg focus-within:shadow-md hover:bg-surface-bg hover:shadow-md',
-        'aspect-4/3 w-full',
+      className={cn(
+        'group relative rounded-xl border border-surface-border bg-white p-3 transition-all duration-200 md:p-6',
+        'w-full focus-within:bg-surface-bg focus-within:shadow-md hover:bg-surface-bg hover:shadow-md',
         className
       )}
     >
@@ -72,7 +73,21 @@ export const CategoryCard = ({
             <div className="size-full bg-gray-200" />
           )}
         </div>
-        <span className="text-base font-semibold text-primary">{name}</span>
+        <Typography
+          as="p"
+          variant="p"
+          weight="semibold"
+          className="w-full truncate text-center text-primary"
+        >
+          {name}
+        </Typography>
+        <Typography
+          as="p"
+          variant="small"
+          className="line-clamp-3 w-full text-gray-500"
+        >
+          {description || 'No description provided'}
+        </Typography>
       </div>
     </li>
   )
