@@ -14,7 +14,9 @@
     "lint:fix": "eslint . --fix",
     "lint:sort": "eslint . --fix --rule 'tailwindcss/classnames-order: warn'",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.5.7",
@@ -40,6 +42,19 @@
     "next-devtools-mcp": "^0.4.0",
     "prettier": "^3.9.5",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "storybook": "^10.5.7",
+    "@storybook/nextjs-vite": "^10.5.7",
+    "@chromatic-com/storybook": "latest",
+    "@storybook/addon-vitest": "^10.5.7",
+    "@storybook/addon-a11y": "^10.5.7",
+    "@storybook/addon-docs": "^10.5.7",
+    "@storybook/addon-mcp": "latest",
+    "vite": "^8.x.x",
+    "eslint-plugin-storybook": "^10.5.7",
+    "vitest": "^4.x.x",
+    "playwright": "^1.x.x",
+    "@vitest/browser-playwright": "^4.x.x",
+    "@vitest/coverage-v8": "^4.x.x"
   }
 }
