@@ -16,3 +16,5 @@ export interface PaginationParams {
   page?: number
   limit?: number
 }
+
+export type SearchParams = Record<string, string | string[] | undefined>
