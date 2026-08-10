@@ -34,6 +34,7 @@ export const categories = pgTable(
   {
     id: serial().primaryKey(),
     name: varchar({ length: 100 }).notNull(),
+    description: varchar({ length: 255 }),
   },
   (table) => [uniqueIndex('categories_name_unique_idx').on(sql`lower(${table.name})`)],
 )
@@ -55,7 +56,7 @@ export const receipts = pgTable('receipts', {
     .references(() => stores.id),
   purchaseDate: date('purchase_date').notNull(),
   totalAmount: numeric('total_amount', { precision: 10, scale: 2 }).notNull(),
-  imageKey: varchar('image_key', { length: 500 }),
+  imageKey: varchar('image_key', { length: 100 }),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 })
 
