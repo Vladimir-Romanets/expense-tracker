@@ -11,7 +11,7 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
-    onPageChange: fn(),
+    createPageUrl: (page) => `?page=${page}`,
   },
 } satisfies Meta<typeof Pagination>
 
@@ -76,38 +76,5 @@ export const WithLinks: Story = {
       page: 5,
       hasPrevPage: true,
     },
-    createPageUrl: (page: number) => `?page=${page}`,
-  },
-}
-
-// --- INTERACTIVE VERSION (For Testing) ---
-
-export const Interactive: Story = {
-  // Required by TS because 'meta' is a required prop in PaginationProps
-  args: {
-    meta: defaultMeta,
-  },
-  render: function Render() {
-    const [page, setPage] = useState(1)
-    const totalPages = 15
-
-    return (
-      <div className="flex flex-col items-center gap-4">
-        <Pagination
-          meta={{
-            page,
-            limit: 10,
-            total: 145,
-            totalPages,
-            hasNextPage: page < totalPages,
-            hasPrevPage: page > 1,
-          }}
-          onPageChange={setPage}
-        />
-        <div className="text-sm text-gray-500">
-          Current page: <strong>{page}</strong>
-        </div>
-      </div>
-    )
   },
 }

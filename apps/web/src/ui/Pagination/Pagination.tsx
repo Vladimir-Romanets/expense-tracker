@@ -6,8 +6,7 @@ import { PaginatedMeta } from '@/types/pagination'
 export type PaginationProps = {
   meta: PaginatedMeta
   className?: string
-  createPageUrl?: (page: number) => string
-  onPageChange?: (page: number) => void
+  createPageUrl: (page: number) => string
 }
 
 const DOTS = '...'
@@ -47,7 +46,6 @@ const generatePagination = (currentPage: number, totalPages: number) => {
 export const Pagination = ({
   meta,
   createPageUrl,
-  onPageChange,
   className,
 }: PaginationProps) => {
   const { page: currentPage, totalPages, hasNextPage, hasPrevPage } = meta
@@ -67,7 +65,6 @@ export const Pagination = ({
         page={currentPage - 1}
         isDisabled={!hasPrevPage}
         createPageUrl={createPageUrl}
-        onPageChange={onPageChange}
         aria-label="Previous page"
       >
         <Icon
@@ -95,7 +92,6 @@ export const Pagination = ({
             page={pageNum}
             isActive={pageNum === currentPage}
             createPageUrl={createPageUrl}
-            onPageChange={onPageChange}
           >
             {pageNum}
           </PageItem>
@@ -106,7 +102,6 @@ export const Pagination = ({
         page={currentPage + 1}
         isDisabled={!hasNextPage}
         createPageUrl={createPageUrl}
-        onPageChange={onPageChange}
         aria-label="Next page"
       >
         <Icon
