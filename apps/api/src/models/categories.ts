@@ -11,6 +11,7 @@ export const getAllCategories = async ({ limit, offset }: PaginationResult) => {
     .select({
       id: categories.id,
       name: categories.name,
+      description: categories.description,
     })
     .from(categories)
     .orderBy(asc(categories.name))

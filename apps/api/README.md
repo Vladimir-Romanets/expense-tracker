@@ -158,6 +158,9 @@ Migrations are managed via [Drizzle Kit](https://orm.drizzle.team/docs/kit-overv
 | `db:generate`       | `drizzle-kit generate`                             | Generates SQL migration files based on schema changes                      |
 | `db:migrate`        | `drizzle-kit migrate`                              | Applies migrations directly to the database (used in production)           |
 | `db:migrate:docker` | `docker compose exec api pnpm drizzle-kit migrate` | Applies migrations inside the running `api` container (used for local dev) |
+| `db:seed`           | `ts-node-dev ... src/db/seed.ts`                   | Populates the database with initial reference data (seeds) locally         |
+| `db:seed:docker`    | `docker compose exec api pnpm db:seed`             | Runs the seed script inside the Docker container                           |
+| `db:seed:prod`      | `node dist/db/seed.js`                             | Populates the database with reference data in production (requires build)  |
 | `db:check`          | `drizzle-kit check`                                | Validates migration consistency (no conflicts, correct order)              |
 | `db:studio`         | `drizzle-kit studio`                               | Opens a browser-based GUI for viewing and editing database data            |
 
@@ -180,6 +183,15 @@ Migrations are managed via [Drizzle Kit](https://orm.drizzle.team/docs/kit-overv
    - **Production**: Apply directly to the database:
      ```bash
      pnpm db:migrate
+     ```
+5. Seed the database with initial reference data:
+   - **Local Development**: Seed inside Docker (after applying migrations):
+     ```bash
+     pnpm db:seed:docker
+     ```
+   - **Production**: Seed directly to the database (requires `pnpm build` first):
+     ```bash
+     pnpm db:seed:prod
      ```
 
 > **Important:** To run migrations in production using `pnpm db:migrate`, the `DATABASE_URL` environment variable must be populated in `.env` with a connection string pointing to the real database.
