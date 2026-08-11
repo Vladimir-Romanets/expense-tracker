@@ -1,11 +1,16 @@
 import { getCategories } from '@/features/categories/actions/getCategories'
-import { CategoryList, AddCategoryForm } from '@/features/categories'
+import { CategoryList } from '@/features/categories'
 import { Typography } from '@/ui'
 import { createPageUrl } from '@/lib/createPageUrl'
 import { SearchParams } from '@/types/pagination'
+import { Metadata } from 'next'
 
 type Props = {
   searchParams: Promise<SearchParams>
+}
+
+export const metadata: Metadata = {
+  title: 'Category | Expense Tracker',
 }
 
 const CategoriesPage = async ({ searchParams }: Props) => {
@@ -19,7 +24,6 @@ const CategoriesPage = async ({ searchParams }: Props) => {
 
   return (
     <div className="rounded-2xl border border-surface-border bg-surface-card p-8 shadow-xs">
-      <AddCategoryForm />
       {response.data.length ? (
         <CategoryList
           {...response}

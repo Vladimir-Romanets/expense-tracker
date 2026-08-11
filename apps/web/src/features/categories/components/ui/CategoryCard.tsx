@@ -1,23 +1,19 @@
-import { Icon, Button, Typography } from '@/ui'
+import Image from 'next/image'
+import { Typography } from '@/ui'
 import { cn } from '@/utils/cn'
+import { CategoryEntity } from '../../types'
+import { CategoryCardActions } from './CategoryCardActions'
 
 export type CategoryCardProps = {
-  name: string
-  description?: string
-  id: number
-  onEdit?: (id: number) => void
-  onDelete?: (id: number) => void
-  iconName?: string
   className?: string
-}
+} & CategoryEntity
 
 export const CategoryCard = ({
   id,
   name,
-  iconName,
+  imageKey,
   description,
-  onEdit,
-  onDelete,
+  isSystem,
   className,
 }: CategoryCardProps) => {
   return (
@@ -28,47 +24,20 @@ export const CategoryCard = ({
         className
       )}
     >
-      <div className="absolute top-3 right-3 flex gap-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100 focus-within:opacity-100">
-        {onEdit && (
-          <Button
-            variant="primary"
-            size="icon"
-            shape="pill"
-            onClick={() => onEdit(id)}
-            aria-label="Edit category"
-            className="shadow-sm transition-transform hover:scale-110"
-          >
-            <Icon
-              name="edit"
-              size={16}
-            />
-          </Button>
-        )}
-        {onDelete && (
-          <Button
-            variant="destructive"
-            size="icon"
-            shape="pill"
-            onClick={() => onDelete(id)}
-            aria-label="Delete category"
-            className="shadow-sm transition-transform hover:scale-110"
-          >
-            <Icon
-              name="trash"
-              size={16}
-            />
-          </Button>
-        )}
-      </div>
+      {!isSystem && <CategoryCardActions categoryId={id} />}
 
-      {/* Main Content */}
       <div className="flex flex-col items-center gap-4">
-        <div className="flex size-16 items-center justify-center overflow-hidden rounded-2xl bg-brand-50 text-brand-500">
-          {iconName ? (
-            <Icon
-              name={iconName}
-              size={40}
-            />
+        <div className="flex size-24 overflow-hidden rounded-2xl border border-surface-border bg-brand-50 p-4 text-brand-500">
+          {imageKey ? (
+            <span className="relative flex-1">
+              <Image
+                src={imageKey}
+                alt={`Icon ${name}`}
+                fill
+                className="size-full object-scale-down"
+                sizes="64px"
+              />
+            </span>
           ) : (
             <div className="size-full bg-gray-200" />
           )}

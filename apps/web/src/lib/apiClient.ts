@@ -8,12 +8,18 @@ export type FetchOptions = RequestInit & {
   params?: Record<string, string | number>
 }
 
-export class ApiError extends Error {
+class ApiError extends Error {
+  status: number
   errors?: Record<string, string>
 
-  constructor(message: string, errors?: Record<string, string>) {
+  constructor(
+    message: string,
+    status: number,
+    errors?: Record<string, string>
+  ) {
     super(message)
     this.name = 'ApiError'
+    this.status = status
     this.errors = errors
   }
 }
@@ -40,52 +46,74 @@ export const prettierError = (error: unknown) => {
   }
 }
 
+function getBaseUrl(): string {
+  const baseUrl = process.env.API_URL
+
+  if (!baseUrl) {
+    throw new ApiError('API_URL is not set', 500)
+  }
+
+  return baseUrl
+}
+
 export async function apiClientWithHeaders(
   endpoint: string,
   options: FetchOptions = {}
 ): Promise<Response> {
+  const baseUrl = getBaseUrl()
   const { params, headers, method = 'GET', ...customConfig } = options
 
-  let url = `${API_BASE_URL}/api${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
+  let url = `${baseUrl}/api${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
 
   if (params) {
     const searchParams = new URLSearchParams()
     Object.entries(params).forEach(([key, value]) => {
-      searchParams.append(key, String(value))
+      if (value !== undefined && value !== null) {
+        searchParams.append(key, String(value))
+      }
     })
-    url += `?${searchParams.toString()}`
+    const queryString = searchParams.toString()
+    if (queryString) url += `?${queryString}`
   }
 
   const finalHeaders = new Headers(headers)
-  if (customConfig.body) {
+  if (customConfig.body && !finalHeaders.has('Content-Type')) {
     finalHeaders.set('Content-Type', 'application/json')
   }
 
-  const response = await fetch(url, {
-    headers: finalHeaders,
-    method,
-    ...customConfig,
-  })
+  let response: Response
+  try {
+    response = await fetch(url, {
+      headers: finalHeaders,
+      method,
+      ...customConfig,
+    })
+  } catch (networkError) {
+    throw new ApiError(
+      networkError instanceof Error ? networkError.message : 'Network error',
+      0
+    )
+  }
 
   if (!response.ok) {
-    let error = {
-      message: '',
-      errors: {},
-    }
+    let errorMessage = `API Error: ${response.status} ${response.statusText}`
+    let fieldErrors: Record<string, string> | undefined
 
     try {
-      const errorData = await response.json()
-      error = {
-        ...errorData,
+      const rawText = await response.text()
+      if (rawText) {
+        try {
+          const errorData = JSON.parse(rawText)
+          errorMessage = errorData.message || errorData.error || errorMessage
+          fieldErrors = errorData.errors
+        } catch {
+          errorMessage = rawText
+        }
       }
-    } catch {
-      const errorText = await response.text()
-      if (errorText) error.message = errorText
+    } catch (e) {
+      console.warn('Failed to read error response body:', e)
     }
-    throw new ApiError(
-      error.message || `API Error: ${response.status} ${response.statusText}`,
-      error.errors
-    )
+    throw new ApiError(errorMessage, response.status, fieldErrors)
   }
 
   return response
