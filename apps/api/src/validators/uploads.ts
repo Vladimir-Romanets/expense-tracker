@@ -6,6 +6,7 @@ const MAX_SIZE_BYTES = 10 * 1024 * 1024
 const _presignedUploadBodySchema = z.object({
   contentType: z.enum(ALLOWED_MIME),
   fileSize: z.number().int().positive().max(MAX_SIZE_BYTES),
+  entry: z.enum(['receipts', 'categories']),
 })
 
 export const presignedUploadSchema = z.object({ body: _presignedUploadBodySchema })

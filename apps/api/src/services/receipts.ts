@@ -63,5 +63,5 @@ export const remove = async (id: number, userId: number) => {
   // Returns 404 for both non-existent and unauthorized receipts (intentional — avoids leaking ownership info)
   if (!deleted) throw new AppError('Receipt not found', 404)
 
-  if (deleted.imageKey) uploadsService.deleteReceiptFile(deleted.imageKey)
+  if (deleted.imageKey) await uploadsService.deleteFile(deleted.imageKey)
 }
