@@ -3,20 +3,47 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { addCategorySchema, type AddCategoryFormValues } from '../schemas'
 import { addCategory } from '../actions/addCategory'
 import { setFormErrors } from '@/utils/setFormErrors'
+import { fileUploader } from '@/lib/fileUploader'
 
-export const useAddCategoryForm = () => {
+interface UseAddCategoryFormOptions {
+  onSuccess?: () => void
+}
+
+export const useAddCategoryForm = (options?: UseAddCategoryFormOptions) => {
   const form = useForm<AddCategoryFormValues>({
-    resolver: zodResolver(addCategorySchema),
+    resolver: zodResolver(addCategorySchema) as any,
     defaultValues: { name: '', description: '' },
   })
 
   const onSubmit = async (values: AddCategoryFormValues) => {
-    const result = await addCategory(values)
+    let uploadedImageKey: string | undefined = undefined
+
+    if (values.image) {
+      try {
+        const result = await fileUploader(values.image, 'categories')
+        uploadedImageKey = result.imageKey
+      } catch (e) {
+        form.setError('root', {
+          message: 'Failed to upload image. Please try again.',
+        })
+        return
+      }
+    }
+
+    const payload = {
+      name: values.name,
+      description: values.description,
+      imageKey: uploadedImageKey,
+      isSystem: false,
+    }
+
+    const result = await addCategory(payload)
 
     if (!result.success && 'errors' in result) {
       setFormErrors(form.setError, result)
     } else {
       form.reset()
+      options?.onSuccess?.()
     }
   }
 

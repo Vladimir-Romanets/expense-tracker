@@ -12,7 +12,7 @@ export async function createReceiptAction({
 }: CreateReceiptFormValues) {
   try {
     const { imageKey } = receiptFile
-      ? await fileUploader(receiptFile)
+      ? await fileUploader(receiptFile, 'receipts')
       : { imageKey: null }
 
     await serverApiClient('/receipts', {

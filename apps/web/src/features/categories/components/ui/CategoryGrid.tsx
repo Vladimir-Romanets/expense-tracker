@@ -1,8 +1,5 @@
-'use client'
-
 import { CategoryEntity } from '../../types'
 import { CategoryCard } from './CategoryCard'
-import { deleteCategory } from '../../actions/deleteCategory'
 
 type Props = {
   categories: CategoryEntity[]
@@ -14,7 +11,6 @@ export const CategoryGrid = ({ categories }: Props) => (
       <CategoryCard
         key={card.id}
         {...card}
-        onDelete={deleteCategory}
       />
     ))}
   </ul>

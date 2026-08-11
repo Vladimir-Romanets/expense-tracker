@@ -7,7 +7,8 @@ type SignedUploadResponse = {
 }
 
 export const fileUploader = async (
-  file: File
+  file: File,
+  entry: 'receipts' | 'categories'
 ): Promise<{ imageKey: string }> => {
   const { uploadUrl, imageKey } = await serverApiClient<SignedUploadResponse>(
     '/uploads/presigned-url',
@@ -16,6 +17,7 @@ export const fileUploader = async (
       body: JSON.stringify({
         contentType: file.type,
         fileSize: file.size,
+        entry,
       }),
     }
   )
