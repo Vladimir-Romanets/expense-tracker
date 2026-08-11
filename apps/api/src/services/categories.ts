@@ -19,26 +19,16 @@ export const getAll = async (payload: PaginationInput) => {
 
   const { list, total } = await categoriesModel.getAllCategories(pagination)
 
-  const isListContainsCustom = list.some((el) => !el.isSystem && el.imageKey)
-
-  let result = list
-
-  if (isListContainsCustom) {
-    result = await Promise.all(
-      list.map(async (category) => {
-        if (category.isSystem || !category.imageKey) return category
-        const imageKey = await uploadsService.getImgLink(category.imageKey)
-        return { ...category, imageKey }
-      }),
-    )
-  }
-  return createPaginatedResponse<CategoryProps>(result, total, pagination)
+  return createPaginatedResponse<CategoryProps>(list, total, pagination)
 }
 
 export const remove = async (id: number) => {
+  const category = await categoriesModel.getById(id)
+
+  if (!category) throw new AppError('Category not found', 404)
+  if (category.isSystem) throw new AppError('Cannot delete system category', 403)
+
   const [deleted] = await categoriesModel.remove(id)
 
-  if (!deleted) throw new AppError('Category not found', 404)
-
-  if (deleted.imageKey) await uploadsService.deleteFile(deleted.imageKey)
+  if (deleted.imageKey) await uploadsService.deleteFile(deleted.imageKey, true)
 }
