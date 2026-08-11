@@ -20,7 +20,7 @@ export const useAddCategoryForm = (options?: UseAddCategoryFormOptions) => {
 
     if (values.image) {
       try {
-        const result = await fileUploader(values.image, 'categories')
+        const result = await fileUploader(values.image, 'categories', true)
         uploadedImageKey = result.imageKey
       } catch (e) {
         form.setError('root', {
