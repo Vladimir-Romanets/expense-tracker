@@ -8,11 +8,7 @@ export const create = async (payload: NewCategoryProps) =>
 
 export const getAllCategories = async ({ limit, offset }: PaginationResult) => {
   const reqCategories = db
-    .select({
-      id: categories.id,
-      name: categories.name,
-      description: categories.description,
-    })
+    .select()
     .from(categories)
     .orderBy(asc(categories.name))
     .limit(limit)
