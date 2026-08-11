@@ -1,9 +1,3 @@
-const API_BASE_URL = process.env.API_URL
-
-if (!API_BASE_URL) {
-  throw new Error('API_URL environment variable is not set')
-}
-
 export type FetchOptions = RequestInit & {
   params?: Record<string, string | number>
 }

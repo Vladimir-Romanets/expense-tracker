@@ -7,7 +7,7 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
   error?: string
   wrapperClassName?: string
   ref?: React.Ref<HTMLTextAreaElement>
-  resizeEnable?: boolean
+  resizable?: boolean
 }
 
 export const Textarea = ({
@@ -17,7 +17,7 @@ export const Textarea = ({
   error,
   id,
   ref,
-  resizeEnable = false,
+  resizable = false,
   ...props
 }: TextareaProps) => {
   const generatedId = id || props.name
@@ -33,21 +33,19 @@ export const Textarea = ({
           {label}
         </label>
       )}
-      <div className="relative">
-        <textarea
-          id={generatedId}
-          ref={ref}
-          aria-invalid={!!error}
-          aria-describedby={error ? errorId : undefined}
-          className={cn(
-            inputVariants({ isError: !!error }),
-            'min-h-25',
-            resizeEnable ? 'resize-y' : 'resize-none',
-            className
-          )}
-          {...props}
-        />
-      </div>
+      <textarea
+        id={generatedId}
+        ref={ref}
+        aria-invalid={!!error}
+        aria-describedby={error ? errorId : undefined}
+        className={cn(
+          inputVariants({ isError: !!error }),
+          'min-h-25',
+          resizable ? 'resize-y' : 'resize-none',
+          className
+        )}
+        {...props}
+      />
       {error && (
         <span
           id={errorId}
