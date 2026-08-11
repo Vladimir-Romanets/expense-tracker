@@ -6,6 +6,7 @@ import {
   PaginationInput,
 } from '@helpers/utils/pagination'
 import { AppError } from '@helpers/errors/apiError'
+import { uploadsService } from '@services'
 
 export const create = async (payload: NewCategoryProps) => {
   const [category] = await categoriesModel.create(payload)
@@ -22,7 +23,12 @@ export const getAll = async (payload: PaginationInput) => {
 }
 
 export const remove = async (id: number) => {
+  const category = await categoriesModel.getById(id)
+
+  if (!category) throw new AppError('Category not found', 404)
+  if (category.isSystem) throw new AppError('Cannot delete system category', 403)
+
   const [deleted] = await categoriesModel.remove(id)
 
-  if (!deleted) throw new AppError('Category not found', 404)
+  if (deleted.imageKey) await uploadsService.deleteFile(deleted.imageKey, true)
 }

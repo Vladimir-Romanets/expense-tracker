@@ -21,5 +21,13 @@ export const getAllCategories = async ({ limit, offset }: PaginationResult) => {
   return { list, total }
 }
 
+export const getById = async (id: number) =>
+  await db.query.categories.findFirst({
+    where: { id },
+  })
+
 export const remove = async (id: number) =>
-  await db.delete(categories).where(eq(categories.id, id)).returning({ id: categories.id })
+  await db
+    .delete(categories)
+    .where(eq(categories.id, id))
+    .returning({ id: categories.id, imageKey: categories.imageKey })

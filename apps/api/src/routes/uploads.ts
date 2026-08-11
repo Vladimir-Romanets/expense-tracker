@@ -6,5 +6,10 @@ import { presignedUploadSchema } from '@validators/uploads'
 const router = Router()
 
 router.post('/presigned-url', validate(presignedUploadSchema), uploadController.uploadFile)
+router.post(
+  '/presigned-url-public',
+  validate(presignedUploadSchema),
+  uploadController.uploadFilePublic,
+)
 
 export default router

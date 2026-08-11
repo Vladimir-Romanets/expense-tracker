@@ -31,3 +31,9 @@ export const getR2BucketName = (): string => {
 
   return process.env.R2_BUCKET_NAME
 }
+
+export const getR2PublicBucketName = (): string => {
+  if (!process.env.R2_PUBLIC_BUCKET_NAME) throw new Error('R2_PUBLIC_BUCKET_NAME is not set')
+
+  return process.env.R2_PUBLIC_BUCKET_NAME
+}
