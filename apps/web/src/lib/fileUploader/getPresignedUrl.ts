@@ -1,17 +1,17 @@
 'use server'
-import { serverApiClient } from './apiClient.server'
 
-type SignedUploadResponse = {
+import { serverApiClient } from '../apiClient.server'
+
+export type SignedUploadResponse = {
   uploadUrl: string
   imageKey: string
 }
 
-export const fileUploader = async (
+export const getPresignedUrl = async (
   file: File,
   pathPrefix: 'receipts' | 'categories',
   isPublic = false
-): Promise<{ imageKey: string }> => {
-  console.log(file.type, file.size)
+): Promise<{ imageKey: string; uploadUrl: string }> => {
   const { uploadUrl, imageKey } = await serverApiClient<SignedUploadResponse>(
     isPublic ? '/uploads/presigned-url-public' : '/uploads/presigned-url',
     {
@@ -28,15 +28,5 @@ export const fileUploader = async (
     throw new Error('Failed to get upload URL')
   }
 
-  const uploadRes = await fetch(uploadUrl, {
-    method: 'PUT',
-    headers: { 'Content-Type': file.type },
-    body: file,
-  })
-
-  if (!uploadRes.ok) {
-    throw new Error('Failed to upload to R2')
-  }
-
-  return { imageKey }
+  return { uploadUrl, imageKey }
 }
