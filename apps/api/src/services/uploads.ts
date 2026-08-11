@@ -12,7 +12,7 @@ type Props = {
    * All callers MUST enforce a strict allowlist (e.g. Zod enum)
    * before passing this value to avoid path injection.
    */
-  entry: 'receipts' | 'categories'
+  pathPrefix: 'receipts' | 'categories'
   isPublic: boolean
 }
 
@@ -23,9 +23,15 @@ const MIME_TO_EXT: Record<string, string> = {
   'image/heic': 'heic',
 }
 
-export const uploadFile = async ({ contentType, fileSize, userId, entry, isPublic }: Props) => {
+export const uploadFile = async ({
+  contentType,
+  fileSize,
+  userId,
+  pathPrefix,
+  isPublic,
+}: Props) => {
   const ext = MIME_TO_EXT[contentType] ?? contentType.split('/')[1]
-  const imageKey = `${entry}/${userId}/${randomUUID()}.${ext}`
+  const imageKey = `${pathPrefix}/${userId}/${randomUUID()}.${ext}`
 
   const command = new PutObjectCommand({
     Bucket: isPublic ? getR2PublicBucketName() : getR2BucketName(),

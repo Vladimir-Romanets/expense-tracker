@@ -125,6 +125,7 @@ The file contains the following configuration variables:
 - `R2_SECRET_ACCESS_KEY`: Cloudflare R2 API token Secret Access Key.
 - `R2_BUCKET_NAME`: Name of the Cloudflare R2 bucket for storing uploaded receipt images.
 - `R2_PUBLIC_BUCKET_NAME`: Name of the public Cloudflare R2 bucket for publicly accessible assets.
+- `R2_PUBLIC_ASSETS_URL`: Public base URL for assets served from the public R2 bucket (e.g. `https://assets.example.com`).
 
 ---
 

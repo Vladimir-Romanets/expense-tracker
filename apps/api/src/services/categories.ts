@@ -1,12 +1,13 @@
 import { CategoryProps, NewCategoryProps } from '@db/schema'
 import { categoriesModel } from '@models'
+import { uploadsService } from '@services'
 import {
   createPaginatedResponse,
   getPaginationParams,
   PaginationInput,
 } from '@helpers/utils/pagination'
 import { AppError } from '@helpers/errors/apiError'
-import { uploadsService } from '@services'
+import { getR2PublicUrl } from '@helpers/utils/r2'
 
 export const create = async (payload: NewCategoryProps) => {
   const [category] = await categoriesModel.create(payload)
@@ -17,18 +18,29 @@ export const create = async (payload: NewCategoryProps) => {
 export const getAll = async (payload: PaginationInput) => {
   const pagination = getPaginationParams(payload)
 
-  const { list, total } = await categoriesModel.getAllCategories(pagination)
+  const response = await categoriesModel.getAllCategories(pagination)
+  const publicUrl = getR2PublicUrl()
 
-  return createPaginatedResponse<CategoryProps>(list, total, pagination)
+  const list = response.list.map((el) =>
+    el.isSystem || !el.imageKey
+      ? el
+      : {
+          ...el,
+          imageKey: `${publicUrl}/${el.imageKey}`,
+        },
+  )
+  return createPaginatedResponse<CategoryProps>(list, response.total, pagination)
 }
 
 export const remove = async (id: number) => {
-  const category = await categoriesModel.getById(id)
-
-  if (!category) throw new AppError('Category not found', 404)
-  if (category.isSystem) throw new AppError('Cannot delete system category', 403)
-
   const [deleted] = await categoriesModel.remove(id)
+
+  if (!deleted) {
+    const exists = await categoriesModel.getById(id)
+    throw exists
+      ? new AppError('Cannot delete system category', 403)
+      : new AppError('Category not found', 404)
+  }
 
   if (deleted.imageKey) await uploadsService.deleteFile(deleted.imageKey, true)
 }
