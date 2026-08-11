@@ -1,8 +1,14 @@
 import { z } from 'zod'
 
+const optionalCoerceNumber = z.preprocess((val) => {
+  if (val === '' || val === undefined || val === null) return undefined
+  const num = Number(val)
+  return isNaN(num) ? undefined : num
+}, z.number().int().positive().optional())
+
 export const getPaginationSchema = z.object({
   query: z.object({
-    page: z.coerce.number().int().positive().optional(),
-    limit: z.coerce.number().int().positive().optional(),
+    page: optionalCoerceNumber,
+    limit: optionalCoerceNumber,
   }),
 })

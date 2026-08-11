@@ -1,4 +1,4 @@
-import { asc, eq } from 'drizzle-orm'
+import { and, asc, eq } from 'drizzle-orm'
 import { db } from '@db'
 import { categories, NewCategoryProps } from '@db/schema'
 import { PaginationResult } from '@helpers/utils/pagination'
@@ -29,5 +29,5 @@ export const getById = async (id: number) =>
 export const remove = async (id: number) =>
   await db
     .delete(categories)
-    .where(eq(categories.id, id))
+    .where(and(eq(categories.id, id), eq(categories.isSystem, false)))
     .returning({ id: categories.id, imageKey: categories.imageKey })

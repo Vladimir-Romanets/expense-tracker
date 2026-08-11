@@ -37,3 +37,9 @@ export const getR2PublicBucketName = (): string => {
 
   return process.env.R2_PUBLIC_BUCKET_NAME
 }
+
+export const getR2PublicUrl = (): string => {
+  if (!process.env.R2_PUBLIC_ASSETS_URL) throw new Error('R2_PUBLIC_ASSETS_URL is not set')
+
+  return process.env.R2_PUBLIC_ASSETS_URL
+}
