@@ -3,6 +3,8 @@ import { z } from 'zod'
 const _createCategoriesBodySchema = z.object({
   name: z.string().trim().min(1).max(100),
   description: z.string().trim().max(255).optional(),
+  isSystem: z.boolean().optional().default(false),
+  imageKey: z.string().optional(),
 })
 
 const _deleteCategoryParamsSchema = z.object({

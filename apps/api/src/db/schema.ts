@@ -7,6 +7,7 @@ import {
   integer,
   date,
   numeric,
+  boolean,
 } from 'drizzle-orm/pg-core'
 import { sql } from 'drizzle-orm'
 
@@ -35,6 +36,8 @@ export const categories = pgTable(
     id: serial().primaryKey(),
     name: varchar({ length: 100 }).notNull(),
     description: varchar({ length: 255 }),
+    imageKey: varchar('image_key', { length: 100 }),
+    isSystem: boolean('is_system').default(false).notNull(),
   },
   (table) => [uniqueIndex('categories_name_unique_idx').on(sql`lower(${table.name})`)],
 )
