@@ -17,7 +17,7 @@ export default function CreateCategoryPage() {
         Add a new category to organize your expenses.
       </Typography>
 
-      <div className="border-border w-full max-w-2xl rounded-xl border border-surface-border bg-surface-card p-6 shadow-sm">
+      <div className="w-full max-w-3xl rounded-xl border border-surface-border bg-surface-card p-6 shadow-sm">
         <AddCategoryForm onSuccessRedirect="/categories" />
       </div>
     </div>

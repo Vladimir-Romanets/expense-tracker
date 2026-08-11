@@ -11,8 +11,8 @@ interface UseAddCategoryFormOptions {
 
 export const useAddCategoryForm = (options?: UseAddCategoryFormOptions) => {
   const form = useForm<AddCategoryFormValues>({
-    resolver: zodResolver(addCategorySchema) as any,
-    defaultValues: { name: '', description: '' },
+    resolver: zodResolver(addCategorySchema),
+    defaultValues: { name: '' },
   })
 
   const onSubmit = async (values: AddCategoryFormValues) => {
@@ -34,13 +34,11 @@ export const useAddCategoryForm = (options?: UseAddCategoryFormOptions) => {
       name: values.name,
       description: values.description,
       imageKey: uploadedImageKey,
-      isSystem: false,
     }
 
     const result = await addCategory(payload)
-
-    if (!result.success && 'errors' in result) {
-      setFormErrors(form.setError, result)
+    if (!result.success) {
+      setFormErrors(form.setError, result as any)
     } else {
       form.reset()
       options?.onSuccess?.()

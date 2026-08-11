@@ -63,6 +63,9 @@ export const AddCategoryForm = ({
           />
         </div>
       </div>
+      {errors.root && (
+        <p className="text-end text-sm text-red-500">{errors.root.message}</p>
+      )}
       <div className="flex justify-end gap-4">
         <Button
           type="submit"
@@ -72,9 +75,6 @@ export const AddCategoryForm = ({
           Add category
         </Button>
       </div>
-      {errors.root && (
-        <p className="text-sm text-red-500">{errors.root.message}</p>
-      )}
     </form>
   )
 }

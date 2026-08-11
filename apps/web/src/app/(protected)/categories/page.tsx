@@ -3,9 +3,14 @@ import { CategoryList } from '@/features/categories'
 import { Typography } from '@/ui'
 import { createPageUrl } from '@/lib/createPageUrl'
 import { SearchParams } from '@/types/pagination'
+import { Metadata } from 'next'
 
 type Props = {
   searchParams: Promise<SearchParams>
+}
+
+export const metadata: Metadata = {
+  title: 'Category | Expense Tracker',
 }
 
 const CategoriesPage = async ({ searchParams }: Props) => {

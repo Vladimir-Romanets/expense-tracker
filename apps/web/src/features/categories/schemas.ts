@@ -4,7 +4,7 @@ export const addCategorySchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters'),
   description: z.string().max(255).optional(),
   image: z
-    .instanceof(File)
+    .custom<File>((v) => typeof window !== 'undefined' && v instanceof File)
     .optional()
     .refine(
       (file) => !file || file.size <= 1 * 1024 * 1024,

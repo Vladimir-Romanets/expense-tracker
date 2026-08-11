@@ -8,7 +8,7 @@ type SignedUploadResponse = {
 
 export const fileUploader = async (
   file: File,
-  entry: 'receipts' | 'categories',
+  pathPrefix: 'receipts' | 'categories',
   isPublic = false
 ): Promise<{ imageKey: string }> => {
   console.log(file.type, file.size)
@@ -19,7 +19,7 @@ export const fileUploader = async (
       body: JSON.stringify({
         contentType: file.type,
         fileSize: file.size,
-        entry,
+        pathPrefix,
       }),
     }
   )
