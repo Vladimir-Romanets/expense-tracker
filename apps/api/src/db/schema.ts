@@ -30,17 +30,13 @@ export const stores = pgTable(
   (table) => [uniqueIndex('stores_name_unique_idx').on(sql`lower(${table.name})`)],
 )
 
-export const categories = pgTable(
-  'categories',
-  {
-    id: serial().primaryKey(),
-    name: varchar({ length: 100 }).notNull(),
-    description: varchar({ length: 255 }),
-    imageKey: varchar('image_key', { length: 100 }),
-    isSystem: boolean('is_system').default(false).notNull(),
-  },
-  (table) => [uniqueIndex('categories_name_unique_idx').on(sql`lower(${table.name})`)],
-)
+export const categories = pgTable('categories', {
+  id: serial().primaryKey(),
+  name: varchar({ length: 100 }).notNull().unique(),
+  description: varchar({ length: 255 }),
+  imageKey: varchar('image_key', { length: 100 }),
+  isSystem: boolean('is_system').default(false).notNull(),
+})
 
 export const products = pgTable('products', {
   id: serial().primaryKey(),
