@@ -1,4 +1,4 @@
-import { asc, eq } from 'drizzle-orm'
+import { and, asc, eq } from 'drizzle-orm'
 import { db } from '@db'
 import { categories, NewCategoryProps } from '@db/schema'
 import { PaginationResult } from '@helpers/utils/pagination'
@@ -21,15 +21,8 @@ export const getAllCategories = async ({ limit, offset }: PaginationResult) => {
   return { list, total }
 }
 
-export const getById = async (id: number) => {
-  const reqCategory = db.query.categories.findFirst({
-    where: {
-      id,
-    },
-  })
-
-  return reqCategory
-}
-
 export const remove = async (id: number) =>
-  await db.delete(categories).where(eq(categories.id, id)).returning({ id: categories.id })
+  await db
+    .delete(categories)
+    .where(and(eq(categories.id, id), eq(categories.isSystem, false)))
+    .returning({ id: categories.id, imageKey: categories.imageKey })
