@@ -3,15 +3,15 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { randomUUID } from 'crypto'
 import { getR2Client, getR2BucketName } from '@helpers/utils/r2'
 
-/**
- * IMPORTANT: `entry` is used directly as an R2 path prefix.
- * All callers MUST enforce a strict allowlist (e.g. Zod enum) before
- * passing this value to avoid path injection.
- */
 type Props = {
   contentType: string
   fileSize: number
   userId: number
+  /**
+   * Used directly as an R2 path prefix.
+   * All callers MUST enforce a strict allowlist (e.g. Zod enum)
+   * before passing this value to avoid path injection.
+   */
   entry: 'receipts' | 'categories'
 }
 
