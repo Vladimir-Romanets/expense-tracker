@@ -1,19 +1,19 @@
 import { Pagination } from '@/ui'
-import type { PaginatedResponse } from '@/types/pagination'
+import type { PaginatedResponse, SearchParams } from '@/types/pagination'
 import { CategoryGrid } from './ui/CategoryGrid'
 import type { CategoryEntity } from '../types'
 
 type Props = {
-  createPageUrl: (page: number) => string
+  searchParams: SearchParams
 } & PaginatedResponse<CategoryEntity>
 
-export const CategoryList = ({ data, meta, createPageUrl }: Props) => {
+export const CategoryList = ({ data, meta, searchParams }: Props) => {
   return (
     <>
       <CategoryGrid categories={data} />
       <Pagination
         meta={meta}
-        createPageUrl={createPageUrl}
+        searchParams={searchParams}
         className="mt-10 justify-center"
       />
     </>

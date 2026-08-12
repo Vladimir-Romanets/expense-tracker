@@ -55,7 +55,9 @@ const ProtectedLayout = ({
 
         <main className="flex-1 overflow-y-auto bg-main-bg p-6 lg:p-8">
           <PageTitle />
-          {children}
+          <div className="rounded-2xl border border-surface-border bg-surface-card p-6 shadow-xs">
+            {children}
+          </div>
         </main>
       </div>
     </div>
