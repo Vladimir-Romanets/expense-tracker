@@ -1,14 +1,14 @@
 import { db } from '@db'
-import { NewReceiptItemProps, ReceiptProps, StoreProps } from '@db/schema'
-import { CreateReceiptDto } from '@validators/receipts'
 import { receiptsModel } from '@models'
 import { productsService, receiptItemsService, uploadsService } from '@services'
+import { AppError } from '@helpers/errors/apiError'
 import {
   createPaginatedResponse,
   getPaginationParams,
-  PaginationInput,
+  type PaginationInput,
 } from '@helpers/utils/pagination'
-import { AppError } from '@helpers/errors/apiError'
+import type { NewReceiptItemProps, ReceiptProps, StoreProps } from '@db/schema'
+import type { CreateReceiptDto } from '@validators/receipts'
 
 type ReceiptsList = {
   store: Pick<StoreProps, 'id' | 'name'> | null
@@ -55,6 +55,19 @@ export const getAll = async (payload: PaginationInput, userId: number) => {
   const { list, total } = await receiptsModel.getAll(pagination, userId)
 
   return createPaginatedResponse<ReceiptsList>(list, total, pagination)
+}
+
+export const getById = async (id: number, userId: number) => {
+  const receipt = await receiptsModel.getById(id, userId)
+
+  if (!receipt) throw new AppError('Receipt not found', 404)
+
+  const receiptUrl = receipt.imageKey ? await uploadsService.getImgLink(receipt.imageKey) : null
+
+  return {
+    ...receipt,
+    receiptUrl,
+  }
 }
 
 export const remove = async (id: number, userId: number) => {

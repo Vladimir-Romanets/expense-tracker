@@ -35,6 +35,17 @@ export const getAll = async ({ limit, offset }: PaginationResult, userId: number
   return { list, total }
 }
 
+export const getById = async (id: number, userId: number) =>
+  db.query.receipts.findFirst({
+    where: {
+      id,
+      userId,
+    },
+    with: {
+      items: true,
+    },
+  })
+
 export const create = async (payload: NewReceiptProps, tx: Executor = db) =>
   await tx.insert(receipts).values(payload).returning()
 

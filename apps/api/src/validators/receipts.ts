@@ -22,13 +22,13 @@ const _createReceiptBodySchema = z.object({
     .min(1, 'Receipt should contain at least one item!'),
 })
 
-const _deleteReceiptParamsSchema = z.object({
+const _paramsIdSchema = z.object({
   id: z.coerce.number().int().positive(),
 })
 
 export const createReceiptSchema = z.object({ body: _createReceiptBodySchema })
-export const deleteReceiptSchema = z.object({ params: _deleteReceiptParamsSchema })
+export const paramsIdReceiptSchema = z.object({ params: _paramsIdSchema })
 
 export type CreateReceiptDto = z.infer<typeof _createReceiptBodySchema>
 export type CreateReceiptItemsDto = CreateReceiptDto['items']
-export type DeleteReceiptDto = z.infer<typeof deleteReceiptSchema>
+export type ParamsIdReceiptDto = z.infer<typeof paramsIdReceiptSchema>
