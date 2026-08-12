@@ -3,7 +3,7 @@ import type { ReceiptEntity } from '../../types'
 import { receiptsFormatter } from '../../utils/receiptListFormatter'
 import { ButtonReceiptDelete } from '../ui/ButtonReceiptDelete'
 
-export interface Props {
+interface Props {
   receipts: ReceiptEntity[]
 }
 
