@@ -11,7 +11,7 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
-    createPageUrl: (page) => `?page=${page}`,
+    searchParams: {},
   },
 } satisfies Meta<typeof Pagination>
 
@@ -75,6 +75,10 @@ export const WithLinks: Story = {
       ...defaultMeta,
       page: 5,
       hasPrevPage: true,
+    },
+    searchParams: {
+      sort: 'desc',
+      filter: 'active',
     },
   },
 }

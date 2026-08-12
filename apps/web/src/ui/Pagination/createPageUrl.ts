@@ -1,6 +1,6 @@
-import { SearchParams } from '@/types/pagination'
+import type { SearchParams } from '@/types/pagination'
 
-export const createPageUrl = (searchParams: SearchParams) => (page: number) => {
+export const createPageUrl = (searchParams: SearchParams, page: number) => {
   const params = new URLSearchParams()
 
   Object.entries(searchParams).forEach(([key, value]) => {

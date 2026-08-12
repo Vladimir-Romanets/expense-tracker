@@ -1,12 +1,13 @@
 import { cn } from '@/utils/cn'
 import { Icon } from '@/ui'
 import { PageItem } from './PageItem'
-import { PaginatedMeta } from '@/types/pagination'
+import { createPageUrl } from './createPageUrl'
+import type { PaginatedMeta, SearchParams } from '@/types/pagination'
 
 export type PaginationProps = {
   meta: PaginatedMeta
   className?: string
-  createPageUrl: (page: number) => string
+  searchParams: SearchParams
 }
 
 const DOTS = '...'
@@ -45,7 +46,7 @@ const generatePagination = (currentPage: number, totalPages: number) => {
 
 export const Pagination = ({
   meta,
-  createPageUrl,
+  searchParams,
   className,
 }: PaginationProps) => {
   const { page: currentPage, totalPages, hasNextPage, hasPrevPage } = meta
@@ -62,9 +63,8 @@ export const Pagination = ({
       className={cn('flex items-center gap-1.5', className)}
     >
       <PageItem
-        page={currentPage - 1}
         isDisabled={!hasPrevPage}
-        createPageUrl={createPageUrl}
+        href={createPageUrl(searchParams, currentPage - 1)}
         aria-label="Previous page"
       >
         <Icon
@@ -89,9 +89,8 @@ export const Pagination = ({
         return (
           <PageItem
             key={pageNum}
-            page={pageNum}
             isActive={pageNum === currentPage}
-            createPageUrl={createPageUrl}
+            href={createPageUrl(searchParams, pageNum)}
           >
             {pageNum}
           </PageItem>
@@ -99,9 +98,8 @@ export const Pagination = ({
       })}
 
       <PageItem
-        page={currentPage + 1}
         isDisabled={!hasNextPage}
-        createPageUrl={createPageUrl}
+        href={createPageUrl(searchParams, currentPage + 1)}
         aria-label="Next page"
       >
         <Icon

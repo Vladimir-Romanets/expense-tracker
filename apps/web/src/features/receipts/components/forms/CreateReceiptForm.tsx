@@ -34,7 +34,7 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
           />
         </div>
 
-        <div className="flex flex-col gap-6 rounded-xl border border-surface-border bg-white p-6 shadow-sm">
+        <div className="flex flex-col gap-6 p-6">
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
             <RHFSelect<CreateReceiptFormValues>
               control={control}
