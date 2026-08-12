@@ -39,9 +39,11 @@ export function RHFFileUpload<T extends FieldValues>({
   const previewUrl = useMemo(() => {
     const file = value as unknown
 
-    return file instanceof File && file.type.startsWith('image/')
-      ? URL.createObjectURL(file)
-      : null
+    if (file instanceof File && file.type.startsWith('image/')) {
+      return URL.createObjectURL(file)
+    }
+
+    return typeof file === 'string' ? file : undefined
   }, [value])
 
   const handleDrag = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
@@ -75,26 +77,19 @@ export function RHFFileUpload<T extends FieldValues>({
     [onChange, accept]
   )
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0]
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) onChange(file)
+  }
 
-      if (file) onChange(file)
-    },
-    [onChange]
-  )
-
-  const handleRemove = useCallback(
-    (e: React.MouseEvent) => {
-      stopEvent(e)
-      onChange(undefined)
-    },
-    [onChange]
-  )
+  const handleRemove = (e: React.MouseEvent) => {
+    stopEvent(e)
+    onChange(null)
+  }
 
   useEffect(() => {
     return () => {
-      if (previewUrl) URL.revokeObjectURL(previewUrl)
+      if (previewUrl?.startsWith('blob:')) URL.revokeObjectURL(previewUrl)
     }
   }, [previewUrl])
 
@@ -135,7 +130,9 @@ export function RHFFileUpload<T extends FieldValues>({
                   size={48}
                 />
                 <span className="text-sm font-medium text-gray-700">
-                  {(value as File).name}
+                  {(value as unknown) instanceof File
+                    ? value.name
+                    : 'Existing file'}
                 </span>
               </div>
             )}

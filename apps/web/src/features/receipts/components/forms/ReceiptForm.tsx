@@ -2,15 +2,26 @@
 
 import { RHFInput, RHFSelect, Button, RHFFileUpload } from '@/ui'
 import { ReceiptItemsGrid } from './ReceiptItemsGrid'
-import type { CreateReceiptFormValues } from '../../schemas'
-import { useCreateReceiptForm } from '../../hooks/useCreateReceiptForm'
+import { useReceiptForm } from '../../hooks/useReceiptForm'
+import type { ReceiptFormValues } from '../../schemas'
 
-interface CreateReceiptFormProps {
+interface ReceiptFormProps {
   stores: { value: number; label: string }[]
+  initValues?: ReceiptFormValues
+  onSubmitAction: (payload: ReceiptFormValues) => Promise<any>
+  submitLabel?: string
 }
 
-export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
-  const { form, onSubmit, handleReset } = useCreateReceiptForm()
+export function ReceiptForm({
+  stores,
+  initValues,
+  onSubmitAction,
+  submitLabel = 'Save Receipt',
+}: ReceiptFormProps) {
+  const { form, onSubmit, handleReset } = useReceiptForm({
+    initValues,
+    onSubmitAction,
+  })
   const {
     control,
     handleSubmit,
@@ -25,7 +36,7 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
     >
       <div className="grid grid-cols-1 gap-8 md:grid-cols-[1fr_2fr]">
         <div className="flex flex-col">
-          <RHFFileUpload<CreateReceiptFormValues>
+          <RHFFileUpload<ReceiptFormValues>
             control={control}
             name="receiptFile"
             label="Upload or drag and-drop scan/photo of receipt."
@@ -36,7 +47,7 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
 
         <div className="flex flex-col gap-6 p-6">
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-            <RHFSelect<CreateReceiptFormValues>
+            <RHFSelect<ReceiptFormValues>
               control={control}
               name="storeId"
               label="Store Name"
@@ -45,14 +56,14 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
             />
 
             <div className="grid grid-cols-2 gap-4">
-              <RHFInput<CreateReceiptFormValues>
+              <RHFInput<ReceiptFormValues>
                 control={control}
                 name="purchaseDate"
                 label="Date & Time"
                 type="datetime-local"
               />
 
-              <RHFInput<CreateReceiptFormValues>
+              <RHFInput<ReceiptFormValues>
                 control={control}
                 name="totalAmount"
                 label="Total Amount"
@@ -69,7 +80,7 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
             errors={errors}
           />
 
-          <div className="mt-4 flex justify-end gap-4 border-t border-gray-200 pt-6 ">
+          <div className="mt-4 flex justify-end gap-4 border-t border-gray-200 pt-6">
             <Button
               type="button"
               variant="outline"
@@ -82,7 +93,7 @@ export function CreateReceiptForm({ stores }: CreateReceiptFormProps) {
               isLoading={isSubmitting}
               disabled={!isDirty}
             >
-              Save Receipt
+              {submitLabel}
             </Button>
           </div>
         </div>

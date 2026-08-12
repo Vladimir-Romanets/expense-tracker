@@ -2,11 +2,11 @@
 
 import { useFieldArray, type Control, type FieldErrors } from 'react-hook-form'
 import { RHFInput, Button, Icon } from '@/ui/'
-import type { CreateReceiptFormValues } from '../../schemas'
+import type { ReceiptFormValues } from '../../schemas'
 
 interface ReceiptItemsGridProps {
-  control: Control<CreateReceiptFormValues>
-  errors: FieldErrors<CreateReceiptFormValues>
+  control: Control<ReceiptFormValues>
+  errors: FieldErrors<ReceiptFormValues>
 }
 
 export function ReceiptItemsGrid({ control, errors }: ReceiptItemsGridProps) {
@@ -40,27 +40,27 @@ export function ReceiptItemsGrid({ control, errors }: ReceiptItemsGridProps) {
             key={field.id}
             className="grid grid-cols-[3fr_1fr_1fr_1fr_auto] items-start gap-4"
           >
-            <RHFInput<CreateReceiptFormValues>
+            <RHFInput<ReceiptFormValues>
               control={control}
               name={`items.${index}.name`}
               placeholder="Autocomplete..."
             />
 
-            <RHFInput<CreateReceiptFormValues>
+            <RHFInput<ReceiptFormValues>
               control={control}
               name={`items.${index}.quantity`}
               type="number"
               hideNativeControl
             />
 
-            <RHFInput<CreateReceiptFormValues>
+            <RHFInput<ReceiptFormValues>
               control={control}
               name={`items.${index}.unitPrice`}
               type="number"
               hideNativeControl
             />
 
-            <RHFInput<CreateReceiptFormValues>
+            <RHFInput<ReceiptFormValues>
               control={control}
               name={`items.${index}.totalPrice`}
               type="number"

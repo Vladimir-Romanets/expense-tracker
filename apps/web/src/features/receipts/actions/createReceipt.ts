@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { serverApiClient } from '@/lib/apiClient.server'
 import { prettierError } from '@/lib/apiClient'
-import type { CreateReceiptFormValues } from '../schemas'
+import type { ReceiptFormValues } from '../schemas'
 import { getPresignedUrl } from '@/lib/fileUploader/getPresignedUrl'
 import { fileUploader } from '@/lib/fileUploader/fileUploader'
 import { ReceiptEntity } from '../types'
@@ -11,11 +11,12 @@ import { ReceiptEntity } from '../types'
 export async function createReceiptAction({
   receiptFile,
   ...data
-}: CreateReceiptFormValues) {
+}: ReceiptFormValues) {
   try {
-    const imgUploadAssets = receiptFile
-      ? await getPresignedUrl(receiptFile, 'receipts', false)
-      : null
+    const imgUploadAssets =
+      receiptFile && receiptFile instanceof File
+        ? await getPresignedUrl(receiptFile, 'receipts', false)
+        : null
 
     const receiptResult = await serverApiClient<ReceiptEntity>('/receipts', {
       method: 'POST',
@@ -23,7 +24,7 @@ export async function createReceiptAction({
     })
 
     if (receiptFile && receiptResult && imgUploadAssets) {
-      await fileUploader(receiptFile, imgUploadAssets.uploadUrl)
+      await fileUploader(receiptFile as File, imgUploadAssets.uploadUrl)
     }
 
     revalidatePath('/receipts')
