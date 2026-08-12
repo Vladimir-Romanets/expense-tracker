@@ -5,6 +5,7 @@ export interface StoreEntity {
 
 export interface ReceiptEntity {
   id: number
+  storeId: number
   store?: StoreEntity
   purchaseDate: string
   totalAmount: string
