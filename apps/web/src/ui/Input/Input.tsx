@@ -31,7 +31,7 @@ export const Input = ({
       {label && (
         <label
           htmlFor={generatedId}
-          className="text-foreground text-sm font-medium"
+          className="text-foreground text-sm font-semibold"
         >
           {label}
         </label>

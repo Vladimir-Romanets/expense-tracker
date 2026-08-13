@@ -1,7 +1,7 @@
-import { Button, Icon, Table } from '@/ui'
-import type { ReceiptEntity } from '../../types'
+import { Icon, LinkAsButton, Table } from '@/ui'
 import { receiptsFormatter } from '../../utils/receiptListFormatter'
 import { ButtonReceiptDelete } from '../ui/ButtonReceiptDelete'
+import type { ReceiptEntity } from '../../types'
 
 interface Props {
   receipts: ReceiptEntity[]
@@ -53,16 +53,18 @@ export const ReceiptsTable = ({ receipts }: Props) => {
             </Table.Cell>
             <Table.Cell>
               <div className="flex items-center gap-3 text-slate-500">
-                <Button
+                <LinkAsButton
+                  href={`/receipts/${receipt.id}/edit`}
                   variant="social"
                   size="icon"
                   aria-label="Edit receipt"
+                  className="hover:text-brand-600"
                 >
                   <Icon
                     name="edit"
                     className="size-5"
                   />
-                </Button>
+                </LinkAsButton>
                 <ButtonReceiptDelete id={receipt.id} />
               </div>
             </Table.Cell>

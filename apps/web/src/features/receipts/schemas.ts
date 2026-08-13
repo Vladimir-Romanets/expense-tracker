@@ -3,7 +3,7 @@ import { z } from 'zod'
 const date = z.coerce.date().transform((d) => d.toISOString())
 
 export const receiptSchema = z.object({
-  receiptFile: z.instanceof(File).or(z.string()).optional(),
+  receiptFile: z.instanceof(File).or(z.string()).nullish(),
   storeId: z.coerce.number().int().positive('Please select a store'),
   totalAmount: z.coerce.number().gte(0, 'Amount must be positive'),
   purchaseDate: date,

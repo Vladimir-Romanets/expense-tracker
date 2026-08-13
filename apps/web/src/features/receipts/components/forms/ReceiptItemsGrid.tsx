@@ -69,14 +69,13 @@ export function ReceiptItemsGrid({ control, errors }: ReceiptItemsGridProps) {
 
             <Button
               type="button"
-              variant="outline"
+              variant="social"
               onClick={() => remove(index)}
-              className="px-2"
+              className="px-2 text-slate-500 focus-within:text-red-500 hover:text-red-500 "
               aria-label="Remove item"
             >
               <Icon
                 name="trash"
-                className="text-red-500"
                 size={20}
               />
             </Button>

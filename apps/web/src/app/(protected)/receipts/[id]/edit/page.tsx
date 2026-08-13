@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 import { getStores } from '@/features/markets/action/getStores'
 import { getReceiptById } from '@/features/receipts/actions/getReceiptById'
 import { ReceiptForm } from '@/features/receipts'
-import type { SearchParams } from '@/types/pagination'
 import { updateReceiptAction } from '@/features/receipts/actions/updateReceipt'
 import type { ReceiptFormValues } from '@/features/receipts/schemas'
 
@@ -43,7 +42,7 @@ const EditReceiptPage = async ({ params }: Props) => {
       unitPrice: item.unitPrice ? Number(item.unitPrice) : undefined,
       totalPrice: Number(item.totalPrice),
     })),
-    receiptFile: receipt.receiptUrl || undefined,
+    receiptFile: receipt.receiptUrl || null,
   }
 
   return (
