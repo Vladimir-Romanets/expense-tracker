@@ -223,6 +223,22 @@ const HomePage = () => {
           </div>
         </section>
       </main>
+      <footer className="border-t border-surface-border bg-surface-card py-8">
+        <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
+          <div className="flex items-center gap-2">
+            <Image
+              src="/logo.webp"
+              width={24}
+              height={18}
+              alt="Expense Tracker"
+            />
+            <span className="font-semibold text-slate-700">Expense Tracker</span>
+          </div>
+          <Typography variant="small" className="text-slate-500">
+            &copy; {new Date().getFullYear()} Expense Tracker. All rights reserved.
+          </Typography>
+        </div>
+      </footer>
     </>
   )
 }
