@@ -42,7 +42,7 @@ const EditReceiptPage = async ({ params }: Props) => {
       unitPrice: item.unitPrice ? Number(item.unitPrice) : undefined,
       totalPrice: Number(item.totalPrice),
     })),
-    receiptFile: receipt.receiptUrl || null,
+    receiptFile: receipt.receiptUrl,
   }
 
   return (

@@ -84,7 +84,7 @@ export function RHFFileUpload<T extends FieldValues>({
 
   const handleRemove = (e: React.MouseEvent) => {
     stopEvent(e)
-    onChange(null)
+    onChange(undefined)
   }
 
   useEffect(() => {

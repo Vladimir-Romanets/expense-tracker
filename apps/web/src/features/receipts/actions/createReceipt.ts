@@ -20,7 +20,10 @@ export async function createReceiptAction({
 
     const receiptResult = await serverApiClient<ReceiptEntity>('/receipts', {
       method: 'POST',
-      body: JSON.stringify({ ...data, imageKey: imgUploadAssets?.imageKey }),
+      body: JSON.stringify({
+        ...data,
+        imageKey: imgUploadAssets?.imageKey,
+      }),
     })
 
     if (receiptFile && receiptResult && imgUploadAssets) {
