@@ -5,30 +5,38 @@ const R2_KEY_REGEX =
 
 const date = z.coerce.date().transform((d) => d.toISOString())
 
-const _createReceiptBodySchema = z.object({
+const _createReceiptItemSchema = z.object({
+  name: z.string().trim().min(1),
+  quantity: z.number().gte(0).optional(),
+  unitPrice: z.number().gte(0).optional(),
+  totalPrice: z.number().gte(0),
+})
+
+const _updateReceiptItemSchema = _createReceiptItemSchema.extend({
+  id: z.number().int().gte(0).optional(),
+})
+
+const _createReceiptSchema = z.object({
   storeId: z.number().int().positive(),
   totalAmount: z.number().gte(0),
   purchaseDate: date,
   imageKey: z.string().regex(R2_KEY_REGEX).optional(),
-  items: z
-    .array(
-      z.object({
-        name: z.string().trim().min(1),
-        quantity: z.number().gte(0).optional(),
-        unitPrice: z.number().gte(0).optional(),
-        totalPrice: z.number().gte(0),
-      }),
-    )
-    .min(1, 'Receipt should contain at least one item!'),
+  items: z.array(_createReceiptItemSchema).min(1, 'Receipt should contain at least one item!'),
+})
+
+const _updateReceiptSchema = _createReceiptSchema.extend({
+  items: z.array(_updateReceiptItemSchema).min(1, 'Receipt should contain at least one item!'),
 })
 
 const _paramsIdSchema = z.object({
   id: z.coerce.number().int().positive(),
 })
 
-export const createReceiptSchema = z.object({ body: _createReceiptBodySchema })
+export const createReceiptSchema = z.object({ body: _createReceiptSchema })
+export const updateReceiptSchema = z.object({ body: _updateReceiptSchema, params: _paramsIdSchema })
 export const paramsIdReceiptSchema = z.object({ params: _paramsIdSchema })
 
-export type CreateReceiptDto = z.infer<typeof _createReceiptBodySchema>
-export type CreateReceiptItemsDto = CreateReceiptDto['items']
+export type CreateReceiptDto = z.infer<typeof _createReceiptSchema>
+export type UpdateReceiptDto = z.infer<typeof _updateReceiptSchema>
 export type ParamsIdReceiptDto = z.infer<typeof paramsIdReceiptSchema>
+export type UpdateIdReceiptDto = z.infer<typeof updateReceiptSchema>
