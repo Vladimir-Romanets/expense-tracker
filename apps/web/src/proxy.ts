@@ -57,6 +57,10 @@ export default async function proxy(request: NextRequest) {
   const isTokenValid = token ? await validateToken(token) : false
   const isAuthPath = checkIsAuthPath(request.nextUrl.pathname)
 
+  if (request.nextUrl.pathname === '/') {
+    return NextResponse.next()
+  }
+
   if (isTokenValid) {
     if (isAuthPath) {
       return redirectAuthenticatedUser(request)
@@ -74,6 +78,7 @@ export default async function proxy(request: NextRequest) {
 
     return NextResponse.next()
   }
+
   // TODO: Token revalidation will be added in the future
   return redirectToLogin(request)
 }
