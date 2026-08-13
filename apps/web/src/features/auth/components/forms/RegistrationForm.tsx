@@ -7,7 +7,10 @@ import { Button, Typography } from '@/ui'
 
 const RegistrationForm = () => {
   const { form, onSubmit } = useRegistrationForm()
-  const { control, formState: { isSubmitting, errors } } = form
+  const {
+    control,
+    formState: { isSubmitting, errors },
+  } = form
 
   return (
     <form
