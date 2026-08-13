@@ -1,7 +1,7 @@
 import { and, eq } from 'drizzle-orm'
-import { NewReceiptProps, receipts } from '@db/schema'
+import { NewReceiptProps, ReceiptProps, receipts } from '@db/schema'
 import { db, Executor } from '@db'
-import { PaginationResult } from '@helpers/utils/pagination'
+import type { PaginationResult } from '@helpers/utils/pagination'
 
 export const getAll = async ({ limit, offset }: PaginationResult, userId: number) => {
   const reqReceipts = db.query.receipts.findMany({
@@ -42,7 +42,18 @@ export const getById = async (id: number, userId: number) =>
       userId,
     },
     with: {
-      items: true,
+      items: {
+        with: {
+          products: {
+            columns: {
+              name: true,
+            },
+          },
+        },
+        columns: {
+          productId: false,
+        },
+      },
     },
   })
 
@@ -54,3 +65,15 @@ export const remove = async (id: number, userId: number) =>
     .delete(receipts)
     .where(and(eq(receipts.id, id), eq(receipts.userId, userId)))
     .returning({ id: receipts.id, imageKey: receipts.imageKey })
+
+export const update = async (payload: Omit<ReceiptProps, 'createdAt'>, tx: Executor = db) =>
+  tx
+    .update(receipts)
+    .set({
+      imageKey: payload.imageKey,
+      storeId: payload.storeId,
+      purchaseDate: payload.purchaseDate,
+      totalAmount: payload.totalAmount,
+    })
+    .where(and(eq(receipts.id, payload.id), eq(receipts.userId, payload.userId)))
+    .returning()
