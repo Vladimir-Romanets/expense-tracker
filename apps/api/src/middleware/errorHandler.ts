@@ -2,9 +2,13 @@
 import { Request, Response, NextFunction } from 'express'
 import { DrizzleError } from 'drizzle-orm'
 import { ZodError } from 'zod'
-import { AppError } from '@helpers/errors/apiError'
 import { handleDbConstraintError } from '@helpers/errors/handleDbConstraintError'
 import { handleZodError } from '@helpers/errors/handleZodError'
+import {
+  handleDbConnectionError,
+  isDbConnectionError,
+} from '@helpers/errors/handleDbConnectionError'
+import type { AppError } from '@helpers/errors/apiError'
 
 interface CustomError extends Error {
   statusCode?: number
@@ -46,7 +50,7 @@ const sendErrorProd = (err: CustomError, res: Response): void | Response => {
 
 export const globalErrorHandler = (
   err: any,
-  req: Request,
+  _req: Request,
   res: Response,
   _next: NextFunction,
 ): void => {
@@ -57,6 +61,8 @@ export const globalErrorHandler = (
 
   if (err instanceof ZodError) {
     validationErr = handleZodError(err)
+  } else if (err.name === 'DrizzleQueryError' && isDbConnectionError(err)) {
+    validationErr = handleDbConnectionError()
   } else if (err.name === 'DrizzleQueryError') {
     validationErr = handleDbConstraintError(err)
   }

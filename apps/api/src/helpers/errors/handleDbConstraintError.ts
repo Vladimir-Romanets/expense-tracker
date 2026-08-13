@@ -1,9 +1,5 @@
-import { DatabaseError } from 'pg'
 import { AppError } from '@helpers/errors/apiError'
-
-interface DrizzleQueryError extends Error {
-  cause?: DatabaseError
-}
+import { DrizzleQueryError } from './types'
 
 export const handleDbConstraintError = (error: DrizzleQueryError): AppError | DrizzleQueryError => {
   const code = error.cause?.code
