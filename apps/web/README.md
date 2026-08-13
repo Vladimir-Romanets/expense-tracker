@@ -7,7 +7,6 @@
 [![Zustand][zustand-badge]][zustand-url]
 [![Storybook][storybook-badge]][storybook-url]
 
-
 This is the frontend client for the Expense Tracker application. Built on Next.js, it provides a dashboard for detailed purchase entry, price dynamics visualization, and budget limit monitoring.
 
 ## Tech Stack
@@ -67,7 +66,7 @@ src/
 
 1. **App Router Boundary (`src/app/`)**: `src/app/` handles routing, layouts, and page entry points. Pages delegate UI rendering and business logic to `features/` or `ui/`.
 2. **Feature Co-location (`src/features/`)**: Everything specific to a business feature (components, server actions, Zod schemas, types) lives inside `features/<feature-name>/`.
-3. **Separation of Concerns (Inside Features)**: 
+3. **Separation of Concerns (Inside Features)**:
    - **Business Logic**: Extracted into custom hooks (`hooks/`) to keep components clean.
    - **Component Hierarchy**: `components/` is subdivided into logical groups (`forms/`, `ui/`, `modals/`, `tables/`).
 4. **Strict Public API**: Each feature exposes its public interface strictly through `index.ts`. Deep imports into a feature's internal structure from outside are forbidden.
@@ -199,4 +198,3 @@ VS Code auto-format on save is pre-configured in `.vscode/settings.json`.
 [zustand-url]: https://zustand-demo.pmnd.rs
 [storybook-badge]: https://img.shields.io/badge/storybook-%23FF4785.svg?style=for-the-badge&logo=storybook&logoColor=white
 [storybook-url]: https://storybook.js.org
-

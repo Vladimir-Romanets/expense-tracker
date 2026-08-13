@@ -13,7 +13,12 @@ const CreateReceiptPage = async () => {
 
   const stores = data.map((el) => ({ value: el.id, label: el.name }))
 
-  return <ReceiptForm stores={stores} onSubmitAction={createReceiptAction} />
+  return (
+    <ReceiptForm
+      stores={stores}
+      onSubmitAction={createReceiptAction}
+    />
+  )
 }
 
 export default CreateReceiptPage
