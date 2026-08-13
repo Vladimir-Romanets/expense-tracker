@@ -13,6 +13,7 @@ export const ButtonReceiptDelete = ({ id }: { id: number }) => {
       size="icon"
       aria-label="Delete receipt"
       onClick={handleClick}
+      className="hover:text-red-500"
     >
       <Icon
         name="trash"
