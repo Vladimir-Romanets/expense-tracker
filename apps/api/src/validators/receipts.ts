@@ -20,7 +20,7 @@ const _createReceiptSchema = z.object({
   storeId: z.number().int().positive(),
   totalAmount: z.number().gte(0),
   purchaseDate: date,
-  imageKey: z.string().regex(R2_KEY_REGEX).optional(),
+  imageKey: z.string().regex(R2_KEY_REGEX).nullish(),
   items: z.array(_createReceiptItemSchema).min(1, 'Receipt should contain at least one item!'),
 })
 
