@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: 'View and Manage products',
 }
 
-export default async function ProductsPage({ searchParams }: Props) {
+const ProductsPage = async ({ searchParams }: Props) => {
   const currentParams = await searchParams
   const page = Number(currentParams.page) || 1
   const limit = Number(currentParams.limit) || undefined
@@ -34,3 +34,5 @@ export default async function ProductsPage({ searchParams }: Props) {
     </>
   )
 }
+
+export default ProductsPage
