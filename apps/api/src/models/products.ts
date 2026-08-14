@@ -7,12 +7,18 @@ import { ProductQuery } from '@validators/products'
 const allowedSortField = ['name']
 
 export const getAll = async (filters: ProductQuery, { limit, offset }: PaginationResult) => {
-  const { sortBy = 'name', sortOrder, search, categoryId } = filters
+  const { sortBy = 'name', sortOrder = 'asc', search, categoryId } = filters
 
+  // START. This approach violates the dry principle, but it works
   const whereConditions: SQL[] = [
     ...(search ? [ilike(products.name, `%${search}%`)] : []),
     ...(categoryId ? [eq(products.categoryId, categoryId)] : []),
   ]
+  const whereFilter = {
+    ...(search ? { name: { ilike: `%${search}%` } } : {}),
+    ...(categoryId !== undefined ? { categoryId: { eq: categoryId } } : {}),
+  }
+  // END
 
   const whereClause = whereConditions.length ? and(...whereConditions) : undefined
   const sortField = allowedSortField.includes(sortBy) ? sortBy : 'name'
@@ -23,8 +29,7 @@ export const getAll = async (filters: ProductQuery, { limit, offset }: Paginatio
   const reqProducts = db.query.products.findMany({
     limit,
     offset,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    where: whereClause as any,
+    where: whereFilter,
     orderBy,
     columns: {
       createdAt: false,
