@@ -1,4 +1,13 @@
 import { z } from 'zod'
+import { basicQuerySchema, optionalCoerceNumber } from './basicFilter'
+
+const productQuerySchema = basicQuerySchema.extend({
+  categoryId: optionalCoerceNumber,
+})
+
+export const getProductFilterSchema = z.object({
+  query: productQuerySchema,
+})
 
 export const updateProductSchema = z.object({
   params: z.object({
@@ -9,4 +18,7 @@ export const updateProductSchema = z.object({
     categoryId: z.number().int().positive().nullable().optional(),
   }),
 })
+
+export type ProductFilter = z.infer<typeof getProductFilterSchema>
+export type ProductQuery = z.infer<typeof productQuerySchema>
 export type UpdateProductDto = z.infer<typeof updateProductSchema>

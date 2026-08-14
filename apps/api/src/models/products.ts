@@ -1,15 +1,31 @@
-import { eq } from 'drizzle-orm'
+import { eq, ilike, and, type SQL } from 'drizzle-orm'
 import { db, type Executor } from '@db'
 import { products, type NewProductProps, type ProductProps } from '@db/schema'
 import type { PaginationResult } from '@helpers/utils/pagination'
+import { ProductQuery } from '@validators/products'
 
-export const getAll = async ({ limit, offset }: PaginationResult) => {
+const allowedSortField = ['name']
+
+export const getAll = async (filters: ProductQuery, { limit, offset }: PaginationResult) => {
+  const { sortBy = 'name', sortOrder, search, categoryId } = filters
+
+  const whereConditions: SQL[] = [
+    ...(search ? [ilike(products.name, `%${search}%`)] : []),
+    ...(categoryId ? [eq(products.categoryId, categoryId)] : []),
+  ]
+
+  const whereClause = whereConditions.length ? and(...whereConditions) : undefined
+  const sortField = allowedSortField.includes(sortBy) ? sortBy : 'name'
+  const orderBy = {
+    [sortField]: sortOrder,
+  }
+
   const reqProducts = db.query.products.findMany({
     limit,
     offset,
-    orderBy: {
-      name: 'asc',
-    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    where: whereClause as any,
+    orderBy,
     columns: {
       createdAt: false,
     },
@@ -22,7 +38,7 @@ export const getAll = async ({ limit, offset }: PaginationResult) => {
     },
   })
 
-  const reqTotal = db.$count(products)
+  const reqTotal = db.$count(products, whereClause)
 
   const [list, total] = await Promise.all([reqProducts, reqTotal])
 
