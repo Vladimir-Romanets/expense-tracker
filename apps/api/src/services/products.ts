@@ -1,13 +1,9 @@
 import { productsModel } from '@models'
 import { AppError } from '@helpers/errors/apiError'
+import { createPaginatedResponse, getPaginationParams } from '@helpers/utils/pagination'
 import type { Executor } from '@db'
 import type { NewProductProps, ProductProps } from '@db/schema'
-import type { UpdateProductDto } from '@validators/products'
-import {
-  createPaginatedResponse,
-  getPaginationParams,
-  type PaginationInput,
-} from '@helpers/utils/pagination'
+import type { UpdateProductDto, ProductQuery } from '@validators/products'
 
 type ProductList = {
   id: number
@@ -15,10 +11,11 @@ type ProductList = {
   categoryId: number | null
   categoryName: string
 }
-export const getAll = async (payload: PaginationInput) => {
+
+export const getAll = async (payload: ProductQuery) => {
   const pagination = getPaginationParams(payload)
 
-  const { list, total } = await productsModel.getAll(pagination)
+  const { list, total } = await productsModel.getAll(payload, pagination)
 
   const formattedList = list.map(({ categories, ...rest }) => ({
     ...rest,
