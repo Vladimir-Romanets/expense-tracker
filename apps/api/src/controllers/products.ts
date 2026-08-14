@@ -1,8 +1,15 @@
-import { Response } from 'express'
+import type { Response } from 'express'
 import { productsService } from '@services'
 import { asyncHandler } from '@helpers/errors/asyncHandler'
-import { UpdateProductDto } from '@validators/products'
-import { ValidatedRequest } from '../types/validator'
+import type { UpdateProductDto } from '@validators/products'
+import type { ValidatedRequest } from '../types/validator'
+import type { AuthRequest } from '@middleware/authenticate'
+
+export const getAll = asyncHandler(async (req: AuthRequest, res: Response) => {
+  const response = await productsService.getAll(req.query)
+
+  res.status(200).json(response)
+})
 
 export const update = asyncHandler(
   async (req: ValidatedRequest<UpdateProductDto>, res: Response) => {

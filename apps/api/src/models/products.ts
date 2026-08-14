@@ -1,6 +1,42 @@
-import { db, Executor } from '@db'
-import { products, NewProductProps, ProductProps } from '@db/schema'
 import { eq } from 'drizzle-orm'
+import { db, type Executor } from '@db'
+import { products, type NewProductProps, type ProductProps } from '@db/schema'
+import type { PaginationResult } from '@helpers/utils/pagination'
+
+export const getAll = async ({ limit, offset }: PaginationResult) => {
+  const reqProducts = db.query.products.findMany({
+    limit,
+    offset,
+    orderBy: {
+      name: 'asc',
+    },
+    columns: {
+      createdAt: false,
+    },
+    with: {
+      categories: {
+        columns: {
+          name: true,
+        },
+      },
+    },
+  })
+
+  const reqTotal = db.$count(products)
+
+  const [list, total] = await Promise.all([reqProducts, reqTotal])
+
+  return { list, total }
+}
+
+export const getByName = async (name: NewProductProps['name'], tx: Executor = db) =>
+  await tx.query.products.findFirst({
+    where: {
+      name: {
+        ilike: name,
+      },
+    },
+  })
 
 export const createIfNotExists = async (payload: NewProductProps, tx: Executor = db) =>
   await tx
@@ -11,15 +47,6 @@ export const createIfNotExists = async (payload: NewProductProps, tx: Executor =
       set: { name: payload.name.toLowerCase() },
     })
     .returning()
-
-export const getByName = async (name: NewProductProps['name'], tx: Executor = db) =>
-  await tx.query.products.findFirst({
-    where: {
-      name: {
-        ilike: name,
-      },
-    },
-  })
 
 export const getById = async (id: ProductProps['id'], tx: Executor = db) =>
   await tx.query.products.findFirst({

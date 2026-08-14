@@ -1,17 +1,41 @@
-import { Executor } from '@db'
-import { NewProductProps, ProductProps } from '@db/schema'
 import { productsModel } from '@models'
 import { AppError } from '@helpers/errors/apiError'
-import { UpdateProductDto } from '@validators/products'
+import type { Executor } from '@db'
+import type { NewProductProps, ProductProps } from '@db/schema'
+import type { UpdateProductDto } from '@validators/products'
+import {
+  createPaginatedResponse,
+  getPaginationParams,
+  type PaginationInput,
+} from '@helpers/utils/pagination'
+
+type ProductList = {
+  id: number
+  name: string
+  categoryId: number | null
+  categoryName: string
+}
+export const getAll = async (payload: PaginationInput) => {
+  const pagination = getPaginationParams(payload)
+
+  const { list, total } = await productsModel.getAll(pagination)
+
+  const formattedList = list.map(({ categories, ...rest }) => ({
+    ...rest,
+    categoryName: categories?.name || '',
+  }))
+
+  return createPaginatedResponse<ProductList>(formattedList, total, pagination)
+}
+
+export const getByName = async (name: NewProductProps['name'], tx?: Executor) =>
+  await productsModel.getByName(name, tx)
 
 export const createIfNotExists = async (payload: NewProductProps, tx?: Executor) => {
   const [product] = await productsModel.createIfNotExists(payload, tx)
 
   return product
 }
-
-export const getByName = async (name: NewProductProps['name'], tx?: Executor) =>
-  await productsModel.getByName(name, tx)
 
 export const checkAndInsert = async (name: NewProductProps['name'], tx?: Executor) => {
   const formattedName = name.trim().toLowerCase()
