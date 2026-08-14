@@ -35,7 +35,9 @@ export const Select = ({
   const errorId = generatedId ? `${generatedId}-error` : undefined
 
   return (
-    <div className={cn('flex w-full flex-col gap-1.5', wrapperClassName)}>
+    <div
+      className={cn('relative flex w-full flex-col gap-1.5', wrapperClassName)}
+    >
       {label && (
         <label
           htmlFor={generatedId}
