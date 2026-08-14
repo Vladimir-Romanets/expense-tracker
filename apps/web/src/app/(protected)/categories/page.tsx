@@ -9,7 +9,8 @@ type Props = {
 }
 
 export const metadata: Metadata = {
-  title: 'Category | Expense Tracker',
+  title: 'Categories | Expense Tracker',
+  description: 'View and Manage categories',
 }
 
 const CategoriesPage = async ({ searchParams }: Props) => {
