@@ -12,7 +12,9 @@ export const ProductsToolbar = () => {
   const isMounted = useRef(false)
 
   const [search, setSearch] = useState(searchParams.get('search') || '')
-  const [sort, setSort] = useState(searchParams.get('sort') || '')
+  const [sortOrder, setSortOrder] = useState(
+    searchParams.get('sortOrder') || ''
+  )
 
   const debouncedSearch = useDebounce(search, 600)
 
@@ -25,10 +27,10 @@ export const ProductsToolbar = () => {
       params.delete('search')
     }
 
-    if (sort) {
-      params.set('sort', sort)
+    if (sortOrder) {
+      params.set('sortOrder', sortOrder)
     } else {
-      params.delete('sort')
+      params.delete('sortOrder')
     }
 
     params.set('page', '1')
@@ -40,7 +42,7 @@ export const ProductsToolbar = () => {
     if (isMounted.current) {
       handleUpdate()
     }
-  }, [debouncedSearch, sort])
+  }, [debouncedSearch, sortOrder])
 
   useEffect(() => {
     isMounted.current = true
@@ -58,9 +60,9 @@ export const ProductsToolbar = () => {
       <Select
         placeholder="Sort: A-Z"
         wrapperClassName="w-48"
-        value={sort}
-        name="sort"
-        onChange={(e) => setSort(e.target.value)}
+        value={sortOrder}
+        name="sortOrder"
+        onChange={(e) => setSortOrder(e.target.value)}
         options={[
           { label: 'Sort: A-Z', value: 'asc' },
           { label: 'Sort: Z-A', value: 'desc' },
