@@ -12,6 +12,10 @@ export const metadata: Metadata = {
   title: 'Expense Tracker — Detailed Budget & Price Dynamic',
   description:
     'Track every detail, analyze price history and plan smart budgets.',
+  robots: {
+    index: false,
+    follow: false,
+  },
 }
 
 export default function RootLayout({
