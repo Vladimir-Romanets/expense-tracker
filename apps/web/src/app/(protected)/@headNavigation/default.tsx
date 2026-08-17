@@ -1,3 +1,3 @@
-export default function Default() {
-  return null
-}
+const DefaultHead = () => null
+
+export default DefaultHead

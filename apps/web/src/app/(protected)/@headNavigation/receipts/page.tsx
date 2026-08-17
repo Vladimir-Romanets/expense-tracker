@@ -1,7 +1,7 @@
 import { LinkAsButton } from '@/ui'
 
-const HeadNavigation = () => {
+const HeadNavigationReceipts = () => {
   return <LinkAsButton href="/receipts/create">+ Add Receipt</LinkAsButton>
 }
 
-export default HeadNavigation
+export default HeadNavigationReceipts

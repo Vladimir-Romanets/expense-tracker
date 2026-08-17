@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const HeadNavigation = () => {
+const HeadNavigationCategoriesCreate = () => {
   return (
     <Link
       href="/categories"
@@ -11,4 +11,4 @@ const HeadNavigation = () => {
   )
 }
 
-export default HeadNavigation
+export default HeadNavigationCategoriesCreate
