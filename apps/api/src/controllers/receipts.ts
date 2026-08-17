@@ -2,15 +2,17 @@ import { Response } from 'express'
 import { asyncHandler } from '@helpers/errors/asyncHandler'
 import { receiptsService } from '@services'
 import type { ValidatedRequest } from '../types/validator'
-import type { ParamsIdReceiptDto, UpdateIdReceiptDto } from '@validators/receipts'
+import type { ParamsIdReceiptDto, UpdateIdReceiptDto, ReceiptsFilter } from '@validators/receipts'
 import type { AuthRequest } from '@middleware/authenticate'
 import { AppError } from '@helpers/errors/apiError'
 
-export const getAll = asyncHandler(async (req: AuthRequest, res: Response) => {
-  const response = await receiptsService.getAll(req.query, req.userId as number)
+export const getAll = asyncHandler(
+  async (req: ValidatedRequest<ReceiptsFilter> & AuthRequest, res: Response) => {
+    const response = await receiptsService.getAll(req.query, req.userId as number)
 
-  res.status(200).json(response)
-})
+    res.status(200).json(response)
+  },
+)
 
 export const getById = asyncHandler(
   async (req: ValidatedRequest<ParamsIdReceiptDto> & AuthRequest, res: Response) => {

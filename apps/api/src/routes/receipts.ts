@@ -6,11 +6,11 @@ import {
 } from '@validators/receipts'
 import { validate } from '@middleware/validate'
 import { receiptsController } from '@controllers'
-import { getBasicFilterSchema } from '@validators/basicFilter'
+import { getReceiptsFilterSchema } from '@validators/receipts'
 
 const router = Router()
 
-router.get('/', validate(getBasicFilterSchema), receiptsController.getAll)
+router.get('/', validate(getReceiptsFilterSchema), receiptsController.getAll)
 router.get('/:id', validate(paramsIdReceiptSchema), receiptsController.getById)
 router.post('/', validate(createReceiptSchema), receiptsController.create)
 router.put('/:id', validate(updateReceiptSchema), receiptsController.update)

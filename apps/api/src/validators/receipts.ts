@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { basicQuerySchema, optionalCoerceNumber } from './basicFilter'
 
 const R2_KEY_REGEX =
   /^receipts\/\d+\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|jpeg|png|webp|heic|avif)$/
@@ -32,10 +33,20 @@ const _paramsIdSchema = z.object({
   id: z.coerce.number().int().positive(),
 })
 
+const _receiptsQuerySchema = basicQuerySchema.extend({
+  storeId: optionalCoerceNumber,
+  sortBy: z.enum(['purchaseDate', 'totalAmount', 'storeId']).optional().default('purchaseDate'),
+})
+
+export const getReceiptsFilterSchema = z.object({
+  query: _receiptsQuerySchema,
+})
 export const createReceiptSchema = z.object({ body: _createReceiptSchema })
 export const updateReceiptSchema = z.object({ body: _updateReceiptSchema, params: _paramsIdSchema })
 export const paramsIdReceiptSchema = z.object({ params: _paramsIdSchema })
 
+export type ReceiptsQuery = z.infer<typeof _receiptsQuerySchema>
+export type ReceiptsFilter = z.infer<typeof getReceiptsFilterSchema>
 export type CreateReceiptDto = z.infer<typeof _createReceiptSchema>
 export type UpdateReceiptDto = z.infer<typeof _updateReceiptSchema>
 export type ParamsIdReceiptDto = z.infer<typeof paramsIdReceiptSchema>
