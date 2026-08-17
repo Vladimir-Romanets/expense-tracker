@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const HeadNavigation = () => {
+const HeadNavigationReceiptsEdit = () => {
   return (
     <Link
       href="/receipts"
@@ -11,4 +11,4 @@ const HeadNavigation = () => {
   )
 }
 
-export default HeadNavigation
+export default HeadNavigationReceiptsEdit

@@ -1,7 +1,7 @@
 import { LinkAsButton } from '@/ui'
 
-const HeadNavigation = () => {
+const HeadNavigationCategories = () => {
   return <LinkAsButton href="/categories/create">+ Add Category</LinkAsButton>
 }
 
-export default HeadNavigation
+export default HeadNavigationCategories
