@@ -9,7 +9,7 @@ const allowedSortField = ['name']
 export const getAll = async (filters: ProductQuery, { limit, offset }: PaginationResult) => {
   const { sortBy = 'name', sortOrder = 'asc', search, categoryId } = filters
 
-  // START. This approach violates the dry principle, but it works
+  // START. This approach violates the DRY principle, but it works
   const whereConditions: SQL[] = [
     ...(search ? [ilike(products.name, `%${search}%`)] : []),
     ...(categoryId ? [eq(products.categoryId, categoryId)] : []),

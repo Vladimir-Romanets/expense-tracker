@@ -1,34 +1,53 @@
-import { and, eq } from 'drizzle-orm'
-import { NewReceiptProps, ReceiptProps, receipts } from '@db/schema'
+import { and, eq, asc, desc, sql } from 'drizzle-orm'
+import { NewReceiptProps, ReceiptProps, receipts, stores } from '@db/schema'
 import { db, Executor } from '@db'
 import type { PaginationResult } from '@helpers/utils/pagination'
+import type { ReceiptsQuery } from '@validators/receipts'
 
-export const getAll = async ({ limit, offset }: PaginationResult, userId: number) => {
-  const reqReceipts = db.query.receipts.findMany({
-    where: {
-      userId,
-    },
-    limit,
-    offset,
-    orderBy: {
-      purchaseDate: 'desc',
-    },
-    columns: {
-      createdAt: false,
-      storeId: false,
-      userId: false,
-    },
-    with: {
+type GetAllProps = {
+  pagination: PaginationResult
+  filter: ReceiptsQuery
+  userId: number
+}
+
+const sortColumns = {
+  purchaseDate: receipts.purchaseDate,
+  totalAmount: receipts.totalAmount,
+} as const
+
+export const getAll = async ({ pagination, filter, userId }: GetAllProps) => {
+  const { sortBy, sortOrder, storeId } = filter
+
+  const whereClause = and(
+    eq(receipts.userId, userId),
+    ...(storeId ? [eq(receipts.storeId, storeId)] : []),
+  )
+
+  const direction = sortOrder === 'asc' ? asc : desc
+
+  const orderColumn =
+    sortBy === 'storeId' ? direction(sql`lower(${stores.name})`) : direction(sortColumns[sortBy])
+
+  // Using builder API (not Relational) to support ORDER BY on joined stores.name
+  const reqReceipts = db
+    .select({
+      id: receipts.id,
+      purchaseDate: receipts.purchaseDate,
+      totalAmount: receipts.totalAmount,
+      imageKey: receipts.imageKey,
       store: {
-        columns: {
-          name: true,
-          id: true,
-        },
+        id: stores.id,
+        name: stores.name,
       },
-    },
-  })
+    })
+    .from(receipts)
+    .leftJoin(stores, eq(receipts.storeId, stores.id))
+    .where(whereClause)
+    .orderBy(orderColumn)
+    .limit(pagination.limit)
+    .offset(pagination.offset)
 
-  const reqTotal = db.$count(receipts, eq(receipts.userId, userId))
+  const reqTotal = db.$count(receipts, whereClause)
 
   const [list, total] = await Promise.all([reqReceipts, reqTotal])
 
