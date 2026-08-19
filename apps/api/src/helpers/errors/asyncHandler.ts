@@ -1,15 +1,10 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express'
 
-type DefaultParams = Record<string, string | undefined>
-
 export const asyncHandler =
-  <P = DefaultParams, ResBody = unknown, ReqBody = unknown, ReqQuery = unknown>(
-    fn: (
-      req: Request<P, ResBody, ReqBody, ReqQuery>,
-      res: Response<ResBody>,
-      next: NextFunction,
-    ) => Promise<unknown>,
-  ): RequestHandler<P, ResBody, ReqBody, ReqQuery> =>
-  (req, res, next) => {
-    fn(req, res, next).catch(next)
-  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  <Req extends Request<any, any, any, any>, Res extends Response<any>>(
+      fn: (req: Req, res: Res, next: NextFunction) => Promise<unknown>,
+    ): RequestHandler =>
+    (req, res, next) => {
+      fn(req as unknown as Req, res as unknown as Res, next).catch(next)
+    }

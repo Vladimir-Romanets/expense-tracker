@@ -3,10 +3,10 @@ import {
   createReceiptSchema,
   paramsIdReceiptSchema,
   updateReceiptSchema,
+  getReceiptsFilterSchema,
 } from '@validators/receipts'
 import { validate } from '@middleware/validate'
 import { receiptsController } from '@controllers'
-import { getReceiptsFilterSchema } from '@validators/receipts'
 
 const router = Router()
 

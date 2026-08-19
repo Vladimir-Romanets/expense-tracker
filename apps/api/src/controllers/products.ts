@@ -7,7 +7,7 @@ import type { AuthRequest } from '@middleware/authenticate'
 
 export const getAll = asyncHandler(
   async (req: ValidatedRequest<ProductFilter> & AuthRequest, res: Response) => {
-    const response = await productsService.getAll(req.query)
+    const response = await productsService.getAll(req.validatedQuery)
 
     res.status(200).json(response)
   },
