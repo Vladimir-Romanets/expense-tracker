@@ -35,12 +35,13 @@ const _paramsIdSchema = z.object({
 
 const _receiptsQuerySchema = basicQuerySchema.extend({
   storeId: optionalCoerceNumber,
-  sortBy: z.enum(['purchaseDate', 'totalAmount', 'storeId']).optional().default('purchaseDate'),
+  sortBy: z.enum(['purchaseDate', 'totalAmount', 'storeId']).default('purchaseDate'),
 })
 
 export const getReceiptsFilterSchema = z.object({
   query: _receiptsQuerySchema,
 })
+
 export const createReceiptSchema = z.object({ body: _createReceiptSchema })
 export const updateReceiptSchema = z.object({ body: _updateReceiptSchema, params: _paramsIdSchema })
 export const paramsIdReceiptSchema = z.object({ params: _paramsIdSchema })

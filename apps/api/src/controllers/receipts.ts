@@ -8,7 +8,7 @@ import { AppError } from '@helpers/errors/apiError'
 
 export const getAll = asyncHandler(
   async (req: ValidatedRequest<ReceiptsFilter> & AuthRequest, res: Response) => {
-    const response = await receiptsService.getAll(req.query, req.userId as number)
+    const response = await receiptsService.getAll(req.validatedQuery, req.userId as number)
 
     res.status(200).json(response)
   },
