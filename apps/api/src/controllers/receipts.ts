@@ -1,4 +1,4 @@
-import { Response } from 'express'
+import type { Request, Response } from 'express'
 import { asyncHandler } from '@helpers/errors/asyncHandler'
 import { receiptsService } from '@services'
 import type { ValidatedRequest } from '../types/validator'
@@ -51,3 +51,16 @@ export const update = asyncHandler(
     res.status(200).json(receipt)
   },
 )
+
+export const parse = asyncHandler(async (req: Request & AuthRequest, res: Response) => {
+  if (!req.file) {
+    res.status(400).json({ error: 'Receipt screenshot not uploaded' })
+    return
+  }
+
+  const parsedReceipt = await receiptsService.parse(req.file)
+
+  if (!parsedReceipt) throw new AppError('Receipt can not be parsed', 404)
+
+  res.status(200).json(parsedReceipt)
+})

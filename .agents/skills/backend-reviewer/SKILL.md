@@ -41,7 +41,7 @@ Node.js (Express v5), PostgreSQL, Drizzle ORM (v1.0+ standard syntax & Relationa
 - Diff Awareness: don't flag missing imports/vars unless obviously omitted in the new code shown.
 
 **4. Structure & naming**
-- `kebab-case` for all files/dirs (`user-controller.ts`, `auth-middleware.ts`); flag camelCase/PascalCase/snake_case in paths.
+- `camelCase` for all files/dirs (`userController.ts`, `autoMiddleware.ts`); flag kebab-case/PascalCase/snake_case in paths.
 - Encourage role suffixes: `.service.ts`, `.controller.ts`, `.routes.ts`, `.schema.ts`.
 - Naming should reflect the domain/module it belongs to.
 
