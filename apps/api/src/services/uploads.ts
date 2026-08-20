@@ -1,4 +1,9 @@
-import { PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3'
+import {
+  PutObjectCommand,
+  GetObjectCommand,
+  DeleteObjectCommand,
+  type GetObjectCommandOutput,
+} from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { randomUUID } from 'crypto'
 import { getR2Client, getR2BucketName, getR2PublicBucketName } from '@helpers/utils/r2'
@@ -63,4 +68,13 @@ export const getImgLink = async (imageKey: string): Promise<string> => {
   })
 
   return await getSignedUrl(getR2Client(), command, { expiresIn: 900 })
+}
+
+export const getImgFile = async (imageKey: string): Promise<GetObjectCommandOutput> => {
+  const command = new GetObjectCommand({
+    Bucket: getR2BucketName(),
+    Key: imageKey,
+  })
+  const r2Client = getR2Client()
+  return await r2Client.send(command)
 }

@@ -11,7 +11,8 @@ export const validate = (schema: ZodObject<ZodRawShape>) => {
       })
 
       if ('body' in parsed) req.body = parsed.body
-      if ('query' in parsed) Object.assign(req.query, parsed.query)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ('query' in parsed) (req as any).validatedQuery = parsed.query
       if ('params' in parsed) req.params = parsed.params as Request['params']
 
       return next()
