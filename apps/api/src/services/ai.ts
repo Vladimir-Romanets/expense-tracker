@@ -1,8 +1,22 @@
-import { GenerateContentParameters, GoogleGenAI, Type } from '@google/genai'
+import { GoogleGenAI, Type, type GenerateContentParameters } from '@google/genai'
 import { AppError } from '@helpers/errors/apiError'
-import { getImgFile } from './uploads'
+import { getAiKey } from '@helpers/utils/aiGemini'
 
-const ai = new GoogleGenAI({ apiKey: process.env.AI_API_KEY })
+type ReceiptItem = {
+  name: string
+  quantity?: number
+  totalPrice: number
+}
+
+type ParsedReceipt = {
+  storeName: string
+  purchaseDate?: string
+  totalAmount: number
+  currency?: string
+  items: ReceiptItem[]
+}
+
+const ai = new GoogleGenAI({ apiKey: getAiKey() })
 const MODELS_FALLBACK_ORDER = ['gemini-3.6-flash', 'gemini-1.5-flash', 'gemini-1.5-pro']
 const systemInstruction = `
 You are an expert at parsing sales receipts.
@@ -86,17 +100,11 @@ const callGeminiWithRetry = async (params: CallGeminiParams) => {
   throw new AppError('All Gemini models are temporarily unavailable. Please try again later.', 503)
 }
 
-export const parseReceiptFromR2 = async (imageKey: string) => {
-  const receiptFile = await getImgFile(imageKey)
-
-  if (!receiptFile.Body) {
-    throw new AppError('Receipt file was not found', 404)
-  }
-
-  const byteArray = await receiptFile.Body.transformToByteArray()
+export const parseReceiptFromFile = async (file: Express.Multer.File): Promise<ParsedReceipt> => {
+  const mimeType = file.mimetype.startsWith('image/') ? file.mimetype : 'image/jpeg'
   const inlineData = {
-    data: Buffer.from(byteArray).toString('base64'),
-    mimeType: receiptFile.ContentType || 'image/jpeg',
+    data: file.buffer.toString('base64'),
+    mimeType,
   }
   const contents = [
     {

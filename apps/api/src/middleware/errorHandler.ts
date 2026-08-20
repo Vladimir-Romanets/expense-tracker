@@ -2,8 +2,10 @@
 import { Request, Response, NextFunction } from 'express'
 import { DrizzleError } from 'drizzle-orm'
 import { ZodError } from 'zod'
+import multer from 'multer'
 import { handleDbConstraintError } from '@helpers/errors/handleDbConstraintError'
 import { handleZodError } from '@helpers/errors/handleZodError'
+import { handleMulterError } from '@helpers/errors/handleMulterError'
 import {
   handleDbConnectionError,
   isDbConnectionError,
@@ -61,6 +63,8 @@ export const globalErrorHandler = (
 
   if (err instanceof ZodError) {
     validationErr = handleZodError(err)
+  } else if (err instanceof multer.MulterError) {
+    validationErr = handleMulterError(err)
   } else if (err.name === 'DrizzleQueryError' && isDbConnectionError(err)) {
     validationErr = handleDbConnectionError()
   } else if (err.name === 'DrizzleQueryError') {
