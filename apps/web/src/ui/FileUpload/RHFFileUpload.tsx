@@ -24,6 +24,7 @@ export function RHFFileUpload<T extends FieldValues>({
   label = 'Upload or drag and-drop scan/photo',
   accept = '*',
   className,
+  disabled = false,
   ...props
 }: RHFFileUploadProps<T>) {
   const {
@@ -46,20 +47,26 @@ export function RHFFileUpload<T extends FieldValues>({
     return typeof file === 'string' ? file : undefined
   }, [value])
 
-  const handleDrag = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
-    stopEvent(e)
+  const handleDrag = useCallback(
+    (e: React.DragEvent<HTMLLabelElement>) => {
+      stopEvent(e)
+      if (disabled) return
 
-    if (e.type === 'dragenter' || e.type === 'dragover') {
-      setIsDragActive(true)
-    } else if (e.type === 'dragleave') {
-      setIsDragActive(false)
-    }
-  }, [])
+      if (e.type === 'dragenter' || e.type === 'dragover') {
+        setIsDragActive(true)
+      } else if (e.type === 'dragleave') {
+        setIsDragActive(false)
+      }
+    },
+    [disabled]
+  )
 
   const handleDrop = useCallback(
     (e: React.DragEvent<HTMLLabelElement>) => {
       stopEvent(e)
       setIsDragActive(false)
+      if (disabled) return
+
       const file = e.dataTransfer.files?.[0]
 
       if (accept !== '*' && file) {
@@ -74,16 +81,18 @@ export function RHFFileUpload<T extends FieldValues>({
 
       if (file) onChange(file)
     },
-    [onChange, accept]
+    [onChange, accept, disabled]
   )
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (disabled) return
     const file = e.target.files?.[0]
     if (file) onChange(file)
   }
 
   const handleRemove = (e: React.MouseEvent) => {
     stopEvent(e)
+    if (disabled) return
     onChange(undefined)
   }
 
@@ -101,6 +110,7 @@ export function RHFFileUpload<T extends FieldValues>({
         onDragLeave={handleDrag}
         onDragOver={handleDrag}
         onDrop={handleDrop}
+        aria-disabled={disabled}
         className={cn(
           'relative flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 text-center transition-colors',
           isDragActive
@@ -109,6 +119,7 @@ export function RHFFileUpload<T extends FieldValues>({
                 'border-red-500 bg-red-50': error,
                 'border-gray-300 bg-gray-50 hover:bg-gray-100': !error,
               },
+          disabled && 'cursor-not-allowed opacity-60 hover:bg-gray-50',
           className
         )}
       >
@@ -139,6 +150,7 @@ export function RHFFileUpload<T extends FieldValues>({
             <Button
               type="button"
               onClick={handleRemove}
+              disabled={disabled}
               variant="destructive"
               size="icon"
               shape="pill"
@@ -176,7 +188,7 @@ export function RHFFileUpload<T extends FieldValues>({
           className="hidden"
           onChange={handleChange}
           accept={accept}
-          disabled={!!value}
+          disabled={disabled || !!value}
         />
       </label>
       {error && (
