@@ -71,7 +71,8 @@ export async function apiClientWithHeaders(
   }
 
   const finalHeaders = new Headers(headers)
-  if (customConfig.body && !finalHeaders.has('Content-Type')) {
+  const isFormData = customConfig.body instanceof FormData
+  if (!isFormData && customConfig.body && !finalHeaders.has('Content-Type')) {
     finalHeaders.set('Content-Type', 'application/json')
   }
 

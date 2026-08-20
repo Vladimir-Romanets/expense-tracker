@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
-import { ReceiptForm } from '@/features/receipts'
+import { ReceiptForm, createReceipt } from '@/features/receipts'
 import { getStores } from '@/features/markets/action/getStores'
-import { createReceiptAction } from '@/features/receipts/actions/createReceipt'
 
 export const metadata: Metadata = {
   title: 'Create Receipt | Expense Tracker',
@@ -16,7 +15,7 @@ const CreateReceiptPage = async () => {
   return (
     <ReceiptForm
       stores={stores}
-      onSubmitAction={createReceiptAction}
+      onSubmitAction={createReceipt}
     />
   )
 }

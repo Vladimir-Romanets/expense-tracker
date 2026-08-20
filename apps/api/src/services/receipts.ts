@@ -159,13 +159,13 @@ export const parse = async (file: Express.Multer.File) => {
   const store = await storesService.getByName(parsedReceiptData.storeName)
 
   return {
-    storeId: store?.id || null,
-    purchaseDate: parsedReceiptData.purchaseDate || null,
+    storeId: store?.id,
+    purchaseDate: parsedReceiptData.purchaseDate,
     totalAmount: parsedReceiptData.totalAmount ?? 0,
     currency: parsedReceiptData.currency || null,
     items:
       parsedReceiptData.items?.map((el) => ({
-        name: el.name || null,
+        name: el.name || undefined,
         quantity: el.quantity ?? 1,
         totalPrice: el.totalPrice ?? 0,
       })) || [],

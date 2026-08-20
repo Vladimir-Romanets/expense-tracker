@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Typography } from '@/ui'
-import { getReceipts } from '@/features/receipts/actions/getReceipts'
-import { ReceiptsList } from '@/features/receipts'
+import { ReceiptsList, getReceipts } from '@/features/receipts'
 import type { SearchParams } from '@/types/pagination'
 
 type Props = {
