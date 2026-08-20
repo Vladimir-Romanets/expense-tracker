@@ -18,3 +18,5 @@ export const getAllStores = async (payload: PaginationInput) => {
 
   return createPaginatedResponse<StoreProps>(list, total, pagination)
 }
+
+export const getByName = async (name: string) => await storesModel.getByName(name)

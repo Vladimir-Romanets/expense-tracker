@@ -1,6 +1,12 @@
 import { db } from '@db'
 import { receiptsModel } from '@models'
-import { aiService, productsService, receiptItemsService, uploadsService } from '@services'
+import {
+  aiService,
+  productsService,
+  receiptItemsService,
+  storesService,
+  uploadsService,
+} from '@services'
 import { AppError } from '@helpers/errors/apiError'
 import { createPaginatedResponse, getPaginationParams } from '@helpers/utils/pagination'
 import type { NewReceiptItemProps, ReceiptProps, StoreProps } from '@db/schema'
@@ -150,9 +156,10 @@ export const update = async ({ items, ...rest }: ReceiptPayloadToUpdate) => {
 
 export const parse = async (file: Express.Multer.File) => {
   const parsedReceiptData = await aiService.parseReceiptFromFile(file)
+  const store = await storesService.getByName(parsedReceiptData.storeName)
 
   return {
-    storeName: parsedReceiptData.storeName || null,
+    storeId: store?.id || null,
     purchaseDate: parsedReceiptData.purchaseDate || null,
     totalAmount: parsedReceiptData.totalAmount ?? 0,
     currency: parsedReceiptData.currency || null,
