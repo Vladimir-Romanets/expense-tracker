@@ -8,10 +8,10 @@ import { getPresignedUrl } from '@/lib/fileUploader/getPresignedUrl'
 import { fileUploader } from '@/lib/fileUploader/fileUploader'
 import { ReceiptEntity } from '../types'
 
-export async function createReceiptAction({
+export const createReceipt = async ({
   receiptFile,
   ...data
-}: ReceiptFormValues) {
+}: ReceiptFormValues) => {
   try {
     const imgUploadAssets =
       receiptFile && receiptFile instanceof File

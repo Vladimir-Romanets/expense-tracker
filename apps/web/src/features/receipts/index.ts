@@ -1,2 +1,6 @@
 export { ReceiptsList } from './components/ReceiptsList'
 export { ReceiptForm } from './components/forms/ReceiptForm'
+export { getReceipts } from './actions/getReceipts'
+export { createReceipt } from './actions/createReceipt'
+export { updateReceipt } from './actions/updateReceipt'
+export { getReceiptById } from './actions/getReceiptById'

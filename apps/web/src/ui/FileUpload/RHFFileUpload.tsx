@@ -192,7 +192,7 @@ export function RHFFileUpload<T extends FieldValues>({
         />
       </label>
       {error && (
-        <span className="mt-2 text-sm text-red-500">{error.message}</span>
+        <span className="mt-1 text-sm text-red-500">{error.message}</span>
       )}
     </div>
   )

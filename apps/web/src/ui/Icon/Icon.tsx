@@ -1,6 +1,4 @@
-import { useId } from 'react'
-
-export type IconProps = {
+type IconProps = {
   name: string
   title?: string
   size?: number
@@ -8,7 +6,13 @@ export type IconProps = {
   color?: string
 }
 
-const Icon = ({ name, title, size = 24, color, className }: IconProps) => {
+export const Icon = ({
+  name,
+  title,
+  size = 24,
+  color,
+  className,
+}: IconProps) => {
   const iconUrl = name ? `/sprite.svg?#${name}` : null
 
   return iconUrl ? (
@@ -24,7 +28,3 @@ const Icon = ({ name, title, size = 24, color, className }: IconProps) => {
     </svg>
   ) : null
 }
-
-Icon.displayName = 'Icon'
-
-export { Icon }

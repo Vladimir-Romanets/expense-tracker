@@ -13,7 +13,7 @@ type Payload = {
   initialImageKey?: string | null
 } & ReceiptFormValues
 
-export async function updateReceiptAction(payload: Payload) {
+export const updateReceipt = async (payload: Payload) => {
   try {
     const { receiptFile, id, initialImageKey, ...data } = payload
 
