@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express'
-import { ZodObject, ZodRawShape } from 'zod'
+import type { Request, Response, NextFunction } from 'express'
+import type { ZodObject, ZodRawShape } from 'zod'
 
 export const validate = (schema: ZodObject<ZodRawShape>) => {
   return async (req: Request, _res: Response, next: NextFunction) => {
