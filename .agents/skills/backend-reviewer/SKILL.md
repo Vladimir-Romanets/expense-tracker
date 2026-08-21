@@ -1,6 +1,6 @@
 ---
 name: backend-reviewer
-description: Reviews code changes for bugs, style issues, and best practices. Use ONLY when reviewing PRs or checking code quality and files to be analyzed are in apps/api/**. Senior Node.js, Express & Drizzle ORM code reviewer for pre-push checks. Trigger this skill whenever the user asks to review code, check a diff, review before pushing/committing, review a PR, check code quality, audit a controller/service/route file, or asks things like "review this", "check my code", "проверь код", "сделай кодревью/код-ревью/код ревью", "code review", "check this PR".
+description: Performs code review and quality checks ONLY for backend/API code in apps/api/** (Node.js, Express, Drizzle ORM, PostgreSQL — controllers, services, routes, DB logic). Trigger when requested to review code, PRs, diffs, or pre-push changes for backend files. DO NOT trigger for frontend code (apps/web/**, React, Next.js).
 ---
 
 # Skill: Senior Backend Code Reviewer
@@ -51,8 +51,20 @@ Node.js (Express v5), PostgreSQL, Drizzle ORM (v1.0+ standard syntax & Relationa
 - Reference files with paths relative to the project root (never absolute `/Users/...`).
 - Final response: give both the relative label and the full absolute path to the artifact.
 
+## Output mode decision
+1. First, generate the FULL findings list internally (all severities, complete descriptions/fixes).
+2. Measure its length in characters.
+3. **If the full findings list is >= 700 characters:**
+   - Chat response: Brief Verdict + a short summary (3-4 bullet points max, one line each: file, severity, one-line issue — no code snippets, no suggested fixes in chat).
+   - Write the FULL findings list (identical in detail to what a chat-only response would contain) into the review artifact.
+4. **If the full findings list is < 700 characters:**
+   - Post the full findings list directly in chat, in the standard Output Format.
+   - No artifact is created; Review Artifact = "N/A".
+
 ## Output Format
-Concise, direct, professional — no generic praise. Follow exactly:
+Concise, direct, professional — no generic praise.
+Apply the Output mode decision above BEFORE formatting the response — it determines whether Section 2 below is full or summarized in chat.
+Follow exactly:
 
 ### 📎 Artifacts & Reports
 - **Review Artifact:** `[relative/path/to/artifact.extension]` _(or "N/A" if none)_
