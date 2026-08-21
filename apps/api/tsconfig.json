@@ -10,6 +10,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "paths": {
+      "@config": ["./src/config/index"],
       "@db/*": ["./src/db/*"],
       "@db": ["./src/db/index"],
       "@routes": ["./src/routes/index"],

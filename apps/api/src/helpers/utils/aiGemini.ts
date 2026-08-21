@@ -1,5 +1,3 @@
-export const getAiKey = (): string => {
-  if (!process.env.AI_API_KEY) throw new Error('AI_API_KEY is not set')
+import { config } from '@config'
 
-  return process.env.AI_API_KEY
-}
+export const getAiKey = (): string => config.ai.apiKey
