@@ -1,22 +1,19 @@
 import { Request, Response } from 'express'
 import { authService } from '@services'
 import { asyncHandler } from '@helpers/errors/asyncHandler'
+import { config } from '@config'
 
 const COOKIE_NAME = 'token'
-const isProduction = process.env.NODE_ENV === 'production'
 const cookieOptions = {
   httpOnly: true,
-  secure: isProduction,
-  sameSite: (isProduction ? 'none' : 'lax') as 'none' | 'lax',
+  secure: config.isProduction,
+  sameSite: (config.isProduction ? 'none' : 'lax') as 'none' | 'lax',
 }
 
 const setTokenCookie = (res: Response, token: string) => {
-  const parsed = parseInt(process.env.COOKIE_MAX_AGE ?? '', 10)
-  const maxAge = Number.isFinite(parsed) && parsed > 0 ? parsed : 3_600_000
-
   res.cookie(COOKIE_NAME, token, {
     ...cookieOptions,
-    maxAge,
+    maxAge: config.cookie.maxAge,
   })
 }
 

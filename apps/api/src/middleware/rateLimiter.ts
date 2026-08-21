@@ -1,20 +1,16 @@
 import rateLimit, { type Options } from 'express-rate-limit'
 import { AppError } from '@helpers/errors/apiError'
-
-const windowMs =
-  process.env.RATE_LIMIT_WINDOW_MS !== undefined
-    ? Number(process.env.RATE_LIMIT_WINDOW_MS)
-    : 15 * 60 * 1000
+import { config } from '@config'
 
 const basicOptions: Pick<Options, 'windowMs' | 'standardHeaders' | 'legacyHeaders'> = {
-  windowMs,
+  windowMs: config.rateLimit.windowMs,
   standardHeaders: 'draft-8',
   legacyHeaders: false,
 }
 
 export const globalLimiter = rateLimit({
   ...basicOptions,
-  limit: Number(process.env.RATE_LIMIT_MAX_REQUESTS) || 100,
+  limit: config.rateLimit.globalMax,
   handler: (_req, _res, next) => {
     next(new AppError('Too many requests from this IP, please try again later.', 429))
   },
@@ -22,7 +18,7 @@ export const globalLimiter = rateLimit({
 
 export const loginLimiter = rateLimit({
   ...basicOptions,
-  limit: Number(process.env.LOGIN_RATE_LIMIT_MAX) || 3,
+  limit: config.rateLimit.loginMax,
   handler: (_req, _res, next) => {
     next(new AppError('Too many login attempts, please try again after 15 minutes.', 429))
   },
@@ -30,7 +26,7 @@ export const loginLimiter = rateLimit({
 
 export const registerLimiter = rateLimit({
   ...basicOptions,
-  limit: Number(process.env.REGISTER_RATE_LIMIT_MAX) || 5,
+  limit: config.rateLimit.registerMax,
   handler: (_req, _res, next) => {
     next(new AppError('Too many registration attempts, please try again after 15 minutes.', 429))
   },
@@ -38,7 +34,7 @@ export const registerLimiter = rateLimit({
 
 export const uploadLimiter = rateLimit({
   ...basicOptions,
-  limit: Number(process.env.UPLOAD_RATE_LIMIT_MAX) || 10,
+  limit: config.rateLimit.uploadMax,
   handler: (_req, _res, next) => {
     next(new AppError('Upload limit reached, please try again later.', 429))
   },

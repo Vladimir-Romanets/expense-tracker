@@ -11,6 +11,7 @@ import {
   isDbConnectionError,
 } from '@helpers/errors/handleDbConnectionError'
 import type { AppError } from '@helpers/errors/apiError'
+import { config } from '@config'
 
 interface CustomError extends Error {
   statusCode?: number
@@ -71,7 +72,7 @@ export const globalErrorHandler = (
     validationErr = handleDbConstraintError(err)
   }
 
-  if (process.env.NODE_ENV === 'development') {
+  if (config.isDevelopment) {
     sendErrorDev(err, validationErr, res)
   } else {
     const error: CustomError = validationErr || err
