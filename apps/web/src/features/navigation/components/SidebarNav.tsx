@@ -37,5 +37,3 @@ export const SidebarNav = ({ className }: Props) => {
     </nav>
   )
 }
-
-export default SidebarNav

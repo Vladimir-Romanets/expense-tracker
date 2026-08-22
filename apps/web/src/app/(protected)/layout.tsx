@@ -1,9 +1,12 @@
 import type { ReactNode } from 'react'
-import SidebarNav from '@/features/navigation/components/SidebarNav'
-import { HeaderLogoutButton } from '@/features/navigation/components/HeaderLogoutButton'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Typography } from '@/ui'
+import {
+  HeaderLogoutButton,
+  SidebarToggle,
+  SidebarNav,
+} from '@/features/navigation'
 import { PageTitle } from '@/features/pageTitle'
 
 const ProtectedLayout = ({
@@ -17,7 +20,9 @@ const ProtectedLayout = ({
 
   return (
     <div className="flex h-screen overflow-hidden bg-main-bg">
-      <aside className="flex h-full w-64 shrink-0 flex-col bg-sidebar-bg p-6 text-white shadow-xl">
+      <SidebarToggle />
+
+      <aside className="fixed inset-y-0 left-0 z-50 flex h-full w-64 shrink-0 -translate-x-full flex-col bg-sidebar-bg p-6 text-white shadow-xl transition-transform duration-300 ease-in-out peer-checked:translate-x-0 lg:static lg:z-auto lg:translate-x-0">
         <Link
           href="/"
           className="flex h-12 w-max items-center justify-start gap-2 pb-4"
