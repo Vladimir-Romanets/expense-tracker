@@ -1,3 +1,5 @@
-export { default as SidebarNav } from './components/SidebarNav'
+export { SidebarNav } from './components/SidebarNav'
+export { SidebarToggle } from './components/SidebarToggle'
 export { SidebarNavItem } from './components/SidebarNavItem'
+export { HeaderLogoutButton } from './components/HeaderLogoutButton'
 export * from './types'
