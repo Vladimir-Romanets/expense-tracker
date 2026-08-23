@@ -1,8 +1,8 @@
-import { eq, ilike, and, type SQL } from 'drizzle-orm'
+import { eq, ilike, and, type SQL, inArray } from 'drizzle-orm'
 import { db, type Executor } from '@db'
 import { products, type NewProductProps, type ProductProps } from '@db/schema'
 import type { PaginationResult } from '@helpers/utils/pagination'
-import { ProductQuery } from '@validators/products'
+import type { BulkUpdateCategoryForProductDto, ProductQuery } from '@validators/products'
 
 const allowedSortField = ['name']
 
@@ -84,3 +84,16 @@ export const update = async (
     .set({ ...payload, name: payload.name.toLowerCase() })
     .where(eq(products.id, id))
     .returning()
+
+export const updateBulkCategoryForProducts = async ({
+  productIds,
+  categoryId,
+}: BulkUpdateCategoryForProductDto) => {
+  return db
+    .update(products)
+    .set({
+      categoryId,
+    })
+    .where(inArray(products.id, productIds))
+    .returning({ id: products.id, categoryId: products.categoryId })
+}

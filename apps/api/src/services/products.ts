@@ -3,7 +3,11 @@ import { AppError } from '@helpers/errors/apiError'
 import { createPaginatedResponse, getPaginationParams } from '@helpers/utils/pagination'
 import type { Executor } from '@db'
 import type { NewProductProps, ProductProps } from '@db/schema'
-import type { UpdateProductDto, ProductQuery } from '@validators/products'
+import type {
+  UpdateProductDto,
+  ProductQuery,
+  BulkUpdateCategoryForProductDto,
+} from '@validators/products'
 
 type ProductList = {
   id: number
@@ -57,4 +61,16 @@ export const update = async (id: ProductProps['id'], payload: UpdateProductDto['
   const [product] = await productsModel.update(id, payload)
 
   return product
+}
+
+export const updateBulkCategoryForProducts = async (payload: BulkUpdateCategoryForProductDto) => {
+  const products = await productsModel.updateBulkCategoryForProducts(payload)
+
+  const updatedSet = new Set(products.map((p) => p.id))
+  const notFoundProducts = payload.productIds.filter((id) => !updatedSet.has(id))
+
+  return {
+    updatedProducts: products,
+    notFoundProducts,
+  }
 }
