@@ -1,10 +1,10 @@
-import { CategoryProps, NewCategoryProps } from '@db/schema'
 import { categoriesModel } from '@models'
 import { uploadsService } from '@services'
+import type { CategoryProps, NewCategoryProps } from '@db/schema'
 import {
   createPaginatedResponse,
   getPaginationParams,
-  PaginationInput,
+  type PaginationInput,
 } from '@helpers/utils/pagination'
 import { AppError } from '@helpers/errors/apiError'
 import { getR2PublicUrl } from '@helpers/utils/r2'
