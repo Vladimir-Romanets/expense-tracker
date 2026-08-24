@@ -1,6 +1,7 @@
 import React from 'react'
 import { cn } from '@/utils/cn'
 import { inputVariants } from '../Input/input.variants'
+import { Icon } from '../Icon/Icon'
 
 export interface SelectOption {
   value: string | number
@@ -80,20 +81,7 @@ export const Select = ({
           ))}
         </select>
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
-          <svg
-            className="size-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
+          <Icon name="chevron-down" />
         </div>
       </div>
       {error && (

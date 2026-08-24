@@ -3,6 +3,7 @@ import { Typography } from '@/ui'
 import { getProducts } from '@/features/products/actions/getProducts'
 import { ProductsList } from '@/features/products'
 import type { SearchParams } from '@/types/pagination'
+import { getCategories } from '@/features/categories/actions/getCategories'
 
 type Props = {
   searchParams: Promise<SearchParams>
@@ -15,15 +16,26 @@ export const metadata: Metadata = {
 
 const ProductsPage = async ({ searchParams }: Props) => {
   const currentParams = await searchParams
-  const response = await getProducts(currentParams)
+  const [productsResponse, categories] = await Promise.all([
+    getProducts(currentParams),
+    // limit of 100 - is safe to keep it hardcoded
+    getCategories({ page: 1, limit: 100 }),
+  ])
+
+  const options = categories.data.map((el) => ({
+    value: el.id,
+    label: el.name,
+  }))
+  options.unshift({ label: 'Remove category', value: 0 })
 
   return (
     <>
-      {response.data.length ? (
+      {productsResponse.data.length ? (
         <ProductsList
-          data={response.data}
-          meta={response.meta}
+          data={productsResponse.data}
+          meta={productsResponse.meta}
           searchParams={currentParams}
+          categories={options}
         />
       ) : (
         <Typography variant="p">No products found.</Typography>

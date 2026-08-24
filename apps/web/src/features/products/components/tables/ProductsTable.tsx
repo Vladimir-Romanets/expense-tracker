@@ -1,4 +1,5 @@
 import { Table } from '@/ui'
+import { RowCheckbox } from './RowCheckbox'
 import { CategoryBadge } from '../ui/CategoryBadge'
 import type { ProductEntity } from '../../types'
 
@@ -11,6 +12,7 @@ export const ProductsTable = ({ products }: Props) => {
     <Table>
       <Table.Header>
         <Table.Row>
+          <Table.Head></Table.Head>
           <Table.Head>Product Name</Table.Head>
           <Table.Head>Category</Table.Head>
         </Table.Row>
@@ -18,6 +20,9 @@ export const ProductsTable = ({ products }: Props) => {
       <Table.Body>
         {products.map((product) => (
           <Table.Row key={product.id}>
+            <Table.Cell>
+              <RowCheckbox productId={product.id} />
+            </Table.Cell>
             <Table.Cell>{product.name}</Table.Cell>
             <Table.Cell>
               {product.categoryName ? (

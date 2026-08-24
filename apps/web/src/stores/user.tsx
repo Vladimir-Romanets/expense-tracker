@@ -52,11 +52,7 @@ export function UserStoreProvider({ children }: { children: ReactNode }) {
     store.persist.rehydrate()
   }, [store])
 
-  return (
-    <UserStoreContext.Provider value={store}>
-      {children}
-    </UserStoreContext.Provider>
-  )
+  return <UserStoreContext value={store}>{children}</UserStoreContext>
 }
 
 export function useUserStore<T>(selector: (state: UserState) => T): T {

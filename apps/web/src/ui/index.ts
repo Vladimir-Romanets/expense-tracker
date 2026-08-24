@@ -1,4 +1,5 @@
 export { default as Button } from './Button/Button'
+export * from './Checkbox'
 export { default as Hero } from './Hero/Hero'
 export { Icon } from './Icon/Icon'
 export { Input, RHFInput } from './Input'
