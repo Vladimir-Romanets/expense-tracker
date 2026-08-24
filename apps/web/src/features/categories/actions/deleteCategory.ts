@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
 import { serverApiClient } from '@/lib/apiClient.server'
 import { prettierError } from '@/lib/apiClient'
 
@@ -10,6 +10,7 @@ export const deleteCategory = async (id: number) => {
       method: 'DELETE',
     })
 
+    updateTag('categories')
     revalidatePath('/categories')
     return { success: true }
   } catch (error) {
