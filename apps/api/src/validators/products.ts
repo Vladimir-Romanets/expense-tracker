@@ -10,6 +10,7 @@ const updateCategorySchema = z.object({
 
 const productQuerySchema = basicQuerySchema.extend({
   categoryId: optionalCoerceNumber,
+  sortBy: z.enum(['name', 'category']).default('name'),
 })
 
 export const getProductFilterSchema = z.object({
