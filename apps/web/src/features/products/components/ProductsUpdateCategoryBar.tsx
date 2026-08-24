@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import { Button, Checkbox, Select, Typography } from '@/ui'
 import type { DropdownOptions } from '@/types/dropdown'
 import { useProductTableContext } from '../hooks/useProductTableContext'
@@ -45,7 +45,7 @@ export const ProductsUpdateCategoryBar = ({ categories }: Props) => {
   return (
     <div className="relative">
       <div
-        aria-hidden={!count}
+        inert={!count}
         className={cn(
           'absolute inset-x-0 -top-5 grid transition-[grid-template-rows] duration-200 ease-out',
           count ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
