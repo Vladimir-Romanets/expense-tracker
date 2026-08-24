@@ -49,17 +49,17 @@ export const ProductsToolbar = () => {
   }, [])
 
   return (
-    <div className="mb-6 flex items-center justify-between gap-4">
+    <div className="mb-6 flex items-center justify-between gap-4 px-3">
       <Input
         placeholder="Search products..."
-        className="w-64"
+        wrapperClassName="w-64"
         name="search"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
       <Select
         placeholder="Sort: A-Z"
-        wrapperClassName="w-48"
+        wrapperClassName="w-26 shrink-0"
         value={sortOrder}
         name="sortOrder"
         onChange={(e) => setSortOrder(e.target.value)}
