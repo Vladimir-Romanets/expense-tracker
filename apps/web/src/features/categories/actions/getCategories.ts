@@ -7,4 +7,6 @@ export const getCategories = async (
 ): Promise<PaginatedResponse<CategoryEntity>> =>
   serverApiClient<PaginatedResponse<CategoryEntity>>('/categories', {
     params: params as Record<string, string | number>,
+    cache: 'force-cache',
+    next: { tags: ['categories'] },
   })

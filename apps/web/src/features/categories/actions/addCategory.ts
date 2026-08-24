@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
 import { serverApiClient } from '@/lib/apiClient.server'
 import { prettierError } from '@/lib/apiClient'
 import { getPresignedUrl } from '@/lib/fileUploader/getPresignedUrl'
@@ -29,6 +29,7 @@ export const addCategory = async (payload: AddCategoryFormValues) => {
       await fileUploader(imageFile, imgUploadAssets.uploadUrl)
     }
 
+    updateTag('categories')
     revalidatePath('/categories')
     return { success: true, data: newCategory }
   } catch (error) {
