@@ -11,16 +11,17 @@ export const optionalCoerceString = z.preprocess((val) => {
   return val
 }, z.string().optional())
 
-export const optionalCoerceSortOrder = z.preprocess(
-  (val) => (val === null || val === '' ? undefined : val),
-  z.enum(['asc', 'desc']).optional().default('desc'),
-)
+export const optionalCoerceSortOrder = (order: 'asc' | 'desc') =>
+  z.preprocess(
+    (val) => (val === null || val === '' ? undefined : val),
+    z.enum(['asc', 'desc']).default(order),
+  )
 
 export const basicQuerySchema = z.object({
   page: optionalCoerceNumber,
   limit: optionalCoerceNumber,
   sortBy: optionalCoerceString,
-  sortOrder: optionalCoerceSortOrder,
+  sortOrder: optionalCoerceSortOrder('asc'),
   search: optionalCoerceString,
 })
 

@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { basicQuerySchema, optionalCoerceNumber } from './basicFilter'
+import { basicQuerySchema, optionalCoerceNumber, optionalCoerceSortOrder } from './basicFilter'
 
 const R2_KEY_REGEX =
   /^receipts\/\d+\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|jpeg|png|webp|heic|avif)$/
@@ -36,6 +36,7 @@ const _paramsIdSchema = z.object({
 const _receiptsQuerySchema = basicQuerySchema.extend({
   storeId: optionalCoerceNumber,
   sortBy: z.enum(['purchaseDate', 'totalAmount', 'storeId']).default('purchaseDate'),
+  sortOrder: optionalCoerceSortOrder('desc'),
 })
 
 export const getReceiptsFilterSchema = z.object({
