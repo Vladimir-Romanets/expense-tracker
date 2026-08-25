@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { basicQuerySchema, optionalCoerceNumber } from './basicFilter'
+import { basicQuerySchema, optionalCoerceNumber } from './common/basicFilter'
 
 const updateCategorySchema = z.object({
   productIds: z

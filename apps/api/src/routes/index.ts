@@ -9,6 +9,7 @@ import storesRouter from './stores'
 import categoriesRouter from './categories'
 import receiptsRouter from './receipts'
 import productsRouter from './products'
+import statisticsRouter from './statistics'
 import uploadFileRoute from './uploads'
 
 const router = express.Router()
@@ -24,6 +25,7 @@ router.use('/stores', storesRouter)
 router.use('/categories', categoriesRouter)
 router.use('/receipts', receiptsRouter)
 router.use('/products', productsRouter)
+router.use('/statistics', statisticsRouter)
 router.use('/uploads', uploadLimiter, uploadFileRoute)
 
 router.use((req, res) => {
