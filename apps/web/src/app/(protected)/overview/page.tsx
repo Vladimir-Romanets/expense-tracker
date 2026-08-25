@@ -1,7 +1,13 @@
-import { Typography } from '@/ui'
+import { Metadata } from 'next'
+import { Dashboard } from '@/features/overview'
+
+export const metadata: Metadata = {
+  title: 'Overview | Expense Tracker',
+  description: 'View statistics',
+}
 
 const ProtectedDashboardPage = () => {
-  return <Typography variant="p">Protected area content placeholder</Typography>
+  return <Dashboard />
 }
 
 export default ProtectedDashboardPage
