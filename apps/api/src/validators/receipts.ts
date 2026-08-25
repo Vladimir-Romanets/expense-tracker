@@ -1,10 +1,13 @@
 import { z } from 'zod'
-import { basicQuerySchema, optionalCoerceNumber, optionalCoerceSortOrder } from './basicFilter'
+import {
+  basicQuerySchema,
+  optionalCoerceNumber,
+  optionalCoerceSortOrder,
+} from './common/basicFilter'
+import { date } from './common/date'
 
 const R2_KEY_REGEX =
   /^receipts\/\d+\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|jpeg|png|webp|heic|avif)$/
-
-const date = z.coerce.date().transform((d) => d.toISOString())
 
 const _createReceiptItemSchema = z.object({
   name: z.string().trim().min(1),

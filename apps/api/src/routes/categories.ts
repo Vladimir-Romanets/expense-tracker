@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { createCategoriesSchema, deleteCategorySchema } from '@validators/categories'
-import { getBasicFilterSchema } from '@validators/basicFilter'
+import { getBasicFilterSchema } from '@validators/common/basicFilter'
 import { categoriesController } from '@controllers'
 import { validate } from '@middleware/validate'
 
