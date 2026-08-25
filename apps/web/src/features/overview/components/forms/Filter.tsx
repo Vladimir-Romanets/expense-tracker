@@ -19,6 +19,7 @@ export const Filter = ({ initValues, isLoading, action }: FilterProps) => {
   })
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/incompatible-library -- RHF's watch() subscription is intentionally unmemoized here
     const subscription = watch((_, { type }) => {
       if (type === 'change') {
         handleSubmit(action)()
