@@ -7,4 +7,6 @@ export const getStores = async (
 ): Promise<PaginatedResponse<StoreEntity>> =>
   serverApiClient<PaginatedResponse<StoreEntity>>('/stores', {
     params: params as Record<string, string | number>,
+    cache: 'force-cache',
+    next: { tags: ['stores'] },
   })
