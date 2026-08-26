@@ -4,13 +4,9 @@ import type { ParsedReceipt, ReceiptDetails } from '../types'
 export const receiptDetailsFormatter = (
   rawReceipt: ReceiptDetails | ParsedReceipt
 ): ReceiptFormValues => {
-  const date = rawReceipt.purchaseDate
-    ? new Date(rawReceipt.purchaseDate)
-    : new Date()
-
   const initValues = {
     storeId: rawReceipt.storeId ? Number(rawReceipt.storeId) : 0,
-    purchaseDate: date.toISOString().slice(0, 16),
+    purchaseDate: rawReceipt.purchaseDate || '',
     totalAmount: Number(rawReceipt.totalAmount),
     items: rawReceipt.items.map((item) => ({
       id: item.id,
