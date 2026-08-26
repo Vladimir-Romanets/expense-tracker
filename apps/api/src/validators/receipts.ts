@@ -4,7 +4,7 @@ import {
   optionalCoerceNumber,
   optionalCoerceSortOrder,
 } from './common/basicFilter'
-import { date } from './common/date'
+import { dateOnly } from './common/date'
 
 const R2_KEY_REGEX =
   /^receipts\/\d+\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|jpeg|png|webp|heic|avif)$/
@@ -23,7 +23,7 @@ const _updateReceiptItemSchema = _createReceiptItemSchema.extend({
 const _createReceiptSchema = z.object({
   storeId: z.number().int().positive(),
   totalAmount: z.number().gte(0),
-  purchaseDate: date,
+  purchaseDate: dateOnly,
   imageKey: z.string().regex(R2_KEY_REGEX).nullish(),
   items: z.array(_createReceiptItemSchema).min(1, 'Receipt should contain at least one item!'),
 })
