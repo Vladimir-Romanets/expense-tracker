@@ -1,12 +1,12 @@
 import { z } from 'zod'
 
-const date = z.coerce.date().transform((d) => d.toISOString())
-
 export const receiptSchema = z.object({
   receiptFile: z.instanceof(File).or(z.string()).nullish(),
   storeId: z.coerce.number().int().positive('Please select a store'),
   totalAmount: z.coerce.number().gte(0, 'Amount must be positive'),
-  purchaseDate: date,
+  purchaseDate: z
+    .string('Date is incorrect or not set')
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Date is incorrect or not set'),
   items: z
     .array(
       z.object({

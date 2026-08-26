@@ -96,8 +96,8 @@ export function ReceiptForm({
               <RHFInput<ReceiptFormValues>
                 control={control}
                 name="purchaseDate"
-                label="Date & Time"
-                type="datetime-local"
+                label="Purchase Date"
+                type="date"
               />
 
               <RHFInput<ReceiptFormValues>

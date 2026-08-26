@@ -30,7 +30,7 @@ export const useReceiptForm = ({
     resolver: zodResolver(receiptSchema as any),
     defaultValues: initValues || {
       ...defaultValues,
-      purchaseDate: new Date().toISOString().slice(0, 16),
+      purchaseDate: new Date().toISOString().split('T')[0],
     },
   })
 
