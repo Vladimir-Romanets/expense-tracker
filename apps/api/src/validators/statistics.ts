@@ -1,10 +1,10 @@
 import { z } from 'zod'
-import { date } from './common/date'
+import { dateOnly } from './common/date'
 
-const _basicExpenseSchema = z
+const _periodFilterSchema = z
   .object({
-    startDate: date,
-    endDate: date,
+    startDate: dateOnly,
+    endDate: dateOnly,
   })
   .refine((v) => new Date(v.startDate) <= new Date(v.endDate), {
     error: 'startDate must be before or equal to endDate',
@@ -24,9 +24,9 @@ const _basicExpenseSchema = z
     },
   )
 
-export const getBasicExpenseForPeriodSchema = z.object({
-  query: _basicExpenseSchema,
+export const periodFilterQuerySchema = z.object({
+  query: _periodFilterSchema,
 })
 
-export type BasicExpenseForPeriodQuery = z.infer<typeof getBasicExpenseForPeriodSchema>
-export type BasicExpenseForPeriodProps = z.infer<typeof _basicExpenseSchema>
+export type PeriodFilterPropsQuery = z.infer<typeof periodFilterQuerySchema>
+export type PeriodFilterProps = z.infer<typeof _periodFilterSchema>
