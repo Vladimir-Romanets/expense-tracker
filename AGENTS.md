@@ -14,9 +14,27 @@ This is a monorepo containing two applications:
 - This project uses **pnpm**. Never use `npm install` or `yarn` — always `pnpm install`.
 - Workspace-level dependencies may be hoisted to the root `node_modules/`. If a per-app `node_modules/<package>` path doesn't exist, check the root instead.
 
+## Commands
+
+This is a **Turborepo**. Run these from the repo root:
+
+```bash
+pnpm install       # install all workspace dependencies
+
+turbo dev          # run web + api together
+turbo dev --filter=web   # (or: pnpm dev:web)
+turbo dev --filter=api   # (or: pnpm dev:api)
+
+turbo build        # build all apps
+turbo lint         # lint all apps
+turbo format       # format all apps
+```
+
+App-specific commands (migrations, seeding, storybook, etc.) live in each app's own `AGENTS.md`.
+
 ## Local Development
 
-- Local environment runs via **Docker Compose**.
+- Only `apps/api` is containerized: `apps/api/docker-compose.yml` runs the `api` service, the Postgres db, and `adminer`. `apps/web` is **not** in Docker Compose — run it natively with `pnpm dev:web`.
 - When containers need to reach each other (e.g. migrations, API calls between services), use Docker service names or `host.docker.internal` — never `localhost`, which resolves differently inside containers.
 
 ## Cross-Cutting Architecture
