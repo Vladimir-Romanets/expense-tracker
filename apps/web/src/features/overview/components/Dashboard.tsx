@@ -1,7 +1,11 @@
 import { format, startOfMonth } from 'date-fns'
 
 import { BasicExpenseSection } from './BasicExpenseSection'
-import { getBasicExpenseForRange } from '../actions/getBasicExpenseForRange'
+import { CategoryExpenseSection } from './CategoryExpenseSection'
+import { Filter } from './forms/Filter'
+import { FilterProvider } from '../context/FilterContext'
+import { getBasicExpense } from '../actions/getBasicExpense'
+import { getCategoryExpense } from '../actions/getCategoryExpense'
 
 export const Dashboard = async () => {
   const today = new Date()
@@ -9,12 +13,16 @@ export const Dashboard = async () => {
     startDate: format(startOfMonth(today), 'yyyy-MM-dd'),
     endDate: format(today, 'yyyy-MM-dd'),
   }
-  const data = await getBasicExpenseForRange(initValue)
+  const [basicExpense, categoryExpense] = await Promise.all([
+    getBasicExpense(initValue),
+    getCategoryExpense(initValue),
+  ])
 
   return (
-    <BasicExpenseSection
-      data={data}
-      initialFilterValues={initValue}
-    />
+    <FilterProvider initialFilter={initValue}>
+      <Filter />
+      <BasicExpenseSection data={basicExpense} />
+      <CategoryExpenseSection data={categoryExpense} />
+    </FilterProvider>
   )
 }

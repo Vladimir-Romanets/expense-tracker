@@ -5,28 +5,25 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RHFInput, Typography } from '@/ui'
 import { dateRangeSchema, type DateRangeFilterValues } from '../../schemas'
+import { useFilterContext } from '../../context/FilterContext'
 
-interface FilterProps {
-  initValues: DateRangeFilterValues
-  isLoading: boolean
-  action: (values: DateRangeFilterValues) => void
-}
+export const Filter = () => {
+  const { filter, setFilter } = useFilterContext()
 
-export const Filter = ({ initValues, isLoading, action }: FilterProps) => {
   const { control, handleSubmit, watch } = useForm<DateRangeFilterValues>({
     resolver: zodResolver(dateRangeSchema),
-    defaultValues: initValues,
+    defaultValues: filter,
   })
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/incompatible-library -- RHF's watch() subscription is intentionally unmemoized here
     const subscription = watch((_, { type }) => {
       if (type === 'change') {
-        handleSubmit(action)()
+        handleSubmit(setFilter)()
       }
     })
     return () => subscription.unsubscribe()
-  }, [watch, handleSubmit, action])
+  }, [watch, handleSubmit, setFilter])
 
   return (
     <div className="mb-10 flex gap-3 max-md:flex-col md:items-start">
@@ -37,10 +34,7 @@ export const Filter = ({ initValues, isLoading, action }: FilterProps) => {
       >
         Select date range
       </Typography>
-      <fieldset
-        className="grid grow grid-cols-1 gap-4 sm:grid-cols-2"
-        disabled={isLoading}
-      >
+      <div className="grid grow grid-cols-1 gap-4 sm:grid-cols-2">
         <RHFInput
           control={control}
           name="startDate"
@@ -54,8 +48,9 @@ export const Filter = ({ initValues, isLoading, action }: FilterProps) => {
           label="End date"
           type="date"
           required
+          max={filter.endDate}
         />
-      </fieldset>
+      </div>
     </div>
   )
 }

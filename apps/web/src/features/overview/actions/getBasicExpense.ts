@@ -1,10 +1,10 @@
 'use server'
 
 import { serverApiClient } from '@/lib/apiClient.server'
-import { BasicExpenseStatisticEntry } from '../types'
-import { DateRangeFilterValues } from '../schemas'
+import type { BasicExpenseStatisticEntry } from '../types'
+import type { DateRangeFilterValues } from '../schemas'
 
-export const getBasicExpenseForRange = async (
+export const getBasicExpense = async (
   params: DateRangeFilterValues
 ): Promise<BasicExpenseStatisticEntry> =>
   serverApiClient<BasicExpenseStatisticEntry>('/statistics/basic', {

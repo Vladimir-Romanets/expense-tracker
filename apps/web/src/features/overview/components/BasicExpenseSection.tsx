@@ -1,28 +1,25 @@
 'use client'
+import { useMemo } from 'react'
 import { BasicExpenseChart } from './charts/BasicExpenseChart'
-import { Filter } from './forms/Filter'
-import { BasicExpenseStatisticEntry } from '../types'
-import { DateRangeFilterValues } from '../schemas'
-import { useBasicExpense } from '../hooks/useBasicExpense'
+import { StatisticError } from './StatisticError'
+import { getBasicExpense } from '../actions/getBasicExpense'
+import { collapseDataByDate } from '../utils/collapseDataByDate'
+import { useStatisticQuery } from '../hooks/useStatisticQuery'
+import type { BasicExpenseStatisticEntry } from '../types'
 
 type Props = {
   data: BasicExpenseStatisticEntry
-  initialFilterValues: DateRangeFilterValues
 }
 
 export const BasicExpenseSection = (props: Props) => {
-  const { data, error, isLoading, onFilterChange } = useBasicExpense(props.data)
+  const { data, error } = useStatisticQuery(props.data, getBasicExpense)
+
+  const formattedData = useMemo(() => collapseDataByDate(data), [data])
 
   return (
     <>
-      <Filter
-        initValues={props.initialFilterValues}
-        action={onFilterChange}
-        isLoading={isLoading}
-      />
-      <BasicExpenseChart data={data} />
-      {/* TODO: Create Error Bar and replace this handler with it */}
-      {error ? <p>{error}</p> : null}
+      <BasicExpenseChart data={formattedData} />
+      <StatisticError error={error} />
     </>
   )
 }
