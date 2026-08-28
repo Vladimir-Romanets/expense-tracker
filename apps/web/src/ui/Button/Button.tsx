@@ -1,5 +1,5 @@
 import { cn } from '@/utils/cn'
-import { variants, ButtonVariantsProps } from './button.variants'
+import { variants, type ButtonVariantsProps } from './button.variants'
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>, ButtonVariantsProps {

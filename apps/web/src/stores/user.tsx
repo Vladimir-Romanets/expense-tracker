@@ -19,6 +19,7 @@ export interface User {
 }
 
 interface UserState {
+  hasHydrated: boolean
   user: User | null
   setUser: (user: User) => void
   clearUser: () => void
@@ -30,6 +31,7 @@ const createUserStore = () => {
   return createStore<UserState>()(
     persist(
       (set) => ({
+        hasHydrated: false,
         user: null,
         setUser: (user) => set({ user }),
         clearUser: () => set({ user: null }),
@@ -38,6 +40,7 @@ const createUserStore = () => {
         name: 'user-storage',
         storage: createJSONStorage(() => localStorage),
         skipHydration: true,
+        partialize: ({ hasHydrated, ...rest }) => rest,
       }
     )
   )
@@ -49,7 +52,9 @@ export function UserStoreProvider({ children }: { children: ReactNode }) {
   const [store] = useState(() => createUserStore())
 
   useEffect(() => {
-    store.persist.rehydrate()
+    store.persist.rehydrate()?.then(() => {
+      store.setState({ hasHydrated: true })
+    })
   }, [store])
 
   return <UserStoreContext value={store}>{children}</UserStoreContext>

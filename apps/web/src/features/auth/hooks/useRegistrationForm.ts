@@ -19,7 +19,7 @@ const defaultValues = {
 
 export const useRegistrationForm = () => {
   const router = useRouter()
-  const setUser = useUserStore((s) => s.setUser)
+  const setUser = useUserStore((state) => state.setUser)
 
   const form = useForm<RegistrationSchemaProps>({
     resolver: zodResolver(registrationSchema),

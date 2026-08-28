@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { LinkAsButton, Hero, Icon, Typography } from '@/ui'
+import { HomePageNav } from '@/features/navigation/components/HomePageNav'
 
 export const metadata: Metadata = {
   title: 'Homepage | Expense Tracker',
@@ -14,7 +15,7 @@ const HomePage = () => {
         <div className="container flex items-center justify-between gap-2">
           <Link
             href="/"
-            className="flex items-center gap-2"
+            className="flex shrink-0 items-center gap-2"
             aria-label="Expense Tracker — Home"
           >
             <Image
@@ -44,18 +45,20 @@ const HomePage = () => {
             </LinkAsButton>
           </nav>
           <div className="flex gap-2">
-            <LinkAsButton
-              href="/login"
-              variant="outline"
-            >
-              Login
-            </LinkAsButton>
-            <LinkAsButton
-              href="/register"
-              variant="primary"
-            >
-              Register
-            </LinkAsButton>
+            <HomePageNav>
+              <LinkAsButton
+                href="/login"
+                variant="outline"
+              >
+                Login
+              </LinkAsButton>
+              <LinkAsButton
+                href="/register"
+                variant="primary"
+              >
+                Register
+              </LinkAsButton>
+            </HomePageNav>
           </div>
         </div>
       </header>
@@ -232,10 +235,16 @@ const HomePage = () => {
               height={18}
               alt="Expense Tracker"
             />
-            <span className="font-semibold text-slate-700">Expense Tracker</span>
+            <span className="font-semibold text-slate-700">
+              Expense Tracker
+            </span>
           </div>
-          <Typography variant="small" className="text-slate-500">
-            &copy; {new Date().getFullYear()} Expense Tracker. All rights reserved.
+          <Typography
+            variant="small"
+            className="text-slate-500"
+          >
+            &copy; {new Date().getFullYear()} Expense Tracker. All rights
+            reserved.
           </Typography>
         </div>
       </footer>
