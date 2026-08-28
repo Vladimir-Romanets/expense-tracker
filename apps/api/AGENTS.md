@@ -6,12 +6,29 @@ Applies to all code under `./apps/api/`. Read `../../AGENTS.md` first for monore
 
 - **Runtime**: Node.js
 - **Framework**: Express — 5.2.x
-- **ORM**: Drizzle ORM — 1.x
+- **ORM**: Drizzle ORM — `1.0.0-rc.4` (still a release candidate, not stable 1.x — API can still shift between RC bumps)
 - **Database**: PostgreSQL (Neon)
 - **Storage**: Cloudflare R2 (images)
 - **Language**: TypeScript
 
 > ⚠️ Keep the version numbers above updated whenever you upgrade dependencies. Drizzle ORM v1.x introduced breaking changes from v0.x — most notably `defineRelations` and an updated `drizzle()` initialization syntax. Do not apply v0.x patterns (old `relations()` helper, old client setup) without first checking `package.json`.
+
+## Commands
+
+Run from `./apps/api/` (or via `turbo dev --filter=api` from the repo root):
+
+```bash
+pnpm dev                 # ts-node-dev, local (non-Docker) run
+pnpm build                # tsc + tsc-alias
+pnpm db:generate          # drizzle-kit generate (create migration files)
+pnpm db:migrate           # drizzle-kit migrate — local (non-Docker) run
+pnpm db:migrate:docker    # same, but exec'd inside the running `api` container — use this when Docker Compose is up
+pnpm db:seed              # local seed
+pnpm db:seed:docker       # seed inside the running `api` container
+pnpm db:studio            # Drizzle Studio
+```
+
+> `db:migrate` vs `db:migrate:docker`: if Docker Compose is running, use the `:docker` variant — the plain command runs against `localhost` and will not reach the containerized Postgres instance.
 
 ## Database Schema
 

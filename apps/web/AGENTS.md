@@ -13,6 +13,19 @@ monorepo-wide context.
 
 > ⚠️ Keep the version numbers above updated whenever you upgrade dependencies. Do not rely on training-data assumptions about Next.js/React APIs — versions 14/15/19 have introduced breaking changes (e.g. async `params`/`searchParams`, caching defaults, Server Actions behavior). Verify against `package.json` and `nextjs_docs` MCP tool before writing code that depends on version-specific behavior.
 
+## Commands
+
+Run from `./apps/web/` (or via `turbo dev --filter=web` from the repo root):
+
+```bash
+pnpm dev              # start Next.js dev server
+pnpm build            # production build
+pnpm lint:fix         # eslint --fix
+pnpm lint:sort        # fix Tailwind class order only
+pnpm format           # prettier --write
+pnpm storybook        # Storybook dev server (port 6006)
+```
+
 ## Conventions
 
 - **Server vs. Client Components**: default to Server Components. Add `"use client"` only when necessary (interactivity, browser APIs, hooks). Keep client components as leaves in the tree where possible.
