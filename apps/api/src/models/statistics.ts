@@ -1,6 +1,6 @@
 import { and, asc, between, desc, eq, sql } from 'drizzle-orm'
-import { categories, products, receiptItems, receipts } from '@db/schema'
 import { db } from '@db'
+import { categories, products, receiptItems, receipts } from '@db/schema'
 import type { PeriodFilterProps } from '@validators/statistics'
 
 type UserAndDateRangeFilter = PeriodFilterProps & {
