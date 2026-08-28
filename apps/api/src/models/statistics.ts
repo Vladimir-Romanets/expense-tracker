@@ -3,10 +3,14 @@ import { categories, products, receiptItems, receipts } from '@db/schema'
 import { db } from '@db'
 import type { PeriodFilterProps } from '@validators/statistics'
 
-export const getBasicExpenseForPeriod = async (
-  { startDate, endDate }: PeriodFilterProps,
-  userId: number,
-) =>
+type UserAndDateRangeFilter = PeriodFilterProps & {
+  userId: number
+}
+
+const selectByUserAndDateRange = ({ userId, startDate, endDate }: UserAndDateRangeFilter) =>
+  and(eq(receipts.userId, userId), between(receipts.purchaseDate, startDate, endDate))
+
+export const getBasicExpenseForPeriod = async (dateRange: PeriodFilterProps, userId: number) =>
   await db
     .select({
       id: receipts.id,
@@ -14,13 +18,10 @@ export const getBasicExpenseForPeriod = async (
       purchaseDate: receipts.purchaseDate,
     })
     .from(receipts)
-    .where(and(eq(receipts.userId, userId), between(receipts.purchaseDate, startDate, endDate)))
+    .where(selectByUserAndDateRange({ ...dateRange, userId }))
     .orderBy(asc(receipts.purchaseDate))
 
-export const getExpenseByCategories = async (
-  { startDate, endDate }: PeriodFilterProps,
-  userId: number,
-) => {
+export const getExpenseByCategories = async (dateRange: PeriodFilterProps, userId: number) => {
   const totalSpent = sql<string>`sum(${receiptItems.totalPrice})`.as('total_spent')
 
   return await db
@@ -33,7 +34,7 @@ export const getExpenseByCategories = async (
     .innerJoin(receiptItems, eq(receiptItems.receiptId, receipts.id))
     .innerJoin(products, eq(products.id, receiptItems.productId))
     .leftJoin(categories, eq(categories.id, products.categoryId))
-    .where(and(eq(receipts.userId, userId), between(receipts.purchaseDate, startDate, endDate)))
+    .where(selectByUserAndDateRange({ ...dateRange, userId }))
     .groupBy(categories.id, categories.name)
     .orderBy(desc(totalSpent))
 }
