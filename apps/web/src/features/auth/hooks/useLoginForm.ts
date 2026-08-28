@@ -14,7 +14,7 @@ export const useLoginForm = () => {
     '/overview'
   )
   const router = useRouter()
-  const setUser = useUserStore((s) => s.setUser)
+  const setUser = useUserStore((state) => state.setUser)
 
   useEffect(() => {
     if (state.success && state.user) {
