@@ -48,6 +48,7 @@ export const Filter = () => {
           label="End date"
           type="date"
           required
+          max={filter.endDate}
         />
       </div>
     </div>
