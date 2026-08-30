@@ -1,16 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { jwtVerify, errors as joseErrors } from 'jose'
 import { AUTH_COOKIE_NAME } from './constants/cookie'
+import { validateToken } from './lib/token'
 
-interface JwtPayload {
-  userId: number
-}
-
-if (!process.env.JWT_SECRET) {
-  throw new Error('[proxy] JWT_SECRET environment variable is not set')
-}
-
-const secret = new TextEncoder().encode(process.env.JWT_SECRET)
 const AUTH_PATHS = ['/login', '/register', '/forgot-password']
 const DEFAULT_REDIRECT_AFTER_LOGIN = '/overview'
 
@@ -32,24 +23,6 @@ const redirectToLogin = (request: NextRequest) => {
 const redirectAuthenticatedUser = (request: NextRequest) => {
   const url = new URL(DEFAULT_REDIRECT_AFTER_LOGIN, request.url)
   return NextResponse.redirect(url)
-}
-
-const validateToken = async (token: string) => {
-  try {
-    await jwtVerify<JwtPayload>(token, secret, {
-      algorithms: ['HS256'],
-    })
-    return true
-  } catch (err) {
-    if (
-      err instanceof joseErrors.JWTExpired ||
-      err instanceof joseErrors.JWTInvalid ||
-      err instanceof joseErrors.JWSSignatureVerificationFailed
-    ) {
-      return false
-    }
-    throw err
-  }
 }
 
 export default async function proxy(request: NextRequest) {
