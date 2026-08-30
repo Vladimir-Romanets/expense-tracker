@@ -1,8 +1,12 @@
+import { Suspense } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { LinkAsButton, Hero, Icon, Typography } from '@/ui'
-import { HomePageNav } from '@/features/navigation/components/HomePageNav'
+import {
+  HomePageNav,
+  HomePageNavPlaceholder,
+} from '@/features/navigation/components/HomePageNav'
 
 export const metadata: Metadata = {
   title: 'Homepage | Expense Tracker',
@@ -45,20 +49,9 @@ const HomePage = () => {
             </LinkAsButton>
           </nav>
           <div className="flex gap-2">
-            <HomePageNav>
-              <LinkAsButton
-                href="/login"
-                variant="outline"
-              >
-                Login
-              </LinkAsButton>
-              <LinkAsButton
-                href="/register"
-                variant="primary"
-              >
-                Register
-              </LinkAsButton>
-            </HomePageNav>
+            <Suspense fallback={<HomePageNavPlaceholder />}>
+              <HomePageNav />
+            </Suspense>
           </div>
         </div>
       </header>
