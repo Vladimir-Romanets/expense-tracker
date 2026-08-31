@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef, useState, useTransition } from 'react'
-import { prettierError } from '@/lib/apiClient'
+import { prettierError } from '@/shared/api/apiClient'
 import { useFilterContext } from '../context/FilterContext'
 import type { DateRangeFilterValues } from '../schemas'
 

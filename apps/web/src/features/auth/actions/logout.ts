@@ -1,8 +1,8 @@
 'use server'
 
 import { cookies } from 'next/headers'
-import { serverApiClient } from '@/lib/apiClient.server'
-import { AUTH_COOKIE_NAME } from '@/constants/cookie'
+import { serverApiClient } from '@/shared/api/apiClient.server'
+import { AUTH_COOKIE_NAME } from '@/shared/config/cookie'
 
 export const logoutAction = async () => {
   try {

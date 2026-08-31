@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { ReceiptForm, createReceipt } from '@/features/receipts'
-import { getStores } from '@/features/markets/action/getStores'
+import { getStores } from '@/features/markets'
 
 export const metadata: Metadata = {
   title: 'Create Receipt | Expense Tracker',

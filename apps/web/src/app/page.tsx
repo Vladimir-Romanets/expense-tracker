@@ -2,11 +2,8 @@ import { Suspense } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { LinkAsButton, Hero, Icon, Typography } from '@/ui'
-import {
-  HomePageNav,
-  HomePageNavPlaceholder,
-} from '@/features/navigation/components/HomePageNav'
+import { LinkAsButton, Hero, Icon, Typography } from '@/shared/ui'
+import { HomePageNav, HomePageNavPlaceholder } from '@/widgets/homeNav'
 
 export const metadata: Metadata = {
   title: 'Homepage | Expense Tracker',

@@ -3,7 +3,7 @@
 import { RHFInput } from '../ui/RHFInput'
 import { RHFPasswordInput } from '../ui/RHFPasswordInput'
 import { useRegistrationForm } from '../../hooks/useRegistrationForm'
-import { Button, Typography } from '@/ui'
+import { Button, Typography } from '@/shared/ui'
 
 const RegistrationForm = () => {
   const { form, onSubmit } = useRegistrationForm()

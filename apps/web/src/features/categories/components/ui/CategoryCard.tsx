@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import { Typography } from '@/ui'
-import { cn } from '@/utils/cn'
+import { Typography } from '@/shared/ui'
+import { cn } from '@/shared/lib/cn'
 import { CategoryEntity } from '../../types'
 import { CategoryCardActions } from './CategoryCardActions'
 

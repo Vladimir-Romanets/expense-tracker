@@ -1,5 +1,5 @@
-import { serverApiClient } from '@/lib/apiClient.server'
-import type { PaginatedResponse, PaginationParams } from '@/types/pagination'
+import { serverApiClient } from '@/shared/api/apiClient.server'
+import type { PaginatedResponse, PaginationParams } from '@/shared/types/pagination'
 import type { CategoryEntity } from '../types'
 
 export const getCategories = async (

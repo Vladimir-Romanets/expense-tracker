@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import { getCategories } from '@/features/categories/actions/getCategories'
-import { CategoryList } from '@/features/categories'
-import { Typography } from '@/ui'
-import type { SearchParams } from '@/types/pagination'
+import { getCategories } from '@/features/categories'
+import { CategoryList } from '@/widgets/categoryList'
+import { Typography } from '@/shared/ui'
+import type { SearchParams } from '@/shared/types/pagination'
 
 type Props = {
   searchParams: Promise<SearchParams>

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getStores } from '@/features/markets/action/getStores'
+import { getStores } from '@/features/markets'
 import { ReceiptForm, updateReceipt, getReceiptById } from '@/features/receipts'
 
 export const metadata: Metadata = {

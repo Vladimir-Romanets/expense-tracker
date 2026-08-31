@@ -1,8 +1,8 @@
 'use server'
 
 import { revalidatePath, updateTag } from 'next/cache'
-import { serverApiClient } from '@/lib/apiClient.server'
-import { prettierError } from '@/lib/apiClient'
+import { serverApiClient } from '@/shared/api/apiClient.server'
+import { prettierError } from '@/shared/api/apiClient'
 import type { CategoryEntity } from '../types'
 
 export const editCategory = async (

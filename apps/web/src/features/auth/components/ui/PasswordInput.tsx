@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { cn } from '@/utils/cn'
+import { cn } from '@/shared/lib/cn'
 import { Input, type InputProps } from './Input'
-import { Icon } from '@/ui'
+import { Icon } from '@/shared/ui'
 
 export const PasswordInput = ({ className, ...props }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false)

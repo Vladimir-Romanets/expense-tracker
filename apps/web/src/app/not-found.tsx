@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 import { headers } from 'next/headers'
 
-import { Typography, LinkAsButton, Icon } from '@/ui'
-import GoBackButton from '@/features/navigation/components/GoBackButton'
+import { Typography, LinkAsButton, Icon } from '@/shared/ui'
+import { GoBackButton } from '@/widgets/goBack'
 
 export const metadata: Metadata = {
   title: 'Page Not Found — Expense Tracker',

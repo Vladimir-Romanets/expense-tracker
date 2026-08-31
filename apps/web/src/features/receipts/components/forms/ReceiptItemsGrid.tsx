@@ -1,7 +1,7 @@
 'use client'
 
 import { useFieldArray, type Control, type FieldErrors } from 'react-hook-form'
-import { RHFInput, Button, Icon } from '@/ui/'
+import { RHFInput, Button, Icon } from '@/shared/ui/'
 import type { ReceiptFormValues } from '../../schemas'
 
 interface ReceiptItemsGridProps {

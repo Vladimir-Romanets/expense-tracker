@@ -1,7 +1,7 @@
 'use client'
 
 import { useTransition } from 'react'
-import { Button, Icon, LinkAsButton } from '@/ui'
+import { Button, Icon, LinkAsButton } from '@/shared/ui'
 import { deleteCategory } from '../../actions/deleteCategory'
 
 type Props = {

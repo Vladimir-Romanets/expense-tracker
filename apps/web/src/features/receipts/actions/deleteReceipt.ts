@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { serverApiClient } from '@/lib/apiClient.server'
+import { serverApiClient } from '@/shared/api/apiClient.server'
 
 export const deleteReceipt = async (id: number) => {
   try {

@@ -1,8 +1,8 @@
 'use server'
 
 import { type RegistrationSchemaProps } from '../schemas/auth'
-import { apiClientWithHeaders, prettierError } from '@/lib/apiClient'
-import { login } from '@/utils/login'
+import { apiClientWithHeaders, prettierError } from '@/shared/api/apiClient'
+import { login } from '@/shared/lib/login'
 import type { User } from '@/stores/user'
 
 type RegisterSucceedProps = {

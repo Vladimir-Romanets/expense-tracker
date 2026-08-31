@@ -1,4 +1,4 @@
-import { cn } from '@/utils/cn'
+import { cn } from '@/shared/lib/cn'
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string

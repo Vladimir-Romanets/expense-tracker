@@ -1,5 +1,5 @@
 'use client'
-import { Button, Icon } from '@/ui'
+import { Button, Icon } from '@/shared/ui'
 import { useReceiptsContext } from '../../context/ReceiptsListProvider'
 
 export const ButtonReceiptDelete = ({ id }: { id: number }) => {
