@@ -1,4 +1,4 @@
-import { Table } from '@/ui'
+import { Table } from '@/shared/ui'
 
 const skeletonRows = Array.from({ length: 2 })
 

@@ -1,6 +1,6 @@
 'use server'
 
-import { serverApiClient } from '@/lib/apiClient.server'
+import { serverApiClient } from '@/shared/api/apiClient.server'
 import type { BasicExpenseStatisticEntry } from '../types'
 import type { DateRangeFilterValues } from '../schemas'
 

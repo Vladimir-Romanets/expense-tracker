@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Typography } from '@/ui'
+import { Typography } from '@/shared/ui'
 import { AddCategoryForm } from '@/features/categories'
 
 export const metadata: Metadata = {

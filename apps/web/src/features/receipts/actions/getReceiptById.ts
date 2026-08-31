@@ -1,6 +1,6 @@
 'use server'
 import { notFound } from 'next/navigation'
-import { serverApiClient } from '@/lib/apiClient.server'
+import { serverApiClient } from '@/shared/api/apiClient.server'
 import type { ReceiptDetails } from '../types'
 import { receiptDetailsFormatter } from '../utils/receiptDetailsFormatter'
 import { ReceiptFormValues } from '../schemas'

@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useRef, useEffectEvent } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { Input, Select } from '@/ui'
-import { useDebounce } from '@/hooks/useDebounce'
+import { Input, Select } from '@/shared/ui'
+import { useDebounce } from '@/shared/hooks/useDebounce'
 
 export const ProductsToolbar = () => {
   const router = useRouter()

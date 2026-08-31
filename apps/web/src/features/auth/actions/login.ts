@@ -1,9 +1,9 @@
 'use server'
 
 import { loginSchema, type LoginSchemaProps } from '../schemas/auth'
-import { flattenFieldErrors } from '@/utils/format-error'
-import { apiClientWithHeaders, prettierError } from '@/lib/apiClient'
-import { login } from '@/utils/login'
+import { flattenFieldErrors } from '@/shared/lib/format-error'
+import { apiClientWithHeaders, prettierError } from '@/shared/api/apiClient'
+import { login } from '@/shared/lib/login'
 import type { User } from '@/stores/user'
 
 type LoginSucceedProps = {

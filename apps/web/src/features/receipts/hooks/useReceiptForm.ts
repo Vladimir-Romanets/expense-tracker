@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { receiptSchema, type ReceiptFormValues } from '../schemas'
-import { setFormErrors } from '@/utils/setFormErrors'
-import type { ActionResult } from '@/types/actionResult'
+import { setFormErrors } from '@/shared/lib/setFormErrors'
+import type { ActionResult } from '@/shared/types/actionResult'
 
 export const defaultValues = {
   storeId: undefined,

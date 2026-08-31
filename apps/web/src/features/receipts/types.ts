@@ -1,7 +1,4 @@
-export interface StoreEntity {
-  id: number
-  name: string
-}
+import type { StoreEntity } from '@/shared/types/store'
 
 export interface ReceiptEntity {
   id: number

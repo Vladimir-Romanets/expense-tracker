@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { LoginForm } from '@/features/auth'
-import { Typography } from '@/ui'
+import { Typography } from '@/shared/ui'
 
 const LoginPage = () => (
   <>

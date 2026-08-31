@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { RHFInput, Typography } from '@/ui'
+import { RHFInput, Typography } from '@/shared/ui'
 import { dateRangeSchema, type DateRangeFilterValues } from '../../schemas'
 import { useFilterContext } from '../../context/FilterContext'
 

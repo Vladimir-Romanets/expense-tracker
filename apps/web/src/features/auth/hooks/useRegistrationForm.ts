@@ -7,7 +7,7 @@ import {
 } from '../schemas/auth'
 import { registrationAction } from '../actions/register'
 import { useUserStore } from '@/stores/user'
-import { setFormErrors } from '@/utils/setFormErrors'
+import { setFormErrors } from '@/shared/lib/setFormErrors'
 
 const defaultValues = {
   firstName: '',

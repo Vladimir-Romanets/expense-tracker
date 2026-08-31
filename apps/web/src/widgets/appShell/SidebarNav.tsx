@@ -1,0 +1,39 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
+import { SidebarNavItem } from './SidebarNavItem'
+import { SIDEBAR_MENU_ITEMS } from './menuItems'
+import { isNavItemActive } from './getActiveNavItem'
+
+type Props = {
+  className?: string
+}
+
+export const SidebarNav = ({ className }: Props) => {
+  const pathname = usePathname()
+
+  return (
+    <nav
+      aria-label="Sidebar navigation"
+      className={className}
+    >
+      <ul
+        className="flex flex-col gap-2"
+        role="list"
+      >
+        {SIDEBAR_MENU_ITEMS.map((item) => {
+          const isActive = isNavItemActive(pathname, item.href)
+
+          return (
+            <li key={item.id}>
+              <SidebarNavItem
+                item={item}
+                isActive={isActive}
+              />
+            </li>
+          )
+        })}
+      </ul>
+    </nav>
+  )
+}

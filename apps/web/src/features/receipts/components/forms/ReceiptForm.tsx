@@ -1,7 +1,7 @@
 'use client'
 
 import { useTransition } from 'react'
-import { RHFInput, RHFSelect, Button, RHFFileUpload, Icon } from '@/ui'
+import { RHFInput, RHFSelect, Button, RHFFileUpload, Icon } from '@/shared/ui'
 import { ReceiptItemsGrid } from './ReceiptItemsGrid'
 import { useReceiptForm } from '../../hooks/useReceiptForm'
 import type { ReceiptFormValues } from '../../schemas'

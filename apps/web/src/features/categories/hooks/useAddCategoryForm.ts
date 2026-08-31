@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { addCategorySchema, type AddCategoryFormValues } from '../schemas'
 import { addCategory } from '../actions/addCategory'
-import { setFormErrors } from '@/utils/setFormErrors'
+import { setFormErrors } from '@/shared/lib/setFormErrors'
 
 interface UseAddCategoryFormOptions {
   onSuccess?: () => void

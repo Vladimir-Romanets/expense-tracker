@@ -1,6 +1,6 @@
 'use server'
-import { prettierError } from '@/lib/apiClient'
-import { serverApiClient } from '@/lib/apiClient.server'
+import { prettierError } from '@/shared/api/apiClient'
+import { serverApiClient } from '@/shared/api/apiClient.server'
 import { revalidatePath } from 'next/cache'
 
 type ResponseType = {

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Typography } from '@/ui'
+import { Typography } from '@/shared/ui'
 
 export default function AuthLayout({
   children,

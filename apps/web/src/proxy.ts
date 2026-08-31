@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { AUTH_COOKIE_NAME } from './constants/cookie'
-import { validateToken } from './lib/token'
+import { AUTH_COOKIE_NAME } from './shared/config/cookie'
+import { validateToken } from './shared/lib/token'
 
 const AUTH_PATHS = ['/login', '/register', '/forgot-password']
 const DEFAULT_REDIRECT_AFTER_LOGIN = '/overview'

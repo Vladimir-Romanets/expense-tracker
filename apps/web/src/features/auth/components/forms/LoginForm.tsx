@@ -5,8 +5,8 @@ import Link from 'next/link'
 import { PasswordInput } from '../ui/PasswordInput'
 import { Input } from '../ui/Input'
 import { useLoginForm } from '../../hooks/useLoginForm'
-import { cn } from '@/utils/cn'
-import { Button, Typography } from '@/ui'
+import { cn } from '@/shared/lib/cn'
+import { Button, Typography } from '@/shared/ui'
 
 const LoginForm = () => {
   const { state, formAction, isPending, isFormInvalid } = useLoginForm()

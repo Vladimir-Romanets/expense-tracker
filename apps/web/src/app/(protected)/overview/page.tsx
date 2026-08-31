@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { Dashboard } from '@/features/overview'
+import { Dashboard } from '@/widgets/dashboard'
 
 export const metadata: Metadata = {
   title: 'Overview | Expense Tracker',

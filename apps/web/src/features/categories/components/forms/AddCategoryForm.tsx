@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { RHFInput, Button, RHFTextarea, RHFFileUpload } from '@/ui'
+import { RHFInput, Button, RHFTextarea, RHFFileUpload } from '@/shared/ui'
 import { useAddCategoryForm } from '../../hooks/useAddCategoryForm'
 
 interface AddCategoryFormProps {

@@ -1,11 +1,11 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { serverApiClient } from '@/lib/apiClient.server'
-import { prettierError } from '@/lib/apiClient'
+import { serverApiClient } from '@/shared/api/apiClient.server'
+import { prettierError } from '@/shared/api/apiClient'
 import type { ReceiptFormValues } from '../schemas'
-import { getPresignedUrl } from '@/lib/fileUploader/getPresignedUrl'
-import { fileUploader } from '@/lib/fileUploader/fileUploader'
+import { getPresignedUrl } from '@/shared/lib/fileUploader/getPresignedUrl'
+import { fileUploader } from '@/shared/lib/fileUploader/fileUploader'
 import { ReceiptEntity } from '../types'
 
 export const createReceipt = async ({

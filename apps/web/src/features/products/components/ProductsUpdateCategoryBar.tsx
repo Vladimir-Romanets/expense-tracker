@@ -1,11 +1,11 @@
 'use client'
 
 import { useEffect, useRef, useState, useTransition } from 'react'
-import { Button, Checkbox, Select, Typography } from '@/ui'
-import type { DropdownOptions } from '@/types/dropdown'
+import { Button, Checkbox, Select, Typography } from '@/shared/ui'
+import type { DropdownOptions } from '@/shared/types/dropdown'
 import { useProductTableContext } from '../hooks/useProductTableContext'
 import { updateProductCategories } from '../actions/updateProductCategories'
-import { cn } from '@/utils/cn'
+import { cn } from '@/shared/lib/cn'
 
 type Props = {
   categories: DropdownOptions

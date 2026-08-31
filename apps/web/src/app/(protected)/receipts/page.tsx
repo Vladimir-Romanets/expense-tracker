@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
-import { Typography } from '@/ui'
-import { ReceiptsList, getReceipts } from '@/features/receipts'
-import type { SearchParams } from '@/types/pagination'
+import { Typography } from '@/shared/ui'
+import { getReceipts } from '@/features/receipts'
+import { ReceiptsList } from '@/widgets/receiptsList'
+import type { SearchParams } from '@/shared/types/pagination'
 
 type Props = {
   searchParams: Promise<SearchParams>

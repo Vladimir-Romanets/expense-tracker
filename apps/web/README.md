@@ -33,44 +33,47 @@ This is the frontend client for the Expense Tracker application. Built on Next.j
 
 ## Architecture & Folder Structure
 
-The client application follows a **Modular Feature-Driven Architecture (FSD-Light)** optimized for Next.js App Router. Code is organized around business domains to ensure high cohesion, low coupling, and easy scalability.
+The client application follows a **layered, feature-driven architecture (FSD-Light)** optimized for Next.js App Router. Code is organized into four layers — `shared`, `features`, `widgets`, `app` — with a strict, lint-enforced dependency direction between them.
 
 ```text
 src/
 ├── app/                  # Next.js App Router (Routes, Page Views & Layouts)
 │   ├── (auth)/           # Route group for auth pages (/login, /register)
+│   ├── (protected)/      # Route group for authenticated app pages
 │   ├── error.tsx
 │   ├── layout.tsx
 │   └── page.tsx          # Landing / Home page
+├── widgets/              # Composite, page-level UI blocks
+│   └── [widget-name]/    # e.g. appShell, receiptsList, dashboard
+│       └── index.ts      # Strict Public API
 ├── features/             # Self-contained domain modules
 │   ├── [feature-name]/   # Example feature module (auth, receipts, categories)
 │   │   ├── actions/      # Server Actions (e.g., fetch, mutate)
 │   │   ├── components/   # UI layer
 │   │   │   ├── forms/    # Smart forms (e.g., LoginForm)
 │   │   │   ├── modals/   # Feature-specific modals
-│   │   │   ├── tables/   # Feature-specific tables
 │   │   │   └── ui/       # Dumb/presentational feature-specific components
 │   │   ├── context/      # React Context providers for the feature
 │   │   ├── hooks/        # Custom hooks containing business logic
 │   │   ├── schemas.ts    # Zod validation schemas
 │   │   ├── types.ts      # TypeScript interfaces and types
 │   │   └── index.ts      # Strict Public API (exports only what is needed outside)
-├── ui/                   # Shared design system components (Button, Hero, Typography, Link)
-└── lib/                  # Shared infrastructure & utilities
-    ├── utils/            # Shared error formatters and helpers
-    ├── apiClient.ts      # Typed API client wrapper
-    └── cn.ts             # Tailwind class merging utility
+└── shared/               # Shared infrastructure, design system & utilities
+    ├── ui/               # Design system components (Button, Hero, Typography, Link...)
+    ├── api/              # Typed API client wrappers (apiClient.ts, apiClient.server.ts)
+    ├── lib/              # Cross-cutting helpers (cn, auth.server, token, fileUploader...)
+    ├── config/           # App-wide constants
+    ├── types/            # Cross-cutting TypeScript types
+    └── hooks/            # Generic, domain-agnostic hooks
 ```
 
 ### Core Architectural Rules
 
-1. **App Router Boundary (`src/app/`)**: `src/app/` handles routing, layouts, and page entry points. Pages delegate UI rendering and business logic to `features/` or `ui/`.
-2. **Feature Co-location (`src/features/`)**: Everything specific to a business feature (components, server actions, Zod schemas, types) lives inside `features/<feature-name>/`.
-3. **Separation of Concerns (Inside Features)**:
-   - **Business Logic**: Extracted into custom hooks (`hooks/`) to keep components clean.
-   - **Component Hierarchy**: `components/` is subdivided into logical groups (`forms/`, `ui/`, `modals/`, `tables/`).
-4. **Strict Public API**: Each feature exposes its public interface strictly through `index.ts`. Deep imports into a feature's internal structure from outside are forbidden.
-5. **Feature Isolation vs Global UI**: Feature-specific UI controls reside inside their respective feature's `components/ui/` folder, while domain-agnostic UI primitives live in the global `src/ui/`.
+1. **Layer hierarchy (`shared < features < widgets < app`)**: a layer may only import from layers below it. `shared` depends on nothing else in the app; `features` depend only on `shared`; `widgets` compose `shared` + `features` into page-level blocks (e.g. a list, its delete flow, and pagination together); `app` composes everything. This is enforced automatically by `eslint-plugin-boundaries` (see `eslint.config.mjs`) — a disallowed import fails `pnpm lint`.
+2. **App Router Boundary (`src/app/`)**: `src/app/` handles routing, layouts, and page entry points only. Pages delegate rendering and business logic to `widgets/` or `features/`.
+3. **Feature Co-location (`src/features/`)**: Everything specific to a single business capability (components, server actions, Zod schemas, types) lives inside `features/<feature-name>/`. A feature never imports from another feature — shared types/logic belong in `shared/` instead.
+4. **Strict Public API**: Every feature and widget exposes its interface strictly through `index.ts`. Deep imports into a slice's internal files from outside that slice are forbidden and fail lint.
+5. **Client components importing server actions**: a feature's `index.ts` barrel may re-export both server actions and client-safe pieces (hooks, components). A `'use client'` file that only needs the client-safe part should import it directly (bypassing the barrel) rather than through `index.ts`, to avoid pulling server-only code (e.g. anything touching `next/headers`) into the browser bundle.
 
 ---
 

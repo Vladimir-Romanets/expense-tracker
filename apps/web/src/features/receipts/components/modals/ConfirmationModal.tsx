@@ -2,7 +2,7 @@
 
 import { startTransition, useState } from 'react'
 import { useReceiptsContext } from '../../context/ReceiptsListProvider'
-import { Button, Icon, Modal, Typography } from '@/ui'
+import { Button, Icon, Modal, Typography } from '@/shared/ui'
 import { deleteReceipt } from '../../actions/deleteReceipt'
 
 export const ConfirmationModal = () => {
