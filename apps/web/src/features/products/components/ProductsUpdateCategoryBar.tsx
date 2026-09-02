@@ -1,17 +1,14 @@
 'use client'
 
-import { useEffect, useRef, useState, useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import { Button, Checkbox, Select, Typography } from '@/shared/ui'
-import type { DropdownOptions } from '@/shared/types/dropdown'
+import { useCategoryOptions } from '@/shared/hooks/useCategoryOptions'
+import { cn } from '@/shared/lib/cn'
 import { useProductTableContext } from '../hooks/useProductTableContext'
 import { updateProductCategories } from '../actions/updateProductCategories'
-import { cn } from '@/shared/lib/cn'
 
-type Props = {
-  categories: DropdownOptions
-}
-
-export const ProductsUpdateCategoryBar = ({ categories }: Props) => {
+export const ProductsUpdateCategoryBar = () => {
+  const categories = useCategoryOptions()
   const [categoryId, setCategoryId] = useState<number | undefined>()
   const [isPending, startTransition] = useTransition()
 

@@ -7,23 +7,16 @@ import {
 } from '@/features/products'
 import { ProductsTable } from './ProductsTable'
 import type { PaginatedResponse, SearchParams } from '@/shared/types/pagination'
-import type { DropdownOptions } from '@/shared/types/dropdown'
 
 type Props = {
   searchParams: SearchParams
-  categories: DropdownOptions
 } & PaginatedResponse<ProductEntity>
 
-export const ProductsList = ({
-  data,
-  meta,
-  searchParams,
-  categories,
-}: Props) => {
+export const ProductsList = ({ data, meta, searchParams }: Props) => {
   return (
     <ProductContextProvider>
       <ProductsToolbar />
-      <ProductsUpdateCategoryBar categories={categories} />
+      <ProductsUpdateCategoryBar />
 
       <ProductsTable products={data} />
 
