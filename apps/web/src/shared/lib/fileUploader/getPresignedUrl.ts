@@ -9,7 +9,7 @@ export type SignedUploadResponse = {
 
 export const getPresignedUrl = async (
   file: File,
-  pathPrefix: 'receipts' | 'categories',
+  pathPrefix: 'receipts' | 'categories' | 'users',
   isPublic = false
 ): Promise<{ imageKey: string; uploadUrl: string }> => {
   const { uploadUrl, imageKey } = await serverApiClient<SignedUploadResponse>(
