@@ -25,45 +25,61 @@ const eslintConfig = [
     plugins: { boundaries: boundariesPlugin },
     settings: {
       'boundaries/elements': [
-        { type: 'shared', pattern: 'src/shared/**', mode: 'file' },
+        { type: 'shared', pattern: 'src/shared/**' },
         {
           type: 'features',
           pattern: 'src/features/*',
-          mode: 'folder',
           capture: ['slice'],
         },
         {
           type: 'widgets',
           pattern: 'src/widgets/*',
-          mode: 'folder',
           capture: ['slice'],
         },
-        { type: 'app', pattern: 'src/app/**', mode: 'file' },
+        { type: 'app', pattern: 'src/app/**' },
       ],
     },
     rules: {
       // Layer hierarchy: shared < features < widgets < app. A layer may only
       // import from layers below it; imports within the same slice are exempt.
-      'boundaries/element-types': [
+      'boundaries/dependencies': [
         'error',
         {
           default: 'disallow',
-          rules: [
-            { from: 'shared', allow: ['shared'] },
-            { from: 'features', allow: ['shared'] },
-            { from: 'widgets', allow: ['shared', 'features'] },
-            { from: 'app', allow: ['shared', 'features', 'widgets', 'app'] },
-          ],
-        },
-      ],
-      // Cross-slice imports must go through a feature's/widget's index.ts barrel.
-      'boundaries/entry-point': [
-        'error',
-        {
-          default: 'allow',
-          rules: [
-            { target: 'features', allow: 'index.ts' },
-            { target: 'widgets', allow: 'index.ts' },
+          policies: [
+            {
+              from: { element: { type: 'shared' } },
+              allow: { to: { element: { type: 'shared' } } },
+            },
+            {
+              from: { element: { type: 'features' } },
+              allow: { to: { element: { type: 'shared' } } },
+            },
+            {
+              from: { element: { type: 'widgets' } },
+              allow: { to: { element: { type: ['shared', 'features'] } } },
+            },
+            {
+              from: { element: { type: 'app' } },
+              allow: {
+                to: { element: { type: ['shared', 'features', 'widgets', 'app'] } },
+              },
+            },
+            // Cross-slice imports into features/widgets must go through their index.ts
+            // barrel. Folded into this rule (not a separate boundaries/entry-point) because
+            // that rule's `default: 'allow'` + allow-only policies can never actually reject
+            // a non-barrel import: an unmatched `allow` falls through to the rule's own
+            // default instead of failing, so it never reports anything.
+            {
+              from: { element: { type: ['widgets', 'app'] } },
+              to: { element: { type: 'features' } },
+              disallow: { to: { element: { fileInternalPath: '!index.ts' } } },
+            },
+            {
+              from: { element: { type: 'app' } },
+              to: { element: { type: 'widgets' } },
+              disallow: { to: { element: { fileInternalPath: '!index.ts' } } },
+            },
           ],
         },
       ],

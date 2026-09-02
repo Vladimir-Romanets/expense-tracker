@@ -3,6 +3,7 @@
 import { Checkbox } from '@/shared/ui'
 // Deep import, not the `@/features/products` barrel: the barrel also re-exports
 // the `getProducts` server action, which would pull `next/headers` into this client bundle.
+// eslint-disable-next-line boundaries/dependencies -- documented client-boundary exception, see apps/web/AGENTS.md
 import { useProductTableContext } from '@/features/products/hooks/useProductTableContext'
 
 type Props = {
