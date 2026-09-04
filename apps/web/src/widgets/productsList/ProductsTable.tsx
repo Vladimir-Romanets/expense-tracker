@@ -34,7 +34,7 @@ export const ProductsTable = ({ products }: Props) => {
                 {product.categoryName ? (
                   <CategoryBadge name={product.categoryName} />
                 ) : (
-                  <span className="text-slate-400">No Category</span>
+                  <span className="leading-7 text-slate-400">No Category</span>
                 )}
               </Table.Cell>
             </Table.Row>
