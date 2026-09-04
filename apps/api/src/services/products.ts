@@ -13,7 +13,7 @@ type ProductList = {
   id: number
   name: string
   categoryId: number | null
-  categoryName: string
+  categoryName: string | null
 }
 
 export const getAll = async (payload: ProductQuery) => {
@@ -21,12 +21,7 @@ export const getAll = async (payload: ProductQuery) => {
 
   const { list, total } = await productsModel.getAll(payload, pagination)
 
-  const formattedList = list.map(({ categories, ...rest }) => ({
-    ...rest,
-    categoryName: categories?.name || '',
-  }))
-
-  return createPaginatedResponse<ProductList>(formattedList, total, pagination)
+  return createPaginatedResponse<ProductList>(list, total, pagination)
 }
 
 export const getByName = async (name: NewProductProps['name'], tx?: Executor) =>
