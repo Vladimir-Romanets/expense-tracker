@@ -1,47 +1,40 @@
-import { eq, ilike, and, type SQL, inArray } from 'drizzle-orm'
+import { eq, ilike, and, type SQL, inArray, asc, desc, sql } from 'drizzle-orm'
 import { db, type Executor } from '@db'
-import { products, type NewProductProps, type ProductProps } from '@db/schema'
+import { categories, products, type NewProductProps, type ProductProps } from '@db/schema'
 import type { PaginationResult } from '@helpers/utils/pagination'
 import type { BulkUpdateCategoryForProductDto, ProductQuery } from '@validators/products'
 
-const allowedSortField = ['name']
+const sortColumns = {
+  name: products.name,
+  category: sql`lower(${categories.name})`,
+} as const
 
-export const getAll = async (filters: ProductQuery, { limit, offset }: PaginationResult) => {
-  const { sortBy = 'name', sortOrder = 'asc', search, categoryId } = filters
+export const getAll = async (filters: ProductQuery, pagination: PaginationResult) => {
+  const { sortBy, sortOrder = 'asc', search, categoryId } = filters
 
-  // START. This approach violates the DRY principle, but it works
   const whereConditions: SQL[] = [
     ...(search ? [ilike(products.name, `%${search}%`)] : []),
     ...(categoryId ? [eq(products.categoryId, categoryId)] : []),
   ]
-  const whereFilter = {
-    ...(search ? { name: { ilike: `%${search}%` } } : {}),
-    ...(categoryId !== undefined ? { categoryId: { eq: categoryId } } : {}),
-  }
-  // END
 
   const whereClause = whereConditions.length ? and(...whereConditions) : undefined
-  const sortField = allowedSortField.includes(sortBy) ? sortBy : 'name'
-  const orderBy = {
-    [sortField]: sortOrder,
-  }
 
-  const reqProducts = db.query.products.findMany({
-    limit,
-    offset,
-    where: whereFilter,
-    orderBy,
-    columns: {
-      createdAt: false,
-    },
-    with: {
-      categories: {
-        columns: {
-          name: true,
-        },
-      },
-    },
-  })
+  const direction = sortOrder === 'asc' ? asc : desc
+
+  // Using builder API (not Relational) to support ORDER BY on joined stores.name
+  const reqProducts = db
+    .select({
+      id: products.id,
+      name: products.name,
+      categoryId: products.categoryId,
+      categoryName: categories.name,
+    })
+    .from(products)
+    .leftJoin(categories, eq(products.categoryId, categories.id))
+    .where(whereClause)
+    .orderBy(direction(sortColumns[sortBy]), asc(products.id))
+    .limit(pagination.limit)
+    .offset(pagination.offset)
 
   const reqTotal = db.$count(products, whereClause)
 
