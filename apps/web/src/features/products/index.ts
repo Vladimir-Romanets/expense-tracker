@@ -1,6 +1,7 @@
 export { getProducts } from './actions/getProducts'
 export { ProductContextProvider } from './context/ProductContext'
 export { useProductTableContext } from './hooks/useProductTableContext'
+export { ProductsTableHeader } from './components/ProductsTableHeader'
 export { ProductsToolbar } from './components/ProductsToolbar'
 export { ProductsUpdateCategoryBar } from './components/ProductsUpdateCategoryBar'
 export { CategoryBadge } from './components/ui/CategoryBadge'

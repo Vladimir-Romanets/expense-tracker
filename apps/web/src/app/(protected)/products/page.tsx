@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Typography } from '@/shared/ui'
 import { getProducts } from '@/features/products'
 import { ProductsList } from '@/widgets/productsList'
 import type { SearchParams } from '@/shared/types/pagination'
@@ -18,17 +17,11 @@ const ProductsPage = async ({ searchParams }: Props) => {
   const productsResponse = await getProducts(currentParams)
 
   return (
-    <>
-      {productsResponse.data.length ? (
-        <ProductsList
-          data={productsResponse.data}
-          meta={productsResponse.meta}
-          searchParams={currentParams}
-        />
-      ) : (
-        <Typography variant="p">No products found.</Typography>
-      )}
-    </>
+    <ProductsList
+      data={productsResponse.data}
+      meta={productsResponse.meta}
+      searchParams={currentParams}
+    />
   )
 }
 
