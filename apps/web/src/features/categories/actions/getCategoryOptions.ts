@@ -8,7 +8,6 @@ export const getCategoryOptions = async () => {
     value: el.id,
     label: el.name,
   }))
-  options.unshift({ label: 'Remove category', value: 0 })
 
   return options
 }

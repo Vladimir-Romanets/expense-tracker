@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useMemo, useState, useTransition } from 'react'
 import { Button, Checkbox, Select, Typography } from '@/shared/ui'
 import { useCategoryOptions } from '@/shared/hooks/useCategoryOptions'
 import { cn } from '@/shared/lib/cn'
@@ -13,6 +13,10 @@ export const ProductsUpdateCategoryBar = () => {
   const [isPending, startTransition] = useTransition()
 
   const { selectedIds, clearSelected } = useProductTableContext()
+  const categoryOptions = useMemo(
+    () => [{ label: 'Remove category', value: 0 }, ...categories],
+    [categories]
+  )
   const count = selectedIds.size
 
   const handleClearSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +66,7 @@ export const ProductsUpdateCategoryBar = () => {
               <span className="max-sm:hidden">Selected products</span>
             </Typography>
             <Select
-              options={categories}
+              options={categoryOptions}
               wrapperClassName="w-49"
               name="category"
               placeholder="Select category"
