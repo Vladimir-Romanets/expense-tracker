@@ -1,16 +1,14 @@
 'use client'
 
-import { useState, useEffect, useRef, useEffectEvent } from 'react'
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Input, Select } from '@/shared/ui'
 import { useDebounce } from '@/shared/hooks/useDebounce'
 import { useCategoryOptions } from '@/shared/hooks/useCategoryOptions'
+import { useSyncSearchParams } from '@/shared/hooks/useSyncSearchParams'
 
 export const ProductsToolbar = () => {
-  const router = useRouter()
-  const pathname = usePathname()
   const searchParams = useSearchParams()
-  const isMounted = useRef(false)
   const [categoryId, setCategoryId] = useState<string | undefined>(
     searchParams.get('categoryId') || undefined
   )
@@ -26,35 +24,24 @@ export const ProductsToolbar = () => {
     setCategoryId(undefined)
   }
 
-  const handleUpdate = useEffectEvent(() => {
-    const params = new URLSearchParams(searchParams.toString())
+  useSyncSearchParams(
+    (params) => {
+      if (debouncedSearch) {
+        params.set('search', debouncedSearch)
+      } else {
+        params.delete('search')
+      }
 
-    if (debouncedSearch) {
-      params.set('search', debouncedSearch)
-    } else {
-      params.delete('search')
-    }
+      if (categoryId) {
+        params.set('categoryId', categoryId)
+      } else {
+        params.delete('categoryId')
+      }
 
-    if (categoryId) {
-      params.set('categoryId', categoryId)
-    } else {
-      params.delete('categoryId')
-    }
-
-    params.set('page', '1')
-
-    router.replace(`${pathname}?${params.toString()}`)
-  })
-
-  useEffect(() => {
-    if (isMounted.current) {
-      handleUpdate()
-    }
-  }, [debouncedSearch, categoryId])
-
-  useEffect(() => {
-    isMounted.current = true
-  }, [])
+      params.set('page', '1')
+    },
+    [debouncedSearch, categoryId]
+  )
 
   return (
     <div className="mb-6 flex justify-between gap-4 px-3 max-md:flex-col md:items-center">

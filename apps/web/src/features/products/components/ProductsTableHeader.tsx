@@ -1,8 +1,9 @@
 'use client'
-import { useEffect, useEffectEvent, useRef, useState } from 'react'
-import { useSearchParams, useRouter, usePathname } from 'next/navigation'
+import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Icon, Table } from '@/shared/ui'
 import { cn } from '@/shared/lib/cn'
+import { useSyncSearchParams } from '@/shared/hooks/useSyncSearchParams'
 
 type DefaultProps = {
   id: string
@@ -18,15 +19,27 @@ type Props = {
 }
 
 export const ProductsTableHeader = ({ options, defaultValue }: Props) => {
-  const isMounted = useRef(false)
   const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
   const [sort, setSort] = useState<DefaultProps>({
     id: searchParams.get('sortBy') || defaultValue.id,
     value:
       (searchParams.get('sortOrder') as 'asc' | 'desc') || defaultValue.value,
   })
+
+  const handleClick = (id: string) => {
+    setSort((state) => ({
+      id,
+      value: state.id === id && state.value === 'asc' ? 'desc' : 'asc',
+    }))
+  }
+
+  useSyncSearchParams(
+    (params) => {
+      params.set('sortOrder', sort.value)
+      params.set('sortBy', sort.id)
+    },
+    [sort]
+  )
 
   const sortIcon = (
     <Icon
@@ -38,32 +51,6 @@ export const ProductsTableHeader = ({ options, defaultValue }: Props) => {
       size={16}
     />
   )
-
-  const handleClick = (id: string) => {
-    setSort((state) => ({
-      id,
-      value: state.id === id && state.value === 'asc' ? 'desc' : 'asc',
-    }))
-  }
-
-  const handleUpdate = useEffectEvent((sortOption: DefaultProps) => {
-    const params = new URLSearchParams(searchParams.toString())
-
-    params.set('sortOrder', sortOption.value)
-    params.set('sortBy', sortOption.id)
-
-    router.replace(`${pathname}?${params.toString()}`)
-  })
-
-  useEffect(() => {
-    if (isMounted.current) {
-      handleUpdate(sort)
-    }
-  }, [sort])
-
-  useEffect(() => {
-    isMounted.current = true
-  }, [])
 
   return (
     <Table.Row>
