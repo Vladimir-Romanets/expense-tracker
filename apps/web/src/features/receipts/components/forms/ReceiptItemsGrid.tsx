@@ -26,11 +26,11 @@ export function ReceiptItemsGrid({ control, errors }: ReceiptItemsGridProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-[3fr_1fr_1fr_1fr_auto] items-center gap-4 text-sm font-medium text-gray-700">
+      <div className="grid grid-cols-[3fr_1fr_1fr_1fr_auto] items-center gap-4 text-sm font-medium text-gray-700 max-sm:hidden">
         <div>Product Name</div>
         <div>Quantity</div>
         <div>Unit Price</div>
-        <div>Line Total</div>
+        <div>Total Price</div>
         <div className="w-10" /> {/* Spacer for delete button */}
       </div>
 
@@ -38,18 +38,21 @@ export function ReceiptItemsGrid({ control, errors }: ReceiptItemsGridProps) {
         {fields.map((field, index) => (
           <div
             key={field.id}
-            className="grid grid-cols-[3fr_1fr_1fr_1fr_auto] items-start gap-4"
+            className="grid grid-rows-1 items-start gap-4 sm:grid-cols-[3fr_1fr_1fr_1fr_auto]"
           >
             <RHFInput<ReceiptFormValues>
               control={control}
               name={`items.${index}.name`}
-              placeholder="Autocomplete..."
+              className="sm:placeholder:opacity-0"
+              placeholder="Product name"
             />
 
             <RHFInput<ReceiptFormValues>
               control={control}
               name={`items.${index}.quantity`}
               type="number"
+              placeholder="Quantity"
+              className="sm:placeholder:opacity-0"
               hideNativeControl
             />
 
@@ -57,13 +60,17 @@ export function ReceiptItemsGrid({ control, errors }: ReceiptItemsGridProps) {
               control={control}
               name={`items.${index}.unitPrice`}
               type="number"
+              className="sm:placeholder:opacity-0"
               hideNativeControl
+              placeholder="Unit price"
             />
 
             <RHFInput<ReceiptFormValues>
               control={control}
               name={`items.${index}.totalPrice`}
               type="number"
+              className="sm:placeholder:opacity-0"
+              placeholder="Total price"
               hideNativeControl
             />
 
@@ -71,7 +78,7 @@ export function ReceiptItemsGrid({ control, errors }: ReceiptItemsGridProps) {
               type="button"
               variant="social"
               onClick={() => remove(index)}
-              className="px-2 text-slate-500 focus-within:text-red-500 hover:text-red-500 "
+              className="px-2 text-slate-500 focus-within:text-red-500 hover:text-red-500 max-sm:ml-auto max-sm:w-min"
               aria-label="Remove item"
             >
               <Icon
