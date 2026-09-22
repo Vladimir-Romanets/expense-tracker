@@ -67,7 +67,7 @@ export function ReceiptForm({
             name="receiptFile"
             label="Upload or drag and-drop scan/photo of receipt."
             className="h-96"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp"
             disabled={isPending}
           />
           <Button

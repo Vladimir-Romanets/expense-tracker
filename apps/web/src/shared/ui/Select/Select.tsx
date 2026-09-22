@@ -5,7 +5,7 @@ import { cn } from '@/shared/lib/cn'
 import { inputVariants } from '../Input/input.variants'
 import { Icon } from '../Icon/Icon'
 
-export interface SelectOption {
+interface SelectOption {
   value: string | number
   label: string
 }

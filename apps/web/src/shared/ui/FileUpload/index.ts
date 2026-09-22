@@ -1,1 +1,1 @@
-export * from './RHFFileUpload'
+export { RHFFileUpload } from './RHFFileUpload'

@@ -47,7 +47,7 @@ const createUserStore = () => {
   )
 }
 
-export const UserStoreContext = createContext<UserStore | null>(null)
+const UserStoreContext = createContext<UserStore | null>(null)
 
 export function UserStoreProvider({ children }: { children: ReactNode }) {
   const [store] = useState(() => createUserStore())

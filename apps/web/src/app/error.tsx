@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect } from 'react'
-import Image from 'next/image'
 import { Typography, Button, LinkAsButton, Icon } from '@/shared/ui'
 
 interface ErrorProps {

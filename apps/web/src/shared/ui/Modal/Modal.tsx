@@ -1,8 +1,10 @@
 'use client'
 
 import { useEffect, useId, useRef, type ReactNode } from 'react'
-import { Icon, Button, Typography } from '../'
 import { cn } from '@/shared/lib/cn'
+import { Icon } from '../Icon'
+import { Button } from '../Button'
+import { Typography } from '../Typography'
 
 export interface ModalProps {
   isOpen: boolean

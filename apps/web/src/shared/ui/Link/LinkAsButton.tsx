@@ -1,13 +1,13 @@
-import Link from 'next/link'
 import type { ComponentPropsWithoutRef } from 'react'
+import Link from 'next/link'
 
-import { buttonVariants, ButtonProps } from '../Button/Button'
+import { buttonVariants, ButtonProps } from '../Button'
 import { cn } from '@/shared/lib/cn'
 
-export type LinkAsButtonProps = ComponentPropsWithoutRef<typeof Link> &
+type LinkAsButtonProps = ComponentPropsWithoutRef<typeof Link> &
   Pick<ButtonProps, 'variant' | 'shape' | 'size' | 'fullWidth'>
 
-const LinkAsButton = ({
+export const LinkAsButton = ({
   href,
   children,
   variant,
@@ -30,5 +30,3 @@ const LinkAsButton = ({
     </Link>
   )
 }
-
-export default LinkAsButton

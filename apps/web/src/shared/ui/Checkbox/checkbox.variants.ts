@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 
 export const checkboxVariants = cva(
   'peer size-5 shrink-0 cursor-pointer appearance-none rounded-md border bg-surface-card transition-all duration-200 outline-none checked:border-brand-600 checked:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-50',
@@ -15,5 +15,3 @@ export const checkboxVariants = cva(
     },
   }
 )
-
-export type CheckboxVariantsProps = VariantProps<typeof checkboxVariants>

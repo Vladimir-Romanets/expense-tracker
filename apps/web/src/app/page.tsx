@@ -31,7 +31,7 @@ const HomePage = () => {
               Tracker
             </b>
           </Link>
-          <nav className="flex gap-4">
+          <nav className="hidden gap-4 sm:flex">
             <LinkAsButton
               href="#features"
               variant="ghost"

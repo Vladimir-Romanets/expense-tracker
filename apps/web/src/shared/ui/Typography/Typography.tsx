@@ -20,7 +20,7 @@ const elementMap: Record<
   price: 'span',
 }
 
-export interface TextProps
+interface TextProps
   extends
     Omit<React.HTMLAttributes<HTMLElement>, 'style'>,
     Omit<TypographyProps, 'style'> {
@@ -29,7 +29,7 @@ export interface TextProps
   style?: React.CSSProperties
 }
 
-const Typography: React.FC<TextProps> = ({
+export const Typography: React.FC<TextProps> = ({
   className,
   variant = 'p',
   weight,
@@ -58,5 +58,3 @@ const Typography: React.FC<TextProps> = ({
     </Component>
   )
 }
-
-export default Typography

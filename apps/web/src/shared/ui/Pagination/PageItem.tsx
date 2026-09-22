@@ -1,6 +1,7 @@
-import { Button, LinkAsButton } from '@/shared/ui'
+import { LinkAsButton } from '../Link'
+import { Button } from '../Button'
 
-export type PageItemProps = {
+type PageItemProps = {
   children: React.ReactNode
   isDisabled?: boolean
   isActive?: boolean

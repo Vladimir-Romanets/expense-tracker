@@ -2,7 +2,8 @@
 
 import React, { useCallback, useState, useMemo, useEffect } from 'react'
 import { useController, UseControllerProps, FieldValues } from 'react-hook-form'
-import { Icon, Button } from '@/shared/ui'
+import { Button } from '../Button'
+import { Icon } from '../Icon'
 import { cn } from '@/shared/lib/cn'
 
 const stopEvent = (e: React.MouseEvent | React.DragEvent<HTMLLabelElement>) => {

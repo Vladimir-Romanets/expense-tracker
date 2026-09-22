@@ -8,7 +8,7 @@ export interface ButtonProps
 
 export const buttonVariants = variants
 
-const Button = ({
+export const Button = ({
   className,
   variant,
   size,
@@ -55,5 +55,3 @@ const Button = ({
     </button>
   )
 }
-
-export default Button
