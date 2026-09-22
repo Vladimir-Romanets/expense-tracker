@@ -17,6 +17,7 @@ interface RHFFileUploadProps<
   label?: string
   accept?: string
   className?: string
+  capture?: boolean | 'user' | 'environment'
 }
 
 export function RHFFileUpload<T extends FieldValues>({
@@ -26,6 +27,7 @@ export function RHFFileUpload<T extends FieldValues>({
   accept = '*',
   className,
   disabled = false,
+  capture,
   ...props
 }: RHFFileUploadProps<T>) {
   const {
@@ -187,6 +189,7 @@ export function RHFFileUpload<T extends FieldValues>({
           id={name}
           type="file"
           className="hidden"
+          capture={capture}
           onChange={handleChange}
           accept={accept}
           disabled={disabled || !!value}
