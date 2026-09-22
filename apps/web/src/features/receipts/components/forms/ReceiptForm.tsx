@@ -66,7 +66,7 @@ export function ReceiptForm({
             control={control}
             name="receiptFile"
             label="Upload or drag and-drop scan/photo of receipt."
-            className="h-96"
+            className="h-64"
             accept="image/jpeg,image/png,image/webp"
             disabled={isPending}
           />
@@ -82,7 +82,7 @@ export function ReceiptForm({
           </Button>
         </div>
 
-        <div className="flex flex-col gap-6 p-6 pt-0">
+        <div className="flex flex-col gap-6">
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
             <RHFSelect<ReceiptFormValues>
               control={control}
