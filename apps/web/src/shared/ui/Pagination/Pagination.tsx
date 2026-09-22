@@ -1,10 +1,10 @@
 import { cn } from '@/shared/lib/cn'
-import { Icon } from '@/shared/ui'
+import type { PaginatedMeta, SearchParams } from '@/shared/types/pagination'
 import { PageItem } from './PageItem'
 import { createPageUrl } from './createPageUrl'
-import type { PaginatedMeta, SearchParams } from '@/shared/types/pagination'
+import { Icon } from '../Icon'
 
-export type PaginationProps = {
+type PaginationProps = {
   meta: PaginatedMeta
   className?: string
   searchParams: SearchParams

@@ -9,7 +9,7 @@ type RegisterSucceedProps = {
   user: User
 }
 
-export type RegisterActionState = {
+type RegisterActionState = {
   success?: boolean
   user?: User
   errors?: Record<keyof RegistrationSchemaProps, string>

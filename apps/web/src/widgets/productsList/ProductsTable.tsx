@@ -1,6 +1,9 @@
 import { Table, Typography } from '@/shared/ui'
-import { CategoryBadge, type ProductEntity } from '@/features/products'
-import { ProductsTableHeader } from '@/features/products'
+import {
+  ProductsTableHeader,
+  CategoryBadge,
+  type ProductEntity,
+} from '@/features/products'
 import { RowCheckbox } from './RowCheckbox'
 
 interface Props {

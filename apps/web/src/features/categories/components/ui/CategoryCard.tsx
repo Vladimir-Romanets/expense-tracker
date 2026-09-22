@@ -4,7 +4,7 @@ import { cn } from '@/shared/lib/cn'
 import { CategoryEntity } from '../../types'
 import { CategoryCardActions } from './CategoryCardActions'
 
-export type CategoryCardProps = {
+type CategoryCardProps = {
   className?: string
 } & CategoryEntity
 

@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import Typography from '../Typography/Typography'
-import LinkAsButton from '../Link/LinkAsButton'
+import { Typography } from '../Typography'
+import { LinkAsButton } from '../Link'
 import { cn } from '@/shared/lib/cn'
 
 type Props = {

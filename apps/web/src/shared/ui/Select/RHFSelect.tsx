@@ -8,7 +8,7 @@ import {
 } from 'react-hook-form'
 import { Select, type SelectProps } from './Select'
 
-export interface RHFSelectProps<T extends FieldValues> extends Omit<
+interface RHFSelectProps<T extends FieldValues> extends Omit<
   SelectProps,
   'name'
 > {

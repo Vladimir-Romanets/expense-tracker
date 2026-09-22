@@ -2,7 +2,7 @@
 
 import { serverApiClient } from '../../api/apiClient.server'
 
-export type SignedUploadResponse = {
+type SignedUploadResponse = {
   uploadUrl: string
   imageKey: string
 }

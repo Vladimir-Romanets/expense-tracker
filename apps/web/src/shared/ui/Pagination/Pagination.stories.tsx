@@ -1,6 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { fn } from 'storybook/test'
-import { useState } from 'react'
 import { Pagination } from './Pagination'
 
 const meta = {
